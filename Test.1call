@@ -1,0 +1,13 @@
+x = 10;
+// mov x 10
+
+y = 20;
+// mov y 20
+
+c = x + y;
+// add x y
+// pop c
+
+print(c);
+// push c
+//int 0x1
