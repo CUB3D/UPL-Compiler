@@ -1,2 +1,4 @@
-hello = 100
-x = hello + 10
+hello = 10
+hello = hello / 10
+
+println(hello)

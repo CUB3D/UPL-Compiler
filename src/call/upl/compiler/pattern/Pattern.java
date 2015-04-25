@@ -17,23 +17,25 @@ public abstract class Pattern
     public static final PatternAnyWordOrNumber PATTERN_ANY_WORD_OR_NUMBER = new PatternAnyWordOrNumber();
     public static final PatternAnyNumber PATTERN_ANY_NUMBER = new PatternAnyNumber();
     public static final PatternAnySpace PATTERN_ANY_SPACE = new PatternAnySpace();
+    public static final PatternExact PATTERN_EXACT = new PatternExact();
+    public static final PatternSkipToExact PATTERN_SKIP_TO_EXACT = new PatternSkipToExact();
 
     public Pattern()
     {
         Pattern.patternList.add(this);
     }
 
-    public abstract boolean matches(PatternStateData csd);
+    public abstract boolean matches(PatternStateData csd, String[] args);
     public abstract String getPatternID();
 
-    protected boolean isNumber(char c)
+    public static boolean isNumber(char c)
     {
         return Character.toString(c).matches(NUMBER_FORMAT);
     }
 
-    protected boolean isLetter(char c)
+    public static boolean isLetter(char c)
     {
-        return Character.toString(c).matches("[a-zA-Z]");
+        return Character.toString(c).matches("[a-zA-Z/]");
     }
 
 

@@ -16,21 +16,29 @@ public class PatternMacher
 
         PatternStateData csd = new PatternStateData();
         csd.text = text.toCharArray();
+        csd.textString = text;
 
         for(String tag : tags)
         {
-            // System.out.println("PAT: " + c + " ID: " + cur);
+            if(csd.curChar >= csd.text.length)
+            {
+                return false;
+            }
 
             String[] args = tag.split(" ");
 
             Pattern p = Pattern.getPattenFor(args[0]);
 
-            System.out.println("Parse tag: " + args[0]);
+           // System.out.println("Parse tag: " + args[0]);
+
+            System.arraycopy(args, 1, args, 0, args.length - 1);
 
             if(p != null)
             {
-                if(!p.matches(csd))
+                if(!p.matches(csd, args))
                 {
+                    //System.out.println("Pattern match failed, TAG: " + tag + ", CURCHAR: " + csd.curChar + ", ACTCHAR: " + csd.text[csd.curChar]);
+
                     return false;
                 }
             }
@@ -41,9 +49,13 @@ public class PatternMacher
         }
 
         if(csd.curChar < csd.text.length) // some of the text was unmached
-            return false;
+        {
+            System.out.println("Pattern match failed: unmatched text");
 
-        System.out.println("True");
+            return false;
+        }
+
+        System.out.println("Pattern matched succesfuly");
 
         return true;
     }

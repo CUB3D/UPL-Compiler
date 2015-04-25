@@ -3,11 +3,16 @@ package call.upl.compiler.core;
 import call.upl.compiler.pattern.Pattern;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
+import call.upl.core.UPLUtils;
+import call.upl.core.Value;
+import com.sun.javafx.css.CssError;
 import cub3d.file.main.FileAPI;
 import cub3d.file.reader.BasicReader;
 import cub3d.file.writer.BasicWriter;
 
+import javax.security.auth.x500.X500Principal;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +24,7 @@ public class UPLCompiler
     public BasicReader reader;
 
     public List<String> code = new ArrayList<String>();
+    public List<Value> values = new ArrayList<Value>();
 
     public BasicWriter writer;
 
@@ -66,28 +72,90 @@ public class UPLCompiler
         {
             String s = code.get(i);
 
-            PatternBuilder set = new PatternBuilder();
+            PatternBuilder setNum = new PatternBuilder();
 
-            set.addMatchAnyWord();
-            set.addMatchSpace(0);
-            set.addMatchSkipChar();
-            set.addMatchValue();
+            setNum.addMatchAnyWord();
+            setNum.addMatchSpace(0);
+            setNum.addMatchExact("=");
+            setNum.addMatchSpace(0);
+            setNum.addMatchNumber();
 
-            System.out.println(set.toString());
-
-            if(PatternMacher.match(s, set.toString()))
-            {
-                System.out.println("Test");
-              //  s = s.replaceAll(" ", "");
-              //  String[] ss = s.split("=");
-
-             //   writer.writeLine("mov " + ss[0] + " " + ss[1]);
-            }
-/*
-            if(PatternMacher.match(s, "#_?_@_?_@")) // a = 10 + 20
+            if(PatternMacher.match(s, setNum.toString()))
             {
                 s = s.replaceAll(" ", "");
-                String[] adds = s.split("\\+");
+                String[] ss = s.split("=");
+
+                writer.writeLine("mov " + ss[0] + " " + ss[1]);
+                values.add(new Value(new BigDecimal(ss[1])));
+            }
+
+            PatternBuilder setText = new PatternBuilder();
+
+            setText.addMatchAnyWord();
+            setText.addMatchSpace(0);
+            setText.addMatchExact("=");
+            setText.addMatchSpace(0);
+            setText.addMatchExact("\"");
+            setText.addMatchSkipToExact("\"");
+
+            if(PatternMacher.match(s, setText.toString()))
+            {
+                // x = "hgfd hgd hgfd"
+                String[] ss = s.split("=");
+                // x , "hgfd hgd hgfd"
+                ss[0] = ss[0].replaceAll(" ", "");
+                // x, "hgfd hgd hgfd"
+                ss[1] = ss[1].replaceAll(" \"", "");
+                ss[1] = ss[1].replaceAll("\"", "");
+                // x, hdfd hgd hgfd
+
+                writer.writeLine("dwd " + ss[0] + " " + ss[1]);
+                values.add(new Value(ss[1]));
+            }
+
+
+            // a = b + c
+            PatternBuilder add = new PatternBuilder();
+
+            add.addMatchAnyWord();
+            add.addMatchSpace(0);
+            add.addMatchExact("=");
+            add.addMatchSpace(0);
+            add.addMatchValue();
+            add.addMatchSpace(0);
+            add.addMatchSkipChar(); // add matchexact one of +, -, *, /
+            add.addMatchSpace(0);
+            add.addMatchValue();
+
+            if(PatternMacher.match(s, add.toString())) // a = 10 + 20
+            {
+                s = s.replaceAll(" ", "");
+
+                String operand = "";
+
+                if(s.contains("+"))
+                {
+                    operand = "\\+";
+                }
+                else
+                if(s.contains("-"))
+                {
+                    operand = "-";
+                }
+                else
+                if(s.contains("*"))
+                {
+                    operand = "\\*";
+                }
+                else
+                if(s.contains("/"))
+                {
+                    operand = "/";
+                }
+
+                System.out.println(operand);
+
+                String[] adds = s.split(operand);
 
                 // a = 10, 20
 
@@ -97,9 +165,154 @@ public class UPLCompiler
 
                 adds[0] = adds[0].replaceAll(ss[0] + "=", "");
 
-                writer.writeLine("add " + adds[0] + " " + adds[1]); // add 10 20
-                writer.writeLine("pop " + ss[0]); // pop a
-            }*/
+                if(operand.equals("\\+"))
+                {
+                    writer.writeLine("add " + adds[0] + " " + adds[1]);
+                    writer.writeLine("pop " + ss[0]);
+                }
+
+                if(operand.equals("-"))
+                {
+                    writer.writeLine("sub " + adds[0] + " " + adds[1]);
+                    writer.writeLine("pop " + ss[0]);
+                }
+
+                if(operand.equals("\\*"))
+                {
+                    writer.writeLine("mul " + adds[0] + " " + adds[1]);
+                    writer.writeLine("pop " + ss[0]);
+                }
+
+                if(operand.equals("/"))
+                {
+                    writer.writeLine("div " + adds[0] + " " + adds[1]);
+                    writer.writeLine("pop " + ss[0]);
+                }
+            }
+
+            //print(x)
+            PatternBuilder printVar = new PatternBuilder();
+            printVar.addMatchAnyWord();
+            printVar.addMatchSpace(0);
+            printVar.addMatchExact("(");
+            printVar.addMatchSpace(0);
+            printVar.addMatchAnyWord();
+            printVar.addMatchSpace(0);
+            printVar.addMatchExact(")");
+
+            if(PatternMacher.match(s, printVar.toString()))
+            {
+                // print ( x )
+                s = s.replaceAll(" ", "");
+                // print(x)
+                s = s.replaceAll("\\(", " ");
+                // print x)
+                s = s.replaceAll("\\)", "");
+                // print x
+                String[] strings = s.split(" ");
+                String methodName = strings[0];
+
+                if(methodName.startsWith("print"))
+                {
+                    String varName = strings[1];
+
+                    writer.writeLine("psh " + varName);
+                    writer.writeLine("int 0x1");
+
+                    if(methodName.equals("println"))
+                    {
+                        writer.writeLine("dwd @TEMP0@ /n");
+                        writer.writeLine("psh @TEMP0@");
+                        writer.writeLine("int 0x1");
+                        writer.writeLine("dwd @TEMP0@ NULL");
+                    }
+                }
+            }
+
+            PatternBuilder printNum = new PatternBuilder();
+            printNum.addMatchAnyWord();
+            printNum.addMatchSpace(0);
+            printNum.addMatchExact("(");
+            printNum.addMatchSpace(0);
+
+            printNum.addMatchNumber();
+
+            printNum.addMatchSpace(0);
+            printNum.addMatchExact(")");
+
+            if(PatternMacher.match(s, printNum.toString()))
+            {
+                // print ( 10 )
+                s = s.replaceAll(" ", "");
+                // print(10)
+                s = s.replaceAll("\\(", " ");
+                // print 10)
+                s = s.replaceAll("\\)", "");
+                // print 10
+                String[] strings = s.split(" ");
+                String methodName = strings[0];
+
+                if(methodName.startsWith("print"))
+                {
+                    String text = strings[1];
+
+                    writer.writeLine("psh " + text);
+                    writer.writeLine("int 0x1");
+
+                    if(methodName.equals("println"))
+                    {
+                        writer.writeLine("dwd @TEMP0@ /n");
+                        writer.writeLine("psh @TEMP0@");
+                        writer.writeLine("int 0x1");
+                        writer.writeLine("dwd @TEMP0@ NULL");
+                    }
+                }
+            }
+
+            PatternBuilder printStr = new PatternBuilder();
+            printStr.addMatchAnyWord();
+            printStr.addMatchSpace(0);
+            printStr.addMatchExact("(");
+            printStr.addMatchSpace(0);
+
+            printStr.addMatchExact("\"");
+            printStr.addMatchSkipToExact("\"");
+
+            printStr.addMatchSpace(0);
+            printStr.addMatchExact(")");
+
+            if(PatternMacher.match(s, printStr.toString()))
+            {
+                // print ( "X Y" )
+                s = s.replaceAll("\\(", " ");
+                // print  "X Y" )
+                s = s.replaceAll("\\)", "");
+                // print  "X Y" .
+                s = s.trim();
+                // print  "X Y".
+                String[] strings = s.split(" ");
+                String methodName = strings[0];
+
+                if(methodName.startsWith("print"))
+                {
+                    s = s.replaceAll(methodName + " ", "");
+                    // . "X Y".
+                    s = s.trim();
+                    // "X Y"
+                    s = s.replaceAll("\"", "");
+                    // X Y
+
+                    if(methodName.equals("println"))
+                    {
+                        s += "/n";
+                    }
+
+                    writer.writeLine("dwd @TEMP0@ " + s);
+                    writer.writeLine("psh @TEMP0@");
+                    writer.writeLine("int 0x1");
+                    writer.writeLine("dwd @TEMP0@ NULL");
+                }
+            }
         }
 
         writer.cleanup();

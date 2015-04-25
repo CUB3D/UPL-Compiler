@@ -7,4 +7,5 @@ public class PatternStateData
 {
     public int curChar;
     public char[] text;
+    public String textString;
 }

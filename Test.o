@@ -1,0 +1,9 @@
+mov hello 10
+div hello 10
+pop hello
+psh hello
+int 0x1
+dwd @TEMP0@ /n
+psh @TEMP0@
+int 0x1
+dwd @TEMP0@ NULL

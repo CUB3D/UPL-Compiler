@@ -22,7 +22,7 @@ public class PatternBuilder
 
     public void addMatchExact(String s)
     {
-        pattern += PATTERN_TAG_START + "mat " + s + ">";
+        pattern += PATTERN_TAG_START + Pattern.PATTERN_EXACT.getPatternID() + " " + s + PATTERN_TAG_END;
     }
 
     public void addMatchValue()
@@ -33,6 +33,16 @@ public class PatternBuilder
     public void addMatchSkipChar()
     {
         pattern += PATTERN_TAG_START + Pattern.PATTERN_SKIP_CHAR.getPatternID() + PATTERN_TAG_END;
+    }
+
+    public void addMatchSkipToExact(String s)
+    {
+        pattern += PATTERN_TAG_START + Pattern.PATTERN_SKIP_TO_EXACT.getPatternID() + " " + s + PATTERN_TAG_END;
+    }
+
+    public void addMatchNumber()
+    {
+        pattern += PATTERN_TAG_START + Pattern.PATTERN_ANY_NUMBER.getPatternID() + PATTERN_TAG_END;
     }
 
     @Override

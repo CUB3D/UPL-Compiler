@@ -6,13 +6,8 @@ package call.upl.compiler.pattern;
 public class PatternAnyWordOrNumber extends Pattern
 {
     @Override
-    public boolean matches(PatternStateData csd)
+    public boolean matches(PatternStateData csd, String[] args)
     {
-        if(csd.curChar >= csd.text.length)
-        {
-            return false;
-        }
-
         if(isLetter(csd.text[csd.curChar]))
         {
             boolean b = false;

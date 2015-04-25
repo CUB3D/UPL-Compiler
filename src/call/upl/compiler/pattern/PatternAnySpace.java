@@ -6,12 +6,9 @@ package call.upl.compiler.pattern;
 public class PatternAnySpace extends Pattern
 {
     @Override
-    public boolean matches(PatternStateData csd)
+    public boolean matches(PatternStateData csd, String[] args)
     {
-        if(csd.curChar >= csd.text.length)
-        {
-            return false;
-        }
+        int start = csd.curChar;
 
         while(true)
         {
@@ -29,6 +26,14 @@ public class PatternAnySpace extends Pattern
             {
                 break;
             }
+        }
+
+        String amount = args[0];
+        int amountInt = Integer.parseInt(amount);
+
+        if(csd.curChar - start < amountInt)
+        {
+            return false;
         }
 
         return true;
