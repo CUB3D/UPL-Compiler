@@ -1,5 +1,7 @@
 package call.upl.compiler.pattern;
 
+import call.upl.compiler.core.UPLCompiler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +12,6 @@ public class PatternMacher
 {
     public static boolean match(String text, String pattern)
     {
-        System.out.println(text);
-
         List<String> tags = getTags(pattern);
 
         PatternStateData csd = new PatternStateData();
@@ -20,6 +20,11 @@ public class PatternMacher
 
         for(String tag : tags)
         {
+            if(UPLCompiler.DEBUG)
+            {
+                System.out.println(tag);
+            }
+
             if(csd.curChar >= csd.text.length)
             {
                 return false;
@@ -28,8 +33,6 @@ public class PatternMacher
             String[] args = tag.split(" ");
 
             Pattern p = Pattern.getPattenFor(args[0]);
-
-           // System.out.println("Parse tag: " + args[0]);
 
             System.arraycopy(args, 1, args, 0, args.length - 1);
 
@@ -47,6 +50,8 @@ public class PatternMacher
                 System.out.println("No match found for tag: " + tag);
             }
         }
+
+        System.out.println("CC: " + csd.curChar + "  TLEN: " + csd.text.length);
 
         if(csd.curChar < csd.text.length) // some of the text was unmached
         {
@@ -67,9 +72,13 @@ public class PatternMacher
         String curTag = "";
         boolean inTag = false;
 
-        for(char c : s.toCharArray())
+        char[] chars = s.toCharArray();
+
+        for(int i = 0; i < chars.length; i++)
         {
-           // System.out.println("TAG: " + curTag + " INTAG: " + inTag + " C: " + c);
+            char c = chars[i];
+
+            //System.out.println("TAG: " + curTag + " INTAG: " + inTag + " C: " + c);
 
             if(c == '<') // open tag
             {
@@ -79,14 +88,33 @@ public class PatternMacher
 
             if(c == '>')
             {
-                if(inTag)
-                    tags.add(curTag);
+                if(i >= 1)
+                {
+                    if(chars[i - 1] != '\\')
+                    {
+                        if(inTag)
+                        {
+                            tags.add(curTag);
+                        }
 
-                inTag = false;
-                curTag = "";
+                        inTag = false;
+                        curTag = "";
+                    }
+                }
             }
-            if(inTag && c != '>' && c != '<')
+            if(c != '<' && c != '\\')
             {
+                if(c =='>')
+                {
+                    if(i >= 0)
+                    {
+                        if(chars[i - 1] != '\\')
+                        {
+                            continue;
+                        }
+                    }
+                }
+
                 curTag += c;
             }
         }

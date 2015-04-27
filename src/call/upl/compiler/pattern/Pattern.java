@@ -35,7 +35,7 @@ public abstract class Pattern
 
     public static boolean isLetter(char c)
     {
-        return Character.toString(c).matches("[a-zA-Z/]");
+        return Character.toString(c).matches("[a-zA-Z/_@]");
     }
 
 

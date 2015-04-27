@@ -1,7 +1,15 @@
-mov hello 10
-div hello 10
-pop hello
-psh hello
+mov x 10
+mov y 20
+.helloWorld
+pop helloWorld@x
+pop helloWorld@y
+add helloWorld@x helloWorld@y
+pop z
+end
+psh 100
+psh 20
+jmp helloWorld
+psh z
 int 0x1
 dwd @TEMP0@ /n
 psh @TEMP0@
