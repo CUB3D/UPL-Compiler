@@ -1,5 +1,7 @@
 package call.upl.compiler.core;
 
+import call.upl.compiler.node.CompileNode;
+import call.upl.compiler.node.CompileStateData;
 import call.upl.compiler.pattern.Pattern;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
@@ -85,21 +87,13 @@ public class UPLCompiler
 
     private int execLine(String s, int i) throws IOException
     {
-        PatternBuilder setNum = new PatternBuilder();
+        CompileStateData compileStateData = new CompileStateData();
+        compileStateData.curLine = s;
+        compileStateData.curLineNumber = i;
 
-        setNum.addMatchAnyWord();
-        setNum.addMatchSpace(0);
-        setNum.addMatchExact("=");
-        setNum.addMatchSpace(0);
-        setNum.addMatchNumber();
-
-        if(PatternMacher.match(s, setNum.toString()))
+        if(CompileNode.attemptCompile(this, compileStateData))
         {
-            s = s.replaceAll(" ", "");
-            String[] ss = s.split("=");
-
-            writer.writeLine("mov " + ss[0] + " " + ss[1]);
-            values.put(ss[0], new Value(new BigDecimal(ss[1])));
+            return compileStateData.curLineNumber;
         }
 
         PatternBuilder setText = new PatternBuilder();
@@ -509,6 +503,16 @@ public class UPLCompiler
         }
 
         return i;
+    }
+
+    public void writeCode(String s)
+    {
+        try
+        {
+            writer.writeLine(s);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws IOException
