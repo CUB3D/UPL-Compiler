@@ -517,7 +517,7 @@ public class UPLCompiler
 
     public static void main(String[] args) throws IOException
     {
-        FileAPI api = new FileAPI("E:\\Development\\Java\\UPL Compiler\\Test.call");
+        FileAPI api = new FileAPI(args[0]);
 
         new UPLCompiler(api);
     }
