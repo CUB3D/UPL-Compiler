@@ -34,6 +34,33 @@ public class CompileNodeSet extends CompileNode
             return true;
         }
 
+
+        PatternBuilder setText = new PatternBuilder();
+
+        setText.addMatchAnyWord();
+        setText.addMatchSpace(0);
+        setText.addMatchExact("=");
+        setText.addMatchSpace(0);
+        setText.addMatchExact("\"");
+        setText.addMatchSkipToExact("\"");
+
+        if(PatternMacher.match(curLine, setText.toString()))
+        {
+            // x = "hgfd hgd hgfd"
+            String[] ss = curLine.split("=");
+            // x , "hgfd hgd hgfd"
+            ss[0] = ss[0].replaceAll(" ", "");
+            // x, "hgfd hgd hgfd"
+            ss[1] = ss[1].replaceAll(" \"", "");
+            ss[1] = ss[1].replaceAll("\"", "");
+            // x, hdfd hgd hgfd
+
+            uplCompiler.writeCode("dwd " + ss[0] + " " + ss[1]);
+            uplCompiler.values.put(ss[0], new Value(ss[1]));
+
+            return true;
+        }
+
         return false;
     }
 }

@@ -13,7 +13,8 @@ public abstract class CompileNode
     private static List<CompileNode> compileNodes = new ArrayList<CompileNode>();
 
     public static final CompileNodeSet COMPILE_NODE_SET = new CompileNodeSet();
-
+    public static final CompileNodeEquation COMPILE_NODE_EQUATION = new CompileNodeEquation();
+    
     public CompileNode()
     {
         compileNodes.add(this);
