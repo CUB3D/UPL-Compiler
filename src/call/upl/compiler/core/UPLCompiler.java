@@ -123,15 +123,15 @@ public class UPLCompiler
             {
                 String varName = strings[1];
 
-                writer.writeLine("psh " + varName);
-                writer.writeLine("int 0x1");
+                writeCode("psh " + varName);
+                writeCode("int 0x1");
 
                 if(methodName.equals("println"))
                 {
-                    writer.writeLine("dwd @TEMP0@ /n");
-                    writer.writeLine("psh @TEMP0@");
-                    writer.writeLine("int 0x1");
-                    writer.writeLine("dwd @TEMP0@ NULL");
+                    writeCode("dwd @TEMP0@ /n");
+                    writeCode("psh @TEMP0@");
+                    writeCode("int 0x1");
+                    writeCode("dwd @TEMP0@ NULL");
                 }
             }
         }
@@ -163,15 +163,15 @@ public class UPLCompiler
             {
                 String text = strings[1];
 
-                writer.writeLine("psh " + text);
-                writer.writeLine("int 0x1");
+                writeCode("psh " + text);
+                writeCode("int 0x1");
 
                 if(methodName.equals("println"))
                 {
-                    writer.writeLine("dwd @TEMP0@ /n");
-                    writer.writeLine("psh @TEMP0@");
-                    writer.writeLine("int 0x1");
-                    writer.writeLine("dwd @TEMP0@ NULL");
+                    writeCode("dwd @TEMP0@ /n");
+                    writeCode("psh @TEMP0@");
+                    writeCode("int 0x1");
+                    writeCode("dwd @TEMP0@ NULL");
                 }
             }
         }
@@ -214,10 +214,10 @@ public class UPLCompiler
                     s += "/n";
                 }
 
-                writer.writeLine("dwd @TEMP0@ " + s);
-                writer.writeLine("psh @TEMP0@");
-                writer.writeLine("int 0x1");
-                writer.writeLine("dwd @TEMP0@ NULL");
+                writeCode("dwd @TEMP0@ " + s);
+                writeCode("psh @TEMP0@");
+                writeCode("int 0x1");
+                writeCode("dwd @TEMP0@ NULL");
             }
 
             if (methodName.equals("__UPLBC"))
@@ -229,87 +229,9 @@ public class UPLCompiler
                 s = s.replaceAll("\"", "");
                 // X Y
 
-                writer.writeLine(s);
+                writeCode(s);
             }
         }
-
-        //func x ( void ) ->
-        PatternBuilder func = new PatternBuilder();
-        func.addMatchExact("func");
-        func.addMatchSpace(0);
-        func.addMatchAnyWord();
-        func.addMatchSpace(0);
-        func.addMatchExact("(");
-        func.addMatchSkipToExact(")");
-        func.addMatchSpace(0);
-        func.addMatchExact("-\\>");
-
-        if(PatternMacher.match(s, func.toString()))
-        {
-            //def x ( x, y ) ->
-            s = s.replaceAll("func", ".");
-            //. x ( x, y ) ->
-            s = s.replaceAll(" ", "");
-            //.x(x,y)->
-            s = s.replaceAll("\\(", " ");
-            //.x x,y)->
-            s = s.replaceAll("\\)->", "");
-            // .x x,y
-            String[] split = s.split(" ");
-            String name = split[0];
-            String[] args = split[1].split(",");
-
-            writer.writeLine(name);
-
-            name = name.replaceFirst("\\.", "");
-
-            i++;
-
-            if(code.get(i).equals("{"))
-            {
-                i++;
-
-                for(int i1 = 0; i1 < args.length; i1++)
-                {
-                    writer.writeLine("pop " + (name + "@" + args[i1]));
-                }
-
-                while(true)
-                {
-                    String line = code.get(i);
-
-                    if(line.equals("}"))
-                    {
-                        break;
-                    } else
-                    {
-                        String codeLine = line.trim();
-
-
-                        codeLine += " ";
-
-                        for(int i1 = 0; i1 < args.length; i1++)
-                        {
-                            codeLine = codeLine.replaceAll(" " + args[i1] + " ", " " + name + "@" + args[i1] + " ");
-                            codeLine = codeLine.replaceAll("\\(" + args[i1], "(" + name + "@" + args[i1]);
-                            codeLine = codeLine.replaceAll(args[i1] + "\\)", name + "@" + args[i1] + ")");
-                        }
-
-                        codeLine = codeLine.trim();
-
-                        i = execLine(codeLine, i);
-                    }
-
-                    i++;
-                }
-            } else
-            {
-                System.out.println("Error uncomplete statement");
-            }
-
-            writer.writeLine("end");
-        }
-
         return i;
     }
 

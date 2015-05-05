@@ -16,6 +16,7 @@ public abstract class CompileNode
     public static final CompileNodeEquation COMPILE_NODE_EQUATION = new CompileNodeEquation();
     public static final CompileNodeIf COMPILE_NODE_IF = new CompileNodeIf();
     public static final CompileNodeFunctionCall COMPILE_NODE_FUNCTION_CALL = new CompileNodeFunctionCall();
+    public static final CompileNodeFunctionDefinitions COMPILE_NODE_FUNCTION_DEFINITIONS = new CompileNodeFunctionDefinitions();
 
     public CompileNode()
     {
