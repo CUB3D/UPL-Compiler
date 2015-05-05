@@ -85,7 +85,7 @@ public class UPLCompiler
         writer.cleanup();
     }
 
-    private int execLine(String s, int i) throws IOException
+    public int execLine(String s, int i)
     {
         CompileStateData compileStateData = new CompileStateData();
         compileStateData.curLine = s;
@@ -233,73 +233,6 @@ public class UPLCompiler
             }
         }
 
-        //if ( s == d ) -> { }
-        PatternBuilder if_ = new PatternBuilder();
-
-        if_.addMatchExact("if");
-        if_.addMatchSpace(0);
-        if_.addMatchExact("(");
-
-        if_.addMatchSpace(0);
-        if_.addMatchValue();
-        if_.addMatchSpace(0);
-
-        if_.addMatchExact("=="); // todo multipul matches
-
-        if_.addMatchSpace(0);
-        if_.addMatchValue();
-        if_.addMatchSpace(0);
-        if_.addMatchExact(")");
-
-        if_.addMatchSpace(0);
-        if_.addMatchExact("-\\>");
-
-        if(PatternMacher.match(s, if_.toString()))
-        {
-            //if(x == y) ->
-            // if x == y
-            s = s.replaceAll(" ", "");
-            //if(x==y)->
-            s = s.replaceAll("\\(", " ");
-            //if x==y)->
-            s = s.replaceAll("\\)", "");
-            //if x==y->
-            s = s.replaceAll("->", "");
-            //if x==y
-            s = s.replaceAll("==", " == ");
-
-            writer.writeLine(s);
-
-            i++;
-
-            if(code.get(i).equals("{"))
-            {
-                i++;
-
-                while(true)
-                {
-                    String line = code.get(i);
-
-                    if(line.equals("}"))
-                    {
-                        break;
-                    } else
-                    {
-                        String codeLine = line.trim();
-
-                        i = execLine(codeLine, i);
-                    }
-
-                    i++;
-                }
-            } else
-            {
-                System.out.println("Error uncomplete statement");
-            }
-
-            writer.writeLine("endif");
-        }
-
         //func x ( void ) ->
         PatternBuilder func = new PatternBuilder();
         func.addMatchExact("func");
@@ -375,34 +308,6 @@ public class UPLCompiler
             }
 
             writer.writeLine("end");
-        }
-
-        PatternBuilder callFunc = new PatternBuilder();
-        //helloWorld ( x, y )
-        callFunc.addMatchAnyWord();
-        callFunc.addMatchSpace(0);
-        callFunc.addMatchExact("(");
-        callFunc.addMatchSkipToExact(")");
-
-        if(PatternMacher.match(s, callFunc.toString()))
-        {
-            //psh x, psh y, jmp name
-            s = s.replaceAll(" ", "");
-            //helloWorld(x,y)
-            s = s.replaceAll("\\(", " ");
-            //helloWorld x,y)
-            s = s.replaceAll("\\)", "");
-            //helloWorld x,y
-            String[] strings = s.split(" ");
-            String name = strings[0];
-            String[] args = strings[1].split(",");
-
-            for(int i1 = 0; i1 < args.length; i1++)
-            {
-                writer.writeLine("psh " + args[i1]);
-            }
-
-            writer.writeLine("jmp " + name);
         }
 
         return i;

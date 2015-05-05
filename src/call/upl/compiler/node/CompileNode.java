@@ -14,7 +14,9 @@ public abstract class CompileNode
 
     public static final CompileNodeSet COMPILE_NODE_SET = new CompileNodeSet();
     public static final CompileNodeEquation COMPILE_NODE_EQUATION = new CompileNodeEquation();
-    
+    public static final CompileNodeIf COMPILE_NODE_IF = new CompileNodeIf();
+    public static final CompileNodeFunctionCall COMPILE_NODE_FUNCTION_CALL = new CompileNodeFunctionCall();
+
     public CompileNode()
     {
         compileNodes.add(this);
