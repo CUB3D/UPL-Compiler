@@ -86,6 +86,8 @@ public class CompileNodeEquation extends CompileNode
                 uplCompiler.writeCode("div " + adds[0] + " " + adds[1]);
                 uplCompiler.writeCode("pop " + ss[0]);
             }
+
+            return true;
         }
 
         return false;

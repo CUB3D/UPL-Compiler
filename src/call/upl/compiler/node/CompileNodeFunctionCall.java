@@ -30,16 +30,30 @@ public class CompileNodeFunctionCall extends CompileNode
             //helloWorld x,y
             String[] strings = curLine.split(" ");
             String name = strings[0];
-            String[] args = strings[1].split(",");
+            boolean hasArgs = strings.length == 2;
+            String[] args = null;
 
-            for(int i1 = 0; i1 < args.length; i1++)
+            if(hasArgs)
             {
-                uplCompiler.writeCode("psh " + args[i1]);
+                args = strings[1].split(",");
             }
 
-            uplCompiler.writeCode("jmp " + name);
+            if(!name.startsWith("_"))
+            {
+                if(hasArgs)
+                {
+                    for (int i1 = 0; i1 < args.length; i1++)
+                    {
+                        uplCompiler.writeCode("psh " + args[i1]);
+                    }
+                }
+
+                uplCompiler.writeCode("jmp " + name);
+
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 }

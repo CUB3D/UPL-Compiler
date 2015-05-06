@@ -1,17 +1,14 @@
-mov x 10
-mov y 20
-.helloWorld
-pop helloWorld@x
-pop helloWorld@y
-add helloWorld@x helloWorld@y
-pop z
-end
-psh 100
-psh 20
-jmp helloWorld
-psh z
-int 0x1
+.newline
 dwd @TEMP0@ /n
 psh @TEMP0@
 int 0x1
-dwd @TEMP0@ NULL
+end
+.println
+pop println@num
+psh println@num 
+int 0x1
+jmp newline
+end
+mov x 10
+psh x
+jmp println

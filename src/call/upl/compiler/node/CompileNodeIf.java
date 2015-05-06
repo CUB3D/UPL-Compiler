@@ -82,6 +82,8 @@ public class CompileNodeIf extends CompileNode
             compileStateData.curLineNumber = i;
 
             uplCompiler.writeCode("endif");
+
+            return true;
         }
 
         return false;

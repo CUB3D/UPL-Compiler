@@ -96,85 +96,7 @@ public class UPLCompiler
             return compileStateData.curLineNumber;
         }
 
-
-        //print(x)
-        PatternBuilder printVar = new PatternBuilder();
-        printVar.addMatchAnyWord();
-        printVar.addMatchSpace(0);
-        printVar.addMatchExact("(");
-        printVar.addMatchSpace(0);
-        printVar.addMatchAnyWord();
-        printVar.addMatchSpace(0);
-        printVar.addMatchExact(")");
-
-        if(PatternMacher.match(s, printVar.toString()))
-        {
-            // print ( x )
-            s = s.replaceAll(" ", "");
-            // print(x)
-            s = s.replaceAll("\\(", " ");
-            // print x)
-            s = s.replaceAll("\\)", "");
-            // print x
-            String[] strings = s.split(" ");
-            String methodName = strings[0];
-
-            if(methodName.startsWith("print"))
-            {
-                String varName = strings[1];
-
-                writeCode("psh " + varName);
-                writeCode("int 0x1");
-
-                if(methodName.equals("println"))
-                {
-                    writeCode("dwd @TEMP0@ /n");
-                    writeCode("psh @TEMP0@");
-                    writeCode("int 0x1");
-                    writeCode("dwd @TEMP0@ NULL");
-                }
-            }
-        }
-
-        PatternBuilder printNum = new PatternBuilder();
-        printNum.addMatchAnyWord();
-        printNum.addMatchSpace(0);
-        printNum.addMatchExact("(");
-        printNum.addMatchSpace(0);
-
-        printNum.addMatchNumber();
-
-        printNum.addMatchSpace(0);
-        printNum.addMatchExact(")");
-
-        if(PatternMacher.match(s, printNum.toString()))
-        {
-            // print ( 10 )
-            s = s.replaceAll(" ", "");
-            // print(10)
-            s = s.replaceAll("\\(", " ");
-            // print 10)
-            s = s.replaceAll("\\)", "");
-            // print 10
-            String[] strings = s.split(" ");
-            String methodName = strings[0];
-
-            if(methodName.startsWith("print"))
-            {
-                String text = strings[1];
-
-                writeCode("psh " + text);
-                writeCode("int 0x1");
-
-                if(methodName.equals("println"))
-                {
-                    writeCode("dwd @TEMP0@ /n");
-                    writeCode("psh @TEMP0@");
-                    writeCode("int 0x1");
-                    writeCode("dwd @TEMP0@ NULL");
-                }
-            }
-        }
+        // TODO: make this a node or add a special case in CompileNodeFunctionCall for special functions
 
         PatternBuilder printStr = new PatternBuilder();
         printStr.addMatchAnyWord();
@@ -200,26 +122,6 @@ public class UPLCompiler
             String[] strings = s.split(" ");
             String methodName = strings[0];
 
-            if (methodName.startsWith("print"))
-            {
-                s = s.replaceAll(methodName + " ", "");
-                // .  "X Y".
-                s = s.trim();
-                // "X Y"
-                s = s.replaceAll("\"", "");
-                // X Y
-
-                if (methodName.equals("println"))
-                {
-                    s += "/n";
-                }
-
-                writeCode("dwd @TEMP0@ " + s);
-                writeCode("psh @TEMP0@");
-                writeCode("int 0x1");
-                writeCode("dwd @TEMP0@ NULL");
-            }
-
             if (methodName.equals("__UPLBC"))
             {
                 s = s.replaceAll(methodName + " ", "");
@@ -230,8 +132,11 @@ public class UPLCompiler
                 // X Y
 
                 writeCode(s);
+
+                return compileStateData.curLineNumber;
             }
         }
+
         return i;
     }
 

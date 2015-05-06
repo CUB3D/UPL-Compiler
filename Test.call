@@ -1,10 +1,18 @@
-x = 10
-y = 20
-
-func helloWorld ( x, y ) ->
+func newline() ->
 {
-    z = x + y
+    __UPLBC("dwd @TEMP0@ /n")
+    __UPLBC("psh @TEMP0@")
+    __UPLBC("int 0x1")
 }
 
-helloWorld(100, 20)
-println(z)
+func println(num) ->
+{
+    // trick to use real variable name and not a string; Also change the way variables are provided to functions so that this trick is not required
+    __UPLBC("psh num ")
+    __UPLBC("int 0x1")
+
+    newline()
+}
+
+x = 10
+println(x)

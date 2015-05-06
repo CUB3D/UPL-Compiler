@@ -36,7 +36,13 @@ public class CompileNodeFunctionDefinitions extends CompileNode
             // .x x,y
             String[] split = curLine.split(" ");
             String name = split[0];
-            String[] args = split[1].split(",");
+            boolean hasArgs = split.length == 2;
+            String[] args = null;
+
+            if(hasArgs)
+            {
+                args = split[1].split(",");
+            }
 
             uplCompiler.writeCode(name);
 
@@ -48,9 +54,12 @@ public class CompileNodeFunctionDefinitions extends CompileNode
             {
                 i++;
 
-                for(int i1 = 0; i1 < args.length; i1++)
+                if(hasArgs)
                 {
-                    uplCompiler.writeCode("pop " + (name + "@" + args[i1]));
+                    for (int i1 = 0; i1 < args.length; i1++)
+                    {
+                        uplCompiler.writeCode("pop " + (name + "@" + args[i1]));
+                    }
                 }
 
                 while(true)
@@ -67,11 +76,14 @@ public class CompileNodeFunctionDefinitions extends CompileNode
 
                         codeLine += " ";
 
-                        for(int i1 = 0; i1 < args.length; i1++)
+                        if(hasArgs)
                         {
-                            codeLine = codeLine.replaceAll(" " + args[i1] + " ", " " + name + "@" + args[i1] + " ");
-                            codeLine = codeLine.replaceAll("\\(" + args[i1], "(" + name + "@" + args[i1]);
-                            codeLine = codeLine.replaceAll(args[i1] + "\\)", name + "@" + args[i1] + ")");
+                            for (int i1 = 0; i1 < args.length; i1++)
+                            {
+                                codeLine = codeLine.replaceAll(" " + args[i1] + " ", " " + name + "@" + args[i1] + " ");
+                                codeLine = codeLine.replaceAll("\\(" + args[i1], "(" + name + "@" + args[i1]);
+                                codeLine = codeLine.replaceAll(args[i1] + "\\)", name + "@" + args[i1] + ")");
+                            }
                         }
 
                         codeLine = codeLine.trim();
@@ -89,9 +101,11 @@ public class CompileNodeFunctionDefinitions extends CompileNode
             compileStateData.curLineNumber = i;
 
             uplCompiler.writeCode("end");
+
+            return true;
         }
 
 
-        return true;
+        return false;
     }
 }
