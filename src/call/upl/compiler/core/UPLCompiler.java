@@ -27,8 +27,6 @@ public class UPLCompiler
 {
     public static final boolean DEBUG = false;
 
-    public BasicReader reader;
-
     public List<String> code = new ArrayList<String>();
     public Map<String, Value> values = new HashMap<String, Value>();
 
@@ -36,24 +34,28 @@ public class UPLCompiler
 
     public UPLCompiler(FileAPI a) throws IOException
     {
-        this.reader = new BasicReader(a.getReader());
-
         FileAPI f = new FileAPI(a.getPath().toString().replaceAll(".call", ".o"));
 
         f.createFile();
 
         this.writer = new BasicWriter(f.getWriter());
 
-        process();
-    }
-
-    public void process() throws IOException
-    {
-        readCode();
+        readCode(new BasicReader(a.getReader()));
         runCode();
     }
 
-    private void readCode()
+    public void readCode(String filename)
+    {
+        try
+        {
+            readCode(new BasicReader(new FileAPI(filename).getReader()));
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void readCode(BasicReader reader)
     {
         try
         {

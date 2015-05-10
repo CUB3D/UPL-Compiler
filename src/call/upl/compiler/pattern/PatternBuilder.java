@@ -20,9 +20,18 @@ public class PatternBuilder
         pattern += PATTERN_TAG_START + Pattern.PATTERN_ANY_SPACE.getPatternID() + " " + amount + PATTERN_TAG_END;
     }
 
-    public void addMatchExact(String s)
+    public void addMatchExact(String... s)
     {
-        pattern += PATTERN_TAG_START + Pattern.PATTERN_EXACT.getPatternID() + " " + s + PATTERN_TAG_END;
+        String args = "";
+
+        for(String ss : s)
+        {
+            args += ss + " ";
+        }
+
+        args = args.trim();
+
+        pattern += PATTERN_TAG_START + Pattern.PATTERN_EXACT.getPatternID() + " " + args + PATTERN_TAG_END;
     }
 
     public void addMatchValue()

@@ -61,6 +61,56 @@ public class CompileNodeSet extends CompileNode
             return true;
         }
 
+        PatternBuilder setFunc = new PatternBuilder();
+
+        //x = foo ( 10 )
+
+        setFunc.addMatchAnyWord();
+        setFunc.addMatchSpace(0);
+        setFunc.addMatchExact("=");
+        setFunc.addMatchSpace(0);
+        setFunc.addMatchAnyWord();
+        setFunc.addMatchSpace(0);
+        setFunc.addMatchExact("(");
+        setFunc.addMatchSkipToExact(")");
+
+        if(PatternMacher.match(curLine, setFunc.toString()))
+        {
+            String[] args0 = curLine.split("=");
+            String func = args0[1];
+
+            func = func.replaceAll(" ", "");
+            func = func.replaceAll("\\(", " ");
+            func = func.replaceAll("\\)", "");
+
+            String[] strings = func.split(" ");
+            String name = strings[0];
+            boolean hasArgs = strings.length == 2;
+            String[] args = null;
+
+            if(hasArgs)
+            {
+                args = strings[1].split(",");
+            }
+
+            if(!name.startsWith("_"))
+            {
+                if(hasArgs)
+                {
+                    for (int i1 = 0; i1 < args.length; i1++)
+                    {
+                        uplCompiler.writeCode("psh " + args[i1]);
+                    }
+                }
+
+                uplCompiler.writeCode("jmp " + name);
+
+                uplCompiler.writeCode("pop " + args0[0].trim());
+            }
+
+            return true;
+        }
+
         return false;
     }
 }

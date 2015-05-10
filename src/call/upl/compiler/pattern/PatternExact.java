@@ -8,25 +8,36 @@ public class PatternExact extends Pattern
     @Override
     public boolean matches(PatternStateData csd, String[] args)
     {
-        String toFind = args[0];
-        char[] toFindChars = toFind.toCharArray();
-
-        for(int i = 0; i < toFind.length(); i++)
+        for(String arg : args)
         {
-            if(csd.curChar + i >= csd.text.length)
+            String toFind = arg;
+            char[] toFindChars = toFind.toCharArray();
+            boolean success = true;
+
+            for(int i = 0; i < toFind.length(); i++)
             {
-                return false;
+                if(csd.curChar + i >= csd.text.length)
+                {
+                    success = false;
+                }
+                else
+                {
+                    if(csd.text[csd.curChar + i] != toFindChars[i])
+                    {
+                        success = false;
+                    }
+                }
             }
 
-            if(csd.text[csd.curChar + i] != toFindChars[i])
+            if(success)
             {
-                return false;
+                csd.curChar += toFind.length();
+
+                return true;
             }
         }
 
-        csd.curChar += toFind.length();
-
-        return true;
+        return false;
     }
 
     @Override

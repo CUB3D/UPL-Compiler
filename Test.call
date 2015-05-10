@@ -1,18 +1,6 @@
-func newline() ->
+include "B:\Git\UPL-Compiler\IO.call"
+
+if ( 10 < 5 ) ->
 {
-    __UPLBC("dwd @TEMP0@ /n")
-    __UPLBC("psh @TEMP0@")
-    __UPLBC("int 0x1")
+    println(10)
 }
-
-func println(num) ->
-{
-    // trick to use real variable name and not a string; Also change the way variables are provided to functions so that this trick is not required
-    __UPLBC("psh num ")
-    __UPLBC("int 0x1")
-
-    newline()
-}
-
-x = 10
-println(x)

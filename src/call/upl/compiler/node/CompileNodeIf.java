@@ -26,7 +26,7 @@ public class CompileNodeIf extends CompileNode
         if_.addMatchValue();
         if_.addMatchSpace(0);
 
-        if_.addMatchExact("=="); // todo multipul matches
+        if_.addMatchExact("==", "\\>", "\\<");
 
         if_.addMatchSpace(0);
         if_.addMatchValue();
@@ -49,6 +49,8 @@ public class CompileNodeIf extends CompileNode
             curLine = curLine.replaceAll("->", "");
             //if x==y
             curLine = curLine.replaceAll("==", " == ");
+            curLine = curLine.replaceAll(">", " > ");
+            curLine = curLine.replaceAll("<", " < ");
 
             uplCompiler.writeCode(curLine);
 

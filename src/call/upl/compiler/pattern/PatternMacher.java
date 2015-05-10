@@ -51,7 +51,7 @@ public class PatternMacher
             }
         }
 
-        System.out.println("CC: " + csd.curChar + "  TLEN: " + csd.text.length);
+        System.out.println("CC: " + csd.curChar + "  TLEN: " + csd.text.length + ", TXT: " + text);
 
         if(csd.curChar < csd.text.length) // some of the text was unmached
         {
@@ -82,13 +82,24 @@ public class PatternMacher
 
             if(c == '<') // open tag
             {
-                curTag = "";
-                inTag = true;
+                if(i > 0)
+                {
+                    if(chars[i - 1] != '\\')
+                    {
+                        curTag = "";
+                        inTag = true;
+                    }
+                }
+                else
+                {
+                    curTag = "";
+                    inTag = true;
+                }
             }
 
             if(c == '>')
             {
-                if(i >= 1)
+                if(i > 0)
                 {
                     if(chars[i - 1] != '\\')
                     {
@@ -101,17 +112,47 @@ public class PatternMacher
                         curTag = "";
                     }
                 }
-            }
-            if(c != '<' && c != '\\')
-            {
-                if(c =='>')
+                else // should never happen but just for a sanity check
                 {
-                    if(i >= 0)
+                    if(inTag)
+                    {
+                        tags.add(curTag);
+                    }
+
+                    inTag = false;
+                    curTag = "";
+                }
+            }
+
+            if(c != '\\')
+            {
+                if(c == '>')
+                {
+                    if(i > 0)
                     {
                         if(chars[i - 1] != '\\')
                         {
                             continue;
                         }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                if(c == '<')
+                {
+                    if(i > 0)
+                    {
+                        if(chars[i - 1] != '\\')
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        continue;
                     }
                 }
 

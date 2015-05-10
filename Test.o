@@ -1,7 +1,12 @@
+if 10 < 5
+psh 10
+jmp println
+endif
 .newline
 dwd @TEMP0@ /n
 psh @TEMP0@
 int 0x1
+dwd @TEMP0@ NULL
 end
 .println
 pop println@num
@@ -9,6 +14,13 @@ psh println@num
 int 0x1
 jmp newline
 end
-mov x 10
-psh x
-jmp println
+.readChar
+int 0x3
+pop @TEMP@
+psh @TEMP@
+end
+.iota
+pop iota@num
+psh iota@num 
+int 0x4
+end

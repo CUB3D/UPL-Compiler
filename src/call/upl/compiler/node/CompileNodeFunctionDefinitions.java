@@ -25,6 +25,8 @@ public class CompileNodeFunctionDefinitions extends CompileNode
 
         if(PatternMacher.match(curLine, func.toString()))
         {
+            compileStateData.isInFunction = true;
+
             //def x ( x, y ) ->
             curLine = curLine.replaceAll("func", ".");
             //. x ( x, y ) ->
@@ -101,6 +103,8 @@ public class CompileNodeFunctionDefinitions extends CompileNode
             compileStateData.curLineNumber = i;
 
             uplCompiler.writeCode("end");
+
+            compileStateData.isInFunction = false;
 
             return true;
         }

@@ -7,4 +7,5 @@ public class CompileStateData
 {
     public String curLine;
     public int curLineNumber;
+    public boolean isInFunction;
 }

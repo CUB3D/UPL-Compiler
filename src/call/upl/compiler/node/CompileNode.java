@@ -2,6 +2,7 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.UPLCompiler;
 
+import javax.swing.ComponentInputMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public abstract class CompileNode
     public static final CompileNodeIf COMPILE_NODE_IF = new CompileNodeIf();
     public static final CompileNodeFunctionCall COMPILE_NODE_FUNCTION_CALL = new CompileNodeFunctionCall();
     public static final CompileNodeFunctionDefinitions COMPILE_NODE_FUNCTION_DEFINITIONS = new CompileNodeFunctionDefinitions();
+    public static final CompileNodeInclude COMPILE_NODE_INCLUDE = new CompileNodeInclude();
+    public static final CompileNodeReturn COMPILE_NODE_RETURN = new CompileNodeReturn();
 
     public CompileNode()
     {
