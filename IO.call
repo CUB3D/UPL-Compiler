@@ -6,10 +6,10 @@ func newline() ->
     __UPLBC("dwd @TEMP0@ NULL")
 }
 
-func println(num) ->
+func println(x) ->
 {
     // trick to use real variable name and not a string; Also change the way variables are provided to functions so that this trick is not required
-    __UPLBC("psh num ")
+    __UPLBC("psh x ")
     __UPLBC("int 0x1")
 
     newline()
@@ -23,8 +23,39 @@ func readChar() ->
     return @TEMP@
 }
 
-func iota(num) ->
+func itoa(num) ->
 {
     __UPLBC("psh num ")
     __UPLBC("int 0x4")
+    __UPLBC("pop @TEMP@")
+
+    return @TEMP@
+}
+
+func atoi(a) ->
+{
+    __UPLBC("psh a ")
+    __UPLBC("int 0x5")
+    __UPLBC("pop @TEMP@")
+
+    return @TEMP@
+}
+
+func readString() ->
+{
+    tempString = " "
+    temp = 100
+
+    while(temp > 0) ->
+    {
+        temp = 0
+
+        temp = readChar()
+
+        tempChar = itoa(temp)
+
+        tempString = tempString + tempChar
+    }
+
+    println(tempString)
 }

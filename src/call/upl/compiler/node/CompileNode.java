@@ -20,6 +20,7 @@ public abstract class CompileNode
     public static final CompileNodeFunctionDefinitions COMPILE_NODE_FUNCTION_DEFINITIONS = new CompileNodeFunctionDefinitions();
     public static final CompileNodeInclude COMPILE_NODE_INCLUDE = new CompileNodeInclude();
     public static final CompileNodeReturn COMPILE_NODE_RETURN = new CompileNodeReturn();
+    public static final CompileNodeWhile COMPILE_NODE_WHILE = new CompileNodeWhile();
 
     public CompileNode()
     {

@@ -1,6 +1,6 @@
 include "B:\Git\UPL-Compiler\IO.call"
 
-if ( 10 < 5 ) ->
+while(10 > 20) ->
 {
     println(10)
 }
