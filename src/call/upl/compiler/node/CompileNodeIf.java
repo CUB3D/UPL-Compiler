@@ -56,20 +56,20 @@ public class CompileNodeIf extends CompileNode
 
             int i = compileStateData.curLineNumber + 1;
 
-            if(uplCompiler.code.get(i).equals("{"))
+            if(uplCompiler.code.get(i).trim().equals("{"))
             {
                 i++;
 
                 while(true)
                 {
-                    String line = uplCompiler.code.get(i);
+                    String line = uplCompiler.code.get(i).trim();
 
                     if(line.equals("}"))
                     {
                         break;
                     } else
                     {
-                        String codeLine = line.trim();
+                        String codeLine = line;
 
                         i = uplCompiler.execLine(codeLine, i);
                     }

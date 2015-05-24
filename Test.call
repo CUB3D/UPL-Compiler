@@ -1,6 +1,14 @@
-include "B:\Git\UPL-Compiler\IO.call"
+#include "B:\Git\UPL-Compiler\IO.call"
 
-while(10 > 20) ->
+temp = 10
+
+func f() ->
 {
-    println(10)
+    if(temp > 0) ->
+    {
+        temp = temp - 1
+        f();
+    }
 }
+
+f()

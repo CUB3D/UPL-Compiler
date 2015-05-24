@@ -1,52 +1,8 @@
-whl 10 > 20
-psh 10
-jmp println
-endwhl
-
-.newline
-dwd @TEMP0@ /n
-psh @TEMP0@
-int 0x1
-dwd @TEMP0@ NULL
-end
-.println
-pop println@x
-psh println@x 
-int 0x1
-jmp newline
-end
-.readChar
-int 0x3
-pop @TEMP@
-psh @TEMP@
-end
-.itoa
-pop itoa@num
-psh itoa@num 
-int 0x4
-pop @TEMP@
-psh @TEMP@
-end
-.atoi
-pop atoi@a
-psh atoi@a 
-int 0x5
-pop @TEMP@
-psh @TEMP@
-end
-.readString
-dwd tempString 
-mov temp 100
-whl temp > 0
-endwhl
-mov temp 0
-jmp readChar
+mov temp 10
+.f
+if temp > 0
+sub temp 1
 pop temp
-psh temp
-jmp itoa
-pop tempChar
-add tempString tempChar
-pop tempString
-psh tempString
-jmp println
+endif
 end
+jmp f
