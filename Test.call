@@ -1,14 +1,9 @@
-#include "B:\Git\UPL-Compiler\IO.call"
+include "B:\Git\UPL-Compiler\IO.call"
 
-temp = 10
-
-func f() ->
-{
-    if(temp > 0) ->
-    {
-        temp = temp - 1
-        f();
-    }
-}
-
-f()
+temp = "Hello, What is your name: "
+print(temp)
+name = readString()
+temp = "Hello"
+newline()
+print(temp)
+println(name)

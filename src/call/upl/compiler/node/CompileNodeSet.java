@@ -46,14 +46,15 @@ public class CompileNodeSet extends CompileNode
 
         if(PatternMacher.match(curLine, setText.toString()))
         {
-            // x = "hgfd hgd hgfd"
+            // x = "hgfd hgd hgfd "
             String[] ss = curLine.split("=");
-            // x , "hgfd hgd hgfd"
+            // x , "hgfd hgd hgfd "
             ss[0] = ss[0].replaceAll(" ", "");
-            // x, "hgfd hgd hgfd"
-            ss[1] = ss[1].replaceAll(" \"", "");
+            // x, "hgfd hgd hgfd "
             ss[1] = ss[1].replaceAll("\"", "");
-            // x, hdfd hgd hgfd
+            // x, hdfd hgd hgfd .
+
+            ss[1] = ss[1].substring(1, ss[1].length());
 
             uplCompiler.writeCode("dwd " + ss[0] + " " + ss[1]);
             uplCompiler.values.put(ss[0], new Value(ss[1]));
