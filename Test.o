@@ -1,62 +1,12 @@
-dwd temp Hello, What is your name: 
-psh temp
-jmp print
-jmp readString
-pop name
-dwd temp Hello
-jmp newline
-psh temp
-jmp print
-psh name
-jmp println
-.newline
-dwd @TEMP0@ /n
-psh @TEMP0@
-int 0x1
-dwd @TEMP0@ NULL
-end
-.print
-pop print@x
-psh print@x 
-int 0x1
-end
-.println
-pop println@x
-psh println@x 
-int 0x1
-jmp newline
-end
-.readChar
-int 0x3
-pop @TEMP@
-psh @TEMP@
-end
-.itoa
-pop itoa@num
-psh itoa@num 
-int 0x4
-pop @TEMP@
-psh @TEMP@
-end
-.atoi
-pop atoi@a
-psh atoi@a 
-int 0x5
-pop @TEMP@
-psh @TEMP@
-end
-.readString
-dwd tempString  
-jmp readChar
-pop temp
-whl temp > 10
-psh temp
-jmp itoa
-pop tempChar
-add tempString tempChar
-pop tempString
-jmp readChar
-pop temp
+ary x 10
+mov x[0] 1
+
+ary temp 20
+len x temp1
+mov temp2 0
+whl temp2 < temp1
+add temp2 1
+pop temp2
+mov x[temp1] temp[temp1]
 endwhl
-psh tempString
-end
+mov temp x

@@ -1,9 +1,29 @@
 include "B:\Git\UPL-Compiler\IO.call"
+// bytecode for arrays (TODO: implement)
+ary x 10
+mov x[0] 1
 
-temp = "Hello, What is your name: "
-print(temp)
-name = readString()
-temp = "Hello"
-newline()
-print(temp)
-println(name)
+ary temp 20
+len x temp1
+mov temp2 0
+whl temp2 < temp1
+add temp2 1
+pop temp2
+mov x[temp1] temp[temp1]
+endwhl
+mov temp x
+
+x = ((10 + 2) * (5 - 3)) / 4
+
+where to store result:
+split by '='
+get first element
+remove spaces
+
+split by '='
+remove all spaces
+//((10+2)*(5-3))/4
+read each char
+
+
+
