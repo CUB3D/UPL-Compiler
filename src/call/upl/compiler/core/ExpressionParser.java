@@ -157,17 +157,128 @@ public class ExpressionParser
             {
                 // if in form -+*/ x then use one temp
 
+                // if in form -+*/ then use two
                 if(s.length() == 1)
                 {
                     uplCompiler.writeCode("pop @TEMP0@");
                     uplCompiler.writeCode("pop @TEMP1@");
+
+                    String operand = "";
+
+                    if(s.contains("+"))
+                    {
+                        operand = "\\+";
+                    } else
+                    if(s.contains("-"))
+                    {
+                        operand = "-";
+                    } else
+                    if(s.contains("*"))
+                    {
+                        operand = "\\*";
+                    } else
+                    if(s.contains("/"))
+                    {
+                        operand = "/";
+                    }
+
+                    String[] args = s.split(operand);
+
+                    if (operand.equals("\\+"))
+                    {
+                        uplCompiler.writeCode("add @TEMP0@ @TEMP1@");
+                    }
+
+                    if (operand.equals("-"))
+                    {
+                        uplCompiler.writeCode("sub @TEMP0@ @TEMP1@");
+                    }
+
+                    if (operand.equals("\\*"))
+                    {
+                        uplCompiler.writeCode("mul @TEMP0@ @TEMP1@");
+                    }
+
+                    if (operand.equals("/"))
+                    {
+                        uplCompiler.writeCode("div @TEMP0@ @TEMP1@");
+                    }
                 }
 
                 if(s.length() >= 2)
                 {
+                    boolean isLeftEmpty = false;
 
+                    char first = s.charAt(0);
+
+                    if(first == '+' || first == '-' || first == '/' || first == '*')
+                    {
+                        isLeftEmpty = true;
+                    }
+
+                    String operand = "";
+
+                    if(s.contains("+"))
+                    {
+                        operand = "\\+";
+                    } else
+                    if(s.contains("-"))
+                    {
+                        operand = "-";
+                    } else
+                    if(s.contains("*"))
+                    {
+                        operand = "\\*";
+                    } else
+                    if(s.contains("/"))
+                    {
+                        operand = "/";
+                    }
+
+                    String left = "";
+                    String right = "";
+
+                    if(isLeftEmpty)
+                    {
+                        left = "@TEMP0@";
+
+                        s = s.replaceAll(operand, "");
+                        right = s;
+
+                    }
+                    else
+                    {
+                        right = "@TEMP0@";
+
+                        s = s.replaceAll(operand, "");
+                        left = s;
+                    }
+
+                    uplCompiler.writeCode("pop @TEMP0@");
+
+                    if (operand.equals("\\+"))
+                    {
+                        uplCompiler.writeCode("add " + left + " " + right);
+                    }
+
+                    if (operand.equals("-"))
+                    {
+                        uplCompiler.writeCode("sub " + left + " " + right);
+                    }
+
+                    if (operand.equals("\\*"))
+                    {
+                        uplCompiler.writeCode("mul " + left + " " + right);
+                    }
+
+                    if (operand.equals("/"))
+                    {
+                        uplCompiler.writeCode("div " + left + " " + right);
+                    }
                 }
             }
         }
+
+        uplCompiler.writeCode("pop " + result);
     }
 }

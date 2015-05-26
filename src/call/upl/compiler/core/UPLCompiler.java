@@ -5,6 +5,7 @@ import call.upl.compiler.node.CompileStateData;
 import call.upl.compiler.pattern.Pattern;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
+import call.upl.core.UPL;
 import call.upl.core.UPLUtils;
 import call.upl.core.Value;
 import com.sun.javafx.css.CssError;
@@ -154,11 +155,23 @@ public class UPLCompiler
 
     public static void main(String[] args) throws IOException
     {
-        String exp = "answer = ((10 + 2) * (5 - 3)) / 4";
+        String exp = "answer = ((10 + 2) * (5 - 3)) / 4"; // = 6
 
-        ExpressionParser.breakdownExpression(exp);
+        UPLCompiler uplCompiler = new UPLCompiler(new FileAPI(args[0]))
+        {
+            @Override
+            public void readCode(String filename)
+            {
+            }
 
-        //FileAPI api = new FileAPI(args[0]);
+            @Override
+            public void writeCode(String s)
+            {
+                System.out.println(s);
+            }
+        };
+
+        ExpressionParser.convertExpressionToCode(exp, uplCompiler);
 
        // new UPLCompiler(api);
     }
