@@ -17,24 +17,16 @@ public class ExpressionParser
         //get variable for result
         String result = getVarForResult(s);
 
-        System.out.println("Parsing: " + s);
-        System.out.println("ReturnValue: " + result);
-
         s = s.replaceAll(result, "");
         s = s.replaceAll(" ", "");
 
         if(s.startsWith("=")) s = s.substring(1);
 
-        System.out.println("Equation: " + s);
-
         List<String> returnValue = new ArrayList<String>();
 
-        breakdownExpressionImpl(s, returnValue);
+        returnValue.add(result);
 
-        for(String s1 : returnValue)
-        {
-            System.out.println("ReturnValue: " + s1);
-        }
+        breakdownExpressionImpl(s, returnValue);
 
         return returnValue;
     }
@@ -82,8 +74,6 @@ public class ExpressionParser
                     i++;
                 }
 
-                System.out.println("SubExpr: " + subExp);
-
                 breakdownExpressionImpl(subExp, returnValue);
 
                 continue;
@@ -102,5 +92,82 @@ public class ExpressionParser
         returnValue = returnValue.replaceAll(" ", "");
 
         return returnValue;
+    }
+
+    public static void convertExpressionToCode(String exp, UPLCompiler compiler)
+    {
+        List<String> subExpressions = breakdownExpression(exp);
+
+        convertExpressionToCodeImpl(subExpressions, compiler);
+    }
+
+    public static void convertExpressionToCodeImpl(List<String> subExpressions, UPLCompiler uplCompiler)
+    {
+        String result = subExpressions.get(0);
+
+        for(int i = 1; i < subExpressions.size(); i++)
+        {
+            String s = subExpressions.get(i);
+
+            // should be in form x+y
+            if(s.length() >= 3)
+            {
+                String operand = "";
+
+                if(s.contains("+"))
+                {
+                    operand = "\\+";
+                } else
+                if(s.contains("-"))
+                {
+                    operand = "-";
+                } else
+                if(s.contains("*"))
+                {
+                    operand = "\\*";
+                } else
+                if(s.contains("/"))
+                {
+                    operand = "/";
+                }
+
+                String[] args = s.split(operand);
+
+                if (operand.equals("\\+"))
+                {
+                    uplCompiler.writeCode("add " + args[0] + " " + args[1]);
+                }
+
+                if (operand.equals("-"))
+                {
+                    uplCompiler.writeCode("sub " + args[0] + " " + args[1]);
+                }
+
+                if (operand.equals("\\*"))
+                {
+                    uplCompiler.writeCode("mul " + args[0] + " " + args[1]);
+                }
+
+                if (operand.equals("/"))
+                {
+                    uplCompiler.writeCode("div " + args[0] + " " + args[1]);
+                }
+            }
+            else
+            {
+                // if in form -+*/ x then use one temp
+
+                if(s.length() == 1)
+                {
+                    uplCompiler.writeCode("pop @TEMP0@");
+                    uplCompiler.writeCode("pop @TEMP1@");
+                }
+
+                if(s.length() >= 2)
+                {
+
+                }
+            }
+        }
     }
 }
