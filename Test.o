@@ -1,10 +1,7 @@
-add 10 2
-sub 5 3
-pop @TEMP0@
-pop @TEMP1@
-mul @TEMP0@ @TEMP1@
-pop @TEMP0@
-div @TEMP0@ 4
-pop x
-psh x
-int 0x1
+ary a 10
+mov a[0] 1
+mov a[1] 2
+mov a[2] 3
+mov a[3] 4
+mov a[4] 5
+ary a 5

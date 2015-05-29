@@ -3,7 +3,9 @@ package call.upl.compiler.node;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
-import call.upl.core.Value;
+import call.upl.core.value.NumberValue;
+import call.upl.core.value.StringValue;
+import call.upl.core.value.Value;
 
 import java.math.BigDecimal;
 
@@ -29,7 +31,7 @@ public class CompileNodeSet extends CompileNode
             String[] ss = curLine.split("=");
 
             uplCompiler.writeCode("mov " + ss[0] + " " + ss[1]);
-            uplCompiler.values.put(ss[0], new Value(new BigDecimal(ss[1])));
+            uplCompiler.values.put(ss[0], new NumberValue(new BigDecimal(ss[1])));
 
             return true;
         }
@@ -57,7 +59,7 @@ public class CompileNodeSet extends CompileNode
             ss[1] = ss[1].substring(1, ss[1].length());
 
             uplCompiler.writeCode("dwd " + ss[0] + " " + ss[1]);
-            uplCompiler.values.put(ss[0], new Value(ss[1]));
+            uplCompiler.values.put(ss[0], new StringValue(ss[1]));
 
             return true;
         }

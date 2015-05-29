@@ -1,7 +1,3 @@
-#include "B:\Git\UPL-Compiler\IO.call"
-x = ((10 + 2) * (5 - 3)) / 4
-__UPLBC("psh x")
-__UPLBC("int 0x1")
+#include "B:\Git\UPL-Compiler\IO.call
 
-
-
+a = [1, 2, 3, 4, 5] : 10

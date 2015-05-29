@@ -2,20 +2,14 @@ package call.upl.compiler.core;
 
 import call.upl.compiler.node.CompileNode;
 import call.upl.compiler.node.CompileStateData;
-import call.upl.compiler.pattern.Pattern;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
-import call.upl.core.UPL;
-import call.upl.core.UPLUtils;
-import call.upl.core.Value;
-import com.sun.javafx.css.CssError;
+import call.upl.core.value.Value;
 import cub3d.file.main.FileAPI;
 import cub3d.file.reader.BasicReader;
 import cub3d.file.writer.BasicWriter;
 
-import javax.security.auth.x500.X500Principal;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

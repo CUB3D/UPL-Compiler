@@ -4,9 +4,6 @@ import call.upl.compiler.core.ExpressionParser;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
-import call.upl.core.Value;
-
-import java.math.BigDecimal;
 
 /**
  * Created by Callum on 27/04/2015.

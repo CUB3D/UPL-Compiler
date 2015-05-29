@@ -21,6 +21,7 @@ public abstract class CompileNode
     public static final CompileNodeInclude COMPILE_NODE_INCLUDE = new CompileNodeInclude();
     public static final CompileNodeReturn COMPILE_NODE_RETURN = new CompileNodeReturn();
     public static final CompileNodeWhile COMPILE_NODE_WHILE = new CompileNodeWhile();
+    public static final CompileNodeArray COMPILE_NODE_ARRAY = new CompileNodeArray();
 
     public CompileNode()
     {
