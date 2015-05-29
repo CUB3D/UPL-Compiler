@@ -1,0 +1,12 @@
+ary x 10
+mov x[0] 1
+
+ary temp 20
+len x temp1
+mov temp2 0
+whl temp2 < temp1
+add temp2 1
+pop temp2
+mov x[temp1] temp[temp1]
+endwhl
+mov temp x

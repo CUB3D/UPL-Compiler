@@ -155,24 +155,8 @@ public class UPLCompiler
 
     public static void main(String[] args) throws IOException
     {
-        String exp = "answer = ((10 + 2) * (5 - 3)) / 4"; // = 6
+        FileAPI api = new FileAPI(args[0]);
 
-        UPLCompiler uplCompiler = new UPLCompiler(new FileAPI(args[0]))
-        {
-            @Override
-            public void readCode(String filename)
-            {
-            }
-
-            @Override
-            public void writeCode(String s)
-            {
-                System.out.println(s);
-            }
-        };
-
-        ExpressionParser.convertExpressionToCode(exp, uplCompiler);
-
-       // new UPLCompiler(api);
+        new UPLCompiler(api);
     }
 }
