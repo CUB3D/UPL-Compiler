@@ -113,97 +113,25 @@ public class ExpressionParser
             // should be in form x+y
             if(s.length() >= 3)
             {
-                String operand = "";
+                EnumOperand operand = getOperand(s);
 
-                if(s.contains("+"))
-                {
-                    operand = "\\+";
-                } else
-                if(s.contains("-"))
-                {
-                    operand = "-";
-                } else
-                if(s.contains("*"))
-                {
-                    operand = "\\*";
-                } else
-                if(s.contains("/"))
-                {
-                    operand = "/";
-                }
+                String[] args = s.split(operand.getIdentifierEscaped());
 
-                String[] args = s.split(operand);
-
-                if (operand.equals("\\+"))
-                {
-                    uplCompiler.writeCode("add " + args[0] + " " + args[1]);
-                }
-
-                if (operand.equals("-"))
-                {
-                    uplCompiler.writeCode("sub " + args[0] + " " + args[1]);
-                }
-
-                if (operand.equals("\\*"))
-                {
-                    uplCompiler.writeCode("mul " + args[0] + " " + args[1]);
-                }
-
-                if (operand.equals("/"))
-                {
-                    uplCompiler.writeCode("div " + args[0] + " " + args[1]);
-                }
+                uplCompiler.writeCode(operand.getOpcode() + " " + args[0] + " " + args[1]);
             }
             else
             {
                 // if in form -+*/ x then use one temp
-
                 // if in form -+*/ then use two
+
                 if(s.length() == 1)
                 {
+                    EnumOperand operand = getOperand(s);
+
                     uplCompiler.writeCode("pop @TEMP0@");
                     uplCompiler.writeCode("pop @TEMP1@");
 
-                    String operand = "";
-
-                    if(s.contains("+"))
-                    {
-                        operand = "\\+";
-                    } else
-                    if(s.contains("-"))
-                    {
-                        operand = "-";
-                    } else
-                    if(s.contains("*"))
-                    {
-                        operand = "\\*";
-                    } else
-                    if(s.contains("/"))
-                    {
-                        operand = "/";
-                    }
-
-                    String[] args = s.split(operand);
-
-                    if (operand.equals("\\+"))
-                    {
-                        uplCompiler.writeCode("add @TEMP0@ @TEMP1@");
-                    }
-
-                    if (operand.equals("-"))
-                    {
-                        uplCompiler.writeCode("sub @TEMP0@ @TEMP1@");
-                    }
-
-                    if (operand.equals("\\*"))
-                    {
-                        uplCompiler.writeCode("mul @TEMP0@ @TEMP1@");
-                    }
-
-                    if (operand.equals("/"))
-                    {
-                        uplCompiler.writeCode("div @TEMP0@ @TEMP1@");
-                    }
+                    uplCompiler.writeCode(operand.getOpcode() + " @TEMP0@ @TEMP1@");
                 }
 
                 if(s.length() >= 2)
@@ -217,69 +145,48 @@ public class ExpressionParser
                         isLeftEmpty = true;
                     }
 
-                    String operand = "";
+                    EnumOperand operand = getOperand(s);
 
-                    if(s.contains("+"))
-                    {
-                        operand = "\\+";
-                    } else
-                    if(s.contains("-"))
-                    {
-                        operand = "-";
-                    } else
-                    if(s.contains("*"))
-                    {
-                        operand = "\\*";
-                    } else
-                    if(s.contains("/"))
-                    {
-                        operand = "/";
-                    }
-
-                    String left = "";
-                    String right = "";
+                    String left;
+                    String right;
 
                     if(isLeftEmpty)
                     {
                         left = "@TEMP0@";
 
-                        s = s.replaceAll(operand, "");
+                        s = s.replace(operand.getIdentifier(), "");
                         right = s;
-
                     }
                     else
                     {
                         right = "@TEMP0@";
 
-                        s = s.replaceAll(operand, "");
+                        s = s.replace(operand.getIdentifier(), "");
                         left = s;
                     }
 
                     uplCompiler.writeCode("pop @TEMP0@");
 
-                    if (operand.equals("\\+"))
-                    {
-                        uplCompiler.writeCode("add " + left + " " + right);
-                    }
-
-                    if (operand.equals("-"))
-                    {
-                        uplCompiler.writeCode("sub " + left + " " + right);
-                    }
-
-                    if (operand.equals("\\*"))
-                    {
-                        uplCompiler.writeCode("mul " + left + " " + right);
-                    }
-
-                    if (operand.equals("/"))
-                    {
-                        uplCompiler.writeCode("div " + left + " " + right);
-                    }
+                    uplCompiler.writeCode(operand.getOpcode() + " " + left + " " + right);
                 }
             }
         }
 
         uplCompiler.writeCode("pop " + result);
+    }
+
+    public static EnumOperand getOperand(String s)
+    {
+        EnumOperand operand = null;
+
+        for(EnumOperand operand1 : EnumOperand.values())
+        {
+            if(s.contains(operand1.getIdentifier()))
+            {
+                operand = operand1;
+            }
+        }
+
+        return operand;
     }
 }

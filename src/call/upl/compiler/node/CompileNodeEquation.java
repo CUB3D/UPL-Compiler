@@ -31,7 +31,7 @@ public class CompileNodeEquation extends CompileNode
                 return false;
             }
 
-            if(!(curLine.contains("+") || curLine.contains("-") || curLine.contains("/") || curLine.contains("*"))) // is a set not an equation
+            if(!(curLine.contains("+") || curLine.contains("-") || curLine.contains("/") || curLine.contains("*") || curLine.contains("%"))) // is a set not an equation
             {
                 return false;
             }
@@ -56,7 +56,7 @@ public class CompileNodeEquation extends CompileNode
 
         if(PatternMacher.match(curLine, setArray.toString()))
         {
-            if(!(curLine.contains("+") || curLine.contains("-") || curLine.contains("/") || curLine.contains("*"))) // is a set not an equation
+            if(!(curLine.contains("+") || curLine.contains("-") || curLine.contains("/") || curLine.contains("*") || curLine.contains("%"))) // is a set not an equation
             {
                 return false;
             }

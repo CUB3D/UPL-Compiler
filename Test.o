@@ -1,10 +1,7 @@
-ary a 10
-mov a[0] 1
-mov a[1] 2
-mov a[2] 3
-mov a[3] 4
-mov a[4] 5
-add 1 5
+ary a 1
+add 5 1
 pop @TEMP0@
 div @TEMP0@ 2
-pop a[9]
+pop a[0]
+psh a[0]
+int 0x1

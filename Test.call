@@ -1,4 +1,7 @@
 #include "B:\Git\UPL-Compiler\IO.call
 
-a = [1, 2, 3, 4, 5] : 10
-a[9] = (1 + 5) / 2
+a = [1] : 1
+a[0] = (5 + 1) / 2
+
+__UPLBC("psh a[0]")
+__UPLBC("int 0x1")
