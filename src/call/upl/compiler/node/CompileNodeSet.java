@@ -17,6 +17,27 @@ public class CompileNodeSet extends CompileNode
     @Override
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
     {
+        PatternBuilder setArray = new PatternBuilder();
+        setArray.addMatchAnyWord();
+        setArray.addMatchExact("[");
+        setArray.addMatchValue();
+        setArray.addMatchExact("]");
+        setArray.addMatchSpace(0);
+        setArray.addMatchExact("=");
+        setArray.addMatchSpace(0);
+        setArray.addMatchValue();
+
+        if(PatternMacher.match(curLine, setArray.toString()))
+        {
+            String[] args = curLine.split("=");
+            String name = args[0].trim();
+            String value = args[1].trim();
+
+            uplCompiler.writeCode("mov " + name + " " + value);
+
+            return true;
+        }
+
         PatternBuilder setNum = new PatternBuilder();
 
         setNum.addMatchAnyWord();

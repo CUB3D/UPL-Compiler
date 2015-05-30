@@ -17,8 +17,9 @@ public class ExpressionParser
         //get variable for result
         String result = getVarForResult(s);
 
-        s = s.replaceAll(result, "");
-        s = s.replaceAll(" ", "");
+
+        s = s.replace(result, "");
+        s = s.replace(" ", "");
 
         if(s.startsWith("=")) s = s.substring(1);
 

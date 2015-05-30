@@ -1,3 +1,4 @@
 #include "B:\Git\UPL-Compiler\IO.call
 
 a = [1, 2, 3, 4, 5] : 10
+a[9] = (1 + 5) / 2

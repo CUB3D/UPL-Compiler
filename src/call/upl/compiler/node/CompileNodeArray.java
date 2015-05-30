@@ -54,6 +54,8 @@ public class CompileNodeArray extends CompileNode
             {
                 System.out.println("Array created: Name: " + name + ", Content: " + contents + ", Size: " + size);
             }
+
+            return true;
         }
 
         return false;

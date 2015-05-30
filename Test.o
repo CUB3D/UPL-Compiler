@@ -4,4 +4,7 @@ mov a[1] 2
 mov a[2] 3
 mov a[3] 4
 mov a[4] 5
-ary a 5
+add 1 5
+pop @TEMP0@
+div @TEMP0@ 2
+pop a[9]
