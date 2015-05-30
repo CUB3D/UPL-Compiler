@@ -60,7 +60,7 @@ public class CompileNodeFunctionDefinitions extends CompileNode
                 {
                     for (int i1 = args.length - 1; i1 >= 0; i1--)
                     {
-                        uplCompiler.writeCode("pop " + (name + "@" + args[i1]));
+                        uplCompiler.writeCode("pop " + args[i1]);
                     }
                 }
 
@@ -74,21 +74,6 @@ public class CompileNodeFunctionDefinitions extends CompileNode
                     } else
                     {
                         String codeLine = line.trim();
-
-
-                        codeLine += " ";
-
-                        if(hasArgs)
-                        {
-                            for (int i1 = 0; i1 < args.length; i1++)
-                            {
-                                codeLine = codeLine.replaceAll(" " + args[i1] + " ", " " + name + "@" + args[i1] + " ");
-                                codeLine = codeLine.replaceAll("\\(" + args[i1], "(" + name + "@" + args[i1]);
-                                codeLine = codeLine.replaceAll(args[i1] + "\\)", name + "@" + args[i1] + ")");
-                            }
-                        }
-
-                        codeLine = codeLine.trim();
 
                         i = uplCompiler.execLine(codeLine, i);
                     }

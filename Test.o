@@ -1,1 +1,13 @@
-mov zxcvbn[0] 10
+.test
+pop num
+mul num 2
+pop num
+psh num
+end
+ary var 1
+mov var[0] 2
+psh var[0]
+jmp test
+pop x
+psh x
+int 0x1

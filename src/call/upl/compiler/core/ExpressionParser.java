@@ -1,5 +1,6 @@
 package call.upl.compiler.core;
 
+import call.upl.core.UPL;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.util.LineInputStream;
 
@@ -111,6 +112,11 @@ public class ExpressionParser
         for(int i = 1; i < subExpressions.size(); i++)
         {
             String s = subExpressions.get(i);
+
+            if(UPL.DEBUG)
+            {
+                System.out.println(s);
+            }
 
             if (s.matches("\\d+"))
             {

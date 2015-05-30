@@ -26,7 +26,7 @@ public class CompileNodeEquation extends CompileNode
 
         if(PatternMacher.match(curLine, basicExpression.toString()))
         {
-            if(curLine.contains("\"")) // not equation
+            if(curLine.contains("\"") || curLine.contains(":")) // not equation
             {
                 return false;
             }
