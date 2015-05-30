@@ -17,15 +17,17 @@ public class ExpressionParser
         //get variable for result
         String result = getVarForResult(s);
 
-
-        s = s.replace(result, "");
-        s = s.replace(" ", "");
-
-        if(s.startsWith("=")) s = s.substring(1);
-
         List<String> returnValue = new ArrayList<String>();
 
         returnValue.add(result);
+
+        result = result.replaceAll("\\[", "\\\\[");
+        result = result.replaceAll("\\]", "\\\\]");
+
+        s = s.replaceFirst(result, "");
+        s = s.replace(" ", "");
+
+        if(s.startsWith("=")) s = s.substring(1);
 
         breakdownExpressionImpl(s, returnValue);
 
@@ -140,7 +142,7 @@ public class ExpressionParser
 
                     char first = s.charAt(0);
 
-                    if(first == '+' || first == '-' || first == '/' || first == '*')
+                    if(first == '+' || first == '-' || first == '/' || first == '*' || first == '%')
                     {
                         isLeftEmpty = true;
                     }

@@ -3,11 +3,6 @@ package call.upl.compiler.node;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
-import call.upl.core.value.NumberValue;
-import call.upl.core.value.StringValue;
-import call.upl.core.value.Value;
-
-import java.math.BigDecimal;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -44,7 +39,7 @@ public class CompileNodeSet extends CompileNode
         setNum.addMatchSpace(0);
         setNum.addMatchExact("=");
         setNum.addMatchSpace(0);
-        setNum.addMatchNumber();
+        setNum.addMatchValue();
 
         if(PatternMacher.match(curLine, setNum.toString()))
         {
@@ -52,11 +47,9 @@ public class CompileNodeSet extends CompileNode
             String[] ss = curLine.split("=");
 
             uplCompiler.writeCode("mov " + ss[0] + " " + ss[1]);
-            uplCompiler.values.put(ss[0], new NumberValue(new BigDecimal(ss[1])));
 
             return true;
         }
-
 
         PatternBuilder setText = new PatternBuilder();
 
@@ -80,7 +73,6 @@ public class CompileNodeSet extends CompileNode
             ss[1] = ss[1].substring(1, ss[1].length());
 
             uplCompiler.writeCode("dwd " + ss[0] + " " + ss[1]);
-            uplCompiler.values.put(ss[0], new StringValue(ss[1]));
 
             return true;
         }

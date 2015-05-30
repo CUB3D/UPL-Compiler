@@ -58,7 +58,7 @@ public class CompileNodeFunctionDefinitions extends CompileNode
 
                 if(hasArgs)
                 {
-                    for (int i1 = 0; i1 < args.length; i1++)
+                    for (int i1 = args.length - 1; i1 >= 0; i1--)
                     {
                         uplCompiler.writeCode("pop " + (name + "@" + args[i1]));
                     }

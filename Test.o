@@ -1,7 +1,21 @@
-ary a 1
-add 5 1
-pop @TEMP0@
-div @TEMP0@ 2
-pop a[0]
-psh a[0]
+psh 5
+psh 10
+jmp range
+pop x
+psh x[0]
 int 0x1
+.range
+pop range@e
+pop range@s
+sub range@e range@s
+pop size
+ary returnValue size
+mov temp 0
+whl temp < size
+add size temp
+pop returnValue[temp]
+add temp 1
+pop temp
+endwhl
+psh returnValue
+end

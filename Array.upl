@@ -1,0 +1,17 @@
+func range(s, e) ->
+{
+    size = e - s
+
+    returnValue = [] : size
+
+    temp = 0
+
+    while(temp < size ) ->
+    {
+       returnValue[temp] = size + temp
+
+       temp = temp + 1
+    }
+
+    return returnValue
+}

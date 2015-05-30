@@ -23,7 +23,6 @@ public class UPLCompiler
     public static final boolean DEBUG = false;
 
     public List<String> code = new ArrayList<String>();
-    public Map<String, Value> values = new HashMap<String, Value>();
 
     public BasicWriter writer;
 

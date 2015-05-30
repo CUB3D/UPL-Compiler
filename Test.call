@@ -1,7 +1,6 @@
-#include "B:\Git\UPL-Compiler\IO.call
+include "B:\Git\UPL-Compiler\Array.upl"
 
-a = [1] : 1
-a[0] = (5 + 1) / 2
+x = range(5, 10)
 
-__UPLBC("psh a[0]")
+__UPLBC("psh x[0]")
 __UPLBC("int 0x1")
