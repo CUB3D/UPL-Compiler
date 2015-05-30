@@ -33,24 +33,6 @@ public class CompileNodeSet extends CompileNode
             return true;
         }
 
-        PatternBuilder setNum = new PatternBuilder();
-
-        setNum.addMatchAnyWord();
-        setNum.addMatchSpace(0);
-        setNum.addMatchExact("=");
-        setNum.addMatchSpace(0);
-        setNum.addMatchValue();
-
-        if(PatternMacher.match(curLine, setNum.toString()))
-        {
-            curLine = curLine.replaceAll(" ", "");
-            String[] ss = curLine.split("=");
-
-            uplCompiler.writeCode("mov " + ss[0] + " " + ss[1]);
-
-            return true;
-        }
-
         PatternBuilder setText = new PatternBuilder();
 
         setText.addMatchAnyWord();

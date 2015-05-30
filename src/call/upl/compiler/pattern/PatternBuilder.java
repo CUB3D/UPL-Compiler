@@ -54,6 +54,11 @@ public class PatternBuilder
         pattern += PATTERN_TAG_START + Pattern.PATTERN_ANY_NUMBER.getPatternID() + PATTERN_TAG_END;
     }
 
+    public void addMatchVariable()
+    {
+        pattern += PATTERN_TAG_START + Pattern.PATTERN_ANY_VARIABLE.getPatternID() + PATTERN_TAG_END;
+    }
+
     @Override
     public String toString()
     {

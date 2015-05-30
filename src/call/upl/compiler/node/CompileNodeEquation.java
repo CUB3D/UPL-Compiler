@@ -16,7 +16,7 @@ public class CompileNodeEquation extends CompileNode
         // a = (b + c) / d
         PatternBuilder basicExpression = new PatternBuilder();
 
-        basicExpression.addMatchAnyWord();
+        basicExpression.addMatchVariable();
         basicExpression.addMatchSpace(0);
         basicExpression.addMatchExact("=");
         basicExpression.addMatchSpace(0);
@@ -27,36 +27,6 @@ public class CompileNodeEquation extends CompileNode
         if(PatternMacher.match(curLine, basicExpression.toString()))
         {
             if(curLine.contains("\"")) // not equation
-            {
-                return false;
-            }
-
-            if(!(curLine.contains("+") || curLine.contains("-") || curLine.contains("/") || curLine.contains("*") || curLine.contains("%"))) // is a set not an equation
-            {
-                return false;
-            }
-
-            ExpressionParser.convertExpressionToCode(curLine, uplCompiler);
-
-            return true;
-        }
-
-        //a[0] = (5 + 4) / 3
-
-        PatternBuilder setArray = new PatternBuilder();
-
-        setArray.addMatchAnyWord();
-        setArray.addMatchExact("[");
-        setArray.addMatchValue();
-        setArray.addMatchExact("]");
-        setArray.addMatchSpace(0);
-        setArray.addMatchExact("=");
-        setArray.addMatchSpace(0);
-        setArray.addMatchSkipToExact(Character.toString(curLine.toCharArray()[curLine.length() - 1]));
-
-        if(PatternMacher.match(curLine, setArray.toString()))
-        {
-            if(!(curLine.contains("+") || curLine.contains("-") || curLine.contains("/") || curLine.contains("*") || curLine.contains("%"))) // is a set not an equation
             {
                 return false;
             }

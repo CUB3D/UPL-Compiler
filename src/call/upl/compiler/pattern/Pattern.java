@@ -19,6 +19,7 @@ public abstract class Pattern
     public static final PatternAnySpace PATTERN_ANY_SPACE = new PatternAnySpace();
     public static final PatternExact PATTERN_EXACT = new PatternExact();
     public static final PatternSkipToExact PATTERN_SKIP_TO_EXACT = new PatternSkipToExact();
+    public static final PatternAnyVariable PATTERN_ANY_VARIABLE = new PatternAnyVariable();
 
     public Pattern()
     {

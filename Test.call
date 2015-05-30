@@ -1,6 +1,3 @@
-include "B:\Git\UPL-Compiler\Array.upl"
+#include "B:\Git\UPL-Compiler\Array.upl"
 
-x = range(5, 10)
-
-__UPLBC("psh x[0]")
-__UPLBC("int 0x1")
+zxcvbn[0] = 10

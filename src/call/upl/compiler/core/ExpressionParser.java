@@ -112,69 +112,72 @@ public class ExpressionParser
         {
             String s = subExpressions.get(i);
 
-            // should be in form x+y
-            if(s.length() >= 3)
+            if (s.matches("\\d+"))
             {
-                EnumOperand operand = getOperand(s);
-
-                String[] args = s.split(operand.getIdentifierEscaped());
-
-                uplCompiler.writeCode(operand.getOpcode() + " " + args[0] + " " + args[1]);
-            }
-            else
+                uplCompiler.writeCode("mov " + result + " " + s);
+            } else
             {
-                // if in form -+*/ x then use one temp
-                // if in form -+*/ then use two
-
-                if(s.length() == 1)
+                if (s.length() >= 3)
                 {
                     EnumOperand operand = getOperand(s);
 
-                    uplCompiler.writeCode("pop @TEMP0@");
-                    uplCompiler.writeCode("pop @TEMP1@");
+                    String[] args = s.split(operand.getIdentifierEscaped());
 
-                    uplCompiler.writeCode(operand.getOpcode() + " @TEMP0@ @TEMP1@");
-                }
-
-                if(s.length() >= 2)
+                    uplCompiler.writeCode(operand.getOpcode() + " " + args[0] + " " + args[1]);
+                } else
                 {
-                    boolean isLeftEmpty = false;
+                    // if in form -+*/ x then use one temp
+                    // if in form -+*/ then use two
 
-                    char first = s.charAt(0);
-
-                    if(first == '+' || first == '-' || first == '/' || first == '*' || first == '%')
+                    if (s.length() == 1)
                     {
-                        isLeftEmpty = true;
+                        EnumOperand operand = getOperand(s);
+
+                        uplCompiler.writeCode("pop @TEMP0@");
+                        uplCompiler.writeCode("pop @TEMP1@");
+
+                        uplCompiler.writeCode(operand.getOpcode() + " @TEMP0@ @TEMP1@");
                     }
 
-                    EnumOperand operand = getOperand(s);
-
-                    String left;
-                    String right;
-
-                    if(isLeftEmpty)
+                    if (s.length() >= 2)
                     {
-                        left = "@TEMP0@";
+                        boolean isLeftEmpty = false;
 
-                        s = s.replace(operand.getIdentifier(), "");
-                        right = s;
+                        char first = s.charAt(0);
+
+                        if (first == '+' || first == '-' || first == '/' || first == '*' || first == '%')
+                        {
+                            isLeftEmpty = true;
+                        }
+
+                        EnumOperand operand = getOperand(s);
+
+                        String left;
+                        String right;
+
+                        if (isLeftEmpty)
+                        {
+                            left = "@TEMP0@";
+
+                            s = s.replace(operand.getIdentifier(), "");
+                            right = s;
+                        } else
+                        {
+                            right = "@TEMP0@";
+
+                            s = s.replace(operand.getIdentifier(), "");
+                            left = s;
+                        }
+
+                        uplCompiler.writeCode("pop @TEMP0@");
+
+                        uplCompiler.writeCode(operand.getOpcode() + " " + left + " " + right);
                     }
-                    else
-                    {
-                        right = "@TEMP0@";
-
-                        s = s.replace(operand.getIdentifier(), "");
-                        left = s;
-                    }
-
-                    uplCompiler.writeCode("pop @TEMP0@");
-
-                    uplCompiler.writeCode(operand.getOpcode() + " " + left + " " + right);
                 }
+
+                uplCompiler.writeCode("pop " + result);
             }
         }
-
-        uplCompiler.writeCode("pop " + result);
     }
 
     public static EnumOperand getOperand(String s)
