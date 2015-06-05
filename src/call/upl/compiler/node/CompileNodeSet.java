@@ -1,5 +1,6 @@
 package call.upl.compiler.node;
 
+import call.upl.compiler.core.FunctionParser;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
@@ -32,7 +33,7 @@ public class CompileNodeSet extends CompileNode
 
         PatternBuilder setText = new PatternBuilder();
 
-        setText.addMatchAnyWord();
+        setText.addMatchVariable();
         setText.addMatchSpace(0);
         setText.addMatchExact("=");
         setText.addMatchSpace(0);
@@ -71,36 +72,12 @@ public class CompileNodeSet extends CompileNode
 
         if(PatternMacher.match(curLine, setFunc.toString()))
         {
-            String[] args0 = curLine.split("=");
-            String func = args0[1];
+            String name = curLine.substring(curLine.indexOf("="), curLine.indexOf("(")).trim();
 
-            func = func.replaceAll(" ", "");
-            func = func.replaceFirst("\\(", " ");
-            func = func.substring(0, func.length() - 1);
-
-            String[] strings = func.split(" ");
-            String name = strings[0];
-            boolean hasArgs = strings.length == 2;
-            String[] args = null;
-
-            if(hasArgs)
-            {
-                args = strings[1].split(",");
-            }
 
             if(!name.startsWith("_"))
             {
-                if(hasArgs)
-                {
-                    for (int i1 = 0; i1 < args.length; i1++)
-                    {
-                        uplCompiler.writeCode("psh " + args[i1]);
-                    }
-                }
-
-                uplCompiler.writeCode("jmp " + name);
-
-                uplCompiler.writeCode("pop " + args0[0].trim());
+                FunctionParser.convertFunctionToCode(uplCompiler, curLine);
             }
 
             return true;

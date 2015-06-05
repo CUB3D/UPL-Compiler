@@ -1,5 +1,6 @@
 package call.upl.compiler.node;
 
+import call.upl.compiler.core.FunctionParser;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
@@ -21,38 +22,11 @@ public class CompileNodeFunctionCall extends CompileNode
 
         if(PatternMacher.match(curLine, callFunc.toString()))
         {
-            //psh x, psh y, jmp name
-            curLine = curLine.replaceAll(" ", "");
-            //helloWorld(x,y)
-            curLine = curLine.replaceFirst("\\(", " ");
-            //helloWorld x,y)
-            curLine = curLine.substring(0, curLine.length() - 1);
-            //helloWorld x,y
-            String[] strings = curLine.split(" ");
-            String name = strings[0];
-            boolean hasArgs = strings.length == 2;
-            String[] args = null;
-
-            if(hasArgs)
-            {
-                args = strings[1].split(",");
-            }
+            String name = curLine.substring(0, curLine.indexOf("(")).trim();
 
             if(!name.startsWith("_")) //TODO: __uplbc goes here
             {
-                if(hasArgs)
-                {
-                    for (int i1 = 0; i1 < args.length; i1++)
-                    {
-                        String s = "@TEMP0@ = " + args[i1];
-
-                        uplCompiler.execLine(s, 0);
-
-                        uplCompiler.writeCode("psh @TEMP0@");
-                    }
-                }
-
-                uplCompiler.writeCode("jmp " + name);
+                FunctionParser.convertFunctionToCode(uplCompiler, curLine);
 
                 return true;
             }

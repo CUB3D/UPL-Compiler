@@ -7,10 +7,10 @@ func foo()->
 
 func test(x, y)->
 {
-    temp = (x + y)
+    temp = x + y
 
     __UPLBC("psh temp")
     __UPLBC("int 0x1")
 }
 
-test(10, foo())
+test(foo(), foo())

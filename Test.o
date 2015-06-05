@@ -7,13 +7,13 @@ pop y
 pop x
 add x y
 pop temp
-pop temp
 psh temp
 int 0x1
 end
-mov @TEMP0@ 10
+jmp foo
+pop @TEMP0@ 
 psh @TEMP0@
 jmp foo
-pop @TEMP0@
+pop @TEMP0@ 
 psh @TEMP0@
 jmp test
