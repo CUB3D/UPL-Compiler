@@ -1,17 +1,16 @@
 #include "B:\Git\UPL-Compiler\Array.upl"
 
-func test(num) ->
+func foo()->
 {
-    num = num * 2
-
-    return num
+    return 20
 }
 
-var = [] : 1
+func test(x, y)->
+{
+    temp = (x + y)
 
-var[0] = 2
+    __UPLBC("psh temp")
+    __UPLBC("int 0x1")
+}
 
-x = test(var[0])
-
-__UPLBC("psh x")
-__UPLBC("int 0x1")
+test(10, foo())

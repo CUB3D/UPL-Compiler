@@ -20,9 +20,7 @@ public class CompileNodeEquation extends CompileNode
         basicExpression.addMatchSpace(0);
         basicExpression.addMatchExact("=");
         basicExpression.addMatchSpace(0);
-        basicExpression.addMatchSkipToExact(Character.toString(curLine.toCharArray()[curLine.length() - 1]));
-
-        //TODO: better pattern recognition
+        basicExpression.addSkipToEnd();
 
         if(PatternMacher.match(curLine, basicExpression.toString()))
         {

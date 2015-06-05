@@ -20,11 +20,6 @@ public class PatternMacher
 
         for(String tag : tags)
         {
-            if(UPLCompiler.DEBUG)
-            {
-                System.out.println(tag);
-            }
-
             if(csd.curChar >= csd.text.length)
             {
                 return false;

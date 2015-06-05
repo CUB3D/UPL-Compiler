@@ -32,7 +32,7 @@ public class CompileNodeFunctionDefinitions extends CompileNode
             //. x ( x, y ) ->
             curLine = curLine.replaceAll(" ", "");
             //.x(x,y)->
-            curLine = curLine.replaceAll("\\(", " ");
+            curLine = curLine.replaceFirst("\\(", " ");
             //.x x,y)->
             curLine = curLine.replaceAll("\\)->", "");
             // .x x,y

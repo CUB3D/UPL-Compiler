@@ -13,14 +13,11 @@ public class CompileNodeSet extends CompileNode
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
     {
         PatternBuilder setArray = new PatternBuilder();
-        setArray.addMatchAnyWord();
-        setArray.addMatchExact("[");
-        setArray.addMatchValue();
-        setArray.addMatchExact("]");
+        setArray.addMatchVariable();
         setArray.addMatchSpace(0);
         setArray.addMatchExact("=");
         setArray.addMatchSpace(0);
-        setArray.addMatchValue();
+        setArray.addMatchVariable();
 
         if(PatternMacher.match(curLine, setArray.toString()))
         {
@@ -63,14 +60,14 @@ public class CompileNodeSet extends CompileNode
 
         //x = foo ( 10 )
 
-        setFunc.addMatchAnyWord();
+        setFunc.addMatchVariable();
         setFunc.addMatchSpace(0);
         setFunc.addMatchExact("=");
         setFunc.addMatchSpace(0);
         setFunc.addMatchAnyWord();
         setFunc.addMatchSpace(0);
         setFunc.addMatchExact("(");
-        setFunc.addMatchSkipToExact(")");
+        setFunc.addSkipToEnd();
 
         if(PatternMacher.match(curLine, setFunc.toString()))
         {
@@ -78,8 +75,8 @@ public class CompileNodeSet extends CompileNode
             String func = args0[1];
 
             func = func.replaceAll(" ", "");
-            func = func.replaceAll("\\(", " ");
-            func = func.replaceAll("\\)", "");
+            func = func.replaceFirst("\\(", " ");
+            func = func.substring(0, func.length() - 1);
 
             String[] strings = func.split(" ");
             String name = strings[0];

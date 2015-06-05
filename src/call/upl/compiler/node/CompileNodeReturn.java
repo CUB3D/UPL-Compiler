@@ -16,14 +16,19 @@ public class CompileNodeReturn extends CompileNode
         PatternBuilder ret = new PatternBuilder();
         ret.addMatchExact("return");
         ret.addMatchSpace(0);
-        ret.addMatchValue();
+        ret.addSkipToEnd();
 
         if(PatternMacher.match(curLine, ret.toString()))
         {
             curLine = curLine.replaceFirst("return", "");
-            curLine = curLine.trim();
 
-            uplCompiler.writeCode("psh " + curLine);
+            curLine = "@TEMP0@ = " + curLine;
+
+            System.out.println(curLine);
+
+            uplCompiler.execLine(curLine, 0);
+
+            uplCompiler.writeCode("psh @TEMP0@");
 
             return true;
         }

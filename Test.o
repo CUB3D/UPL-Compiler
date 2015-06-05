@@ -1,13 +1,19 @@
-.test
-pop num
-mul num 2
-pop num
-psh num
+.foo
+mov @TEMP0@ 20
+psh @TEMP0@
 end
-ary var 1
-mov var[0] 2
-psh var[0]
-jmp test
+.test
+pop y
 pop x
-psh x
+add x y
+pop temp
+pop temp
+psh temp
 int 0x1
+end
+mov @TEMP0@ 10
+psh @TEMP0@
+jmp foo
+pop @TEMP0@
+psh @TEMP0@
+jmp test

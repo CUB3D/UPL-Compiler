@@ -118,71 +118,66 @@ public class ExpressionParser
                 System.out.println(s);
             }
 
-            if (s.matches("\\d+"))
+
+            if(s.length() >= 3)
             {
-                uplCompiler.writeCode("mov " + result + " " + s);
+                EnumOperand operand = getOperand(s);
+
+                String[] args = s.split(operand.getIdentifierEscaped());
+
+                uplCompiler.writeCode(operand.getOpcode() + " " + args[0] + " " + args[1]);
             } else
             {
-                if (s.length() >= 3)
+                // if in form -+*/ x then use one temp
+                // if in form -+*/ then use two
+
+                if(s.length() == 1)
                 {
                     EnumOperand operand = getOperand(s);
 
-                    String[] args = s.split(operand.getIdentifierEscaped());
+                    uplCompiler.writeCode("pop @TEMP0@");
+                    uplCompiler.writeCode("pop @TEMP1@");
 
-                    uplCompiler.writeCode(operand.getOpcode() + " " + args[0] + " " + args[1]);
-                } else
-                {
-                    // if in form -+*/ x then use one temp
-                    // if in form -+*/ then use two
-
-                    if (s.length() == 1)
-                    {
-                        EnumOperand operand = getOperand(s);
-
-                        uplCompiler.writeCode("pop @TEMP0@");
-                        uplCompiler.writeCode("pop @TEMP1@");
-
-                        uplCompiler.writeCode(operand.getOpcode() + " @TEMP0@ @TEMP1@");
-                    }
-
-                    if (s.length() >= 2)
-                    {
-                        boolean isLeftEmpty = false;
-
-                        char first = s.charAt(0);
-
-                        if (first == '+' || first == '-' || first == '/' || first == '*' || first == '%')
-                        {
-                            isLeftEmpty = true;
-                        }
-
-                        EnumOperand operand = getOperand(s);
-
-                        String left;
-                        String right;
-
-                        if (isLeftEmpty)
-                        {
-                            left = "@TEMP0@";
-
-                            s = s.replace(operand.getIdentifier(), "");
-                            right = s;
-                        } else
-                        {
-                            right = "@TEMP0@";
-
-                            s = s.replace(operand.getIdentifier(), "");
-                            left = s;
-                        }
-
-                        uplCompiler.writeCode("pop @TEMP0@");
-
-                        uplCompiler.writeCode(operand.getOpcode() + " " + left + " " + right);
-                    }
+                    uplCompiler.writeCode(operand.getOpcode() + " @TEMP0@ @TEMP1@");
                 }
 
-                uplCompiler.writeCode("pop " + result);
+                if(s.length() >= 2)
+                {
+                    boolean isLeftEmpty = false;
+
+                    char first = s.charAt(0);
+
+                    if(first == '+' || first == '-' || first == '/' || first == '*' || first == '%')
+                    {
+                        isLeftEmpty = true;
+                    }
+
+                    EnumOperand operand = getOperand(s);
+
+                    String left;
+                    String right;
+
+                    if(isLeftEmpty)
+                    {
+                        left = "@TEMP0@";
+
+                        s = s.replace(operand.getIdentifier(), "");
+                        right = s;
+                    } else
+                    {
+                        right = "@TEMP0@";
+
+                        s = s.replace(operand.getIdentifier(), "");
+                        left = s;
+                    }
+
+                    uplCompiler.writeCode("pop @TEMP0@");
+
+                    uplCompiler.writeCode(operand.getOpcode() + " " + left + " " + right);
+                }
             }
+
+            uplCompiler.writeCode("pop " + result);
         }
     }
 

@@ -17,16 +17,16 @@ public class CompileNodeFunctionCall extends CompileNode
         callFunc.addMatchAnyWord();
         callFunc.addMatchSpace(0);
         callFunc.addMatchExact("(");
-        callFunc.addMatchSkipToExact(")");
+        callFunc.addSkipToEnd();
 
         if(PatternMacher.match(curLine, callFunc.toString()))
         {
             //psh x, psh y, jmp name
             curLine = curLine.replaceAll(" ", "");
             //helloWorld(x,y)
-            curLine = curLine.replaceAll("\\(", " ");
+            curLine = curLine.replaceFirst("\\(", " ");
             //helloWorld x,y)
-            curLine = curLine.replaceAll("\\)", "");
+            curLine = curLine.substring(0, curLine.length() - 1);
             //helloWorld x,y
             String[] strings = curLine.split(" ");
             String name = strings[0];
@@ -38,13 +38,17 @@ public class CompileNodeFunctionCall extends CompileNode
                 args = strings[1].split(",");
             }
 
-            if(!name.startsWith("_"))
+            if(!name.startsWith("_")) //TODO: __uplbc goes here
             {
                 if(hasArgs)
                 {
                     for (int i1 = 0; i1 < args.length; i1++)
                     {
-                        uplCompiler.writeCode("psh " + args[i1]);
+                        String s = "@TEMP0@ = " + args[i1];
+
+                        uplCompiler.execLine(s, 0);
+
+                        uplCompiler.writeCode("psh @TEMP0@");
                     }
                 }
 

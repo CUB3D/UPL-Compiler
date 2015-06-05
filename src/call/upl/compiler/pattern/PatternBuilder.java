@@ -59,6 +59,11 @@ public class PatternBuilder
         pattern += PATTERN_TAG_START + Pattern.PATTERN_ANY_VARIABLE.getPatternID() + PATTERN_TAG_END;
     }
 
+    public void addSkipToEnd()
+    {
+        pattern+= PATTERN_TAG_START + Pattern.PATTERN_SKIP_TO_END.getPatternID() + PATTERN_TAG_END;
+    }
+
     @Override
     public String toString()
     {

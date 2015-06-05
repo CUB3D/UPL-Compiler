@@ -32,50 +32,7 @@ public class PatternAnyVariable extends Pattern
             }
         }
 
-        if(!b)
-        {
-            return false;
-        }
-        else
-        {
-            String regx = "[a-zA-Z/_@0-9]+\\[?[a-zA-Z/_@0-9]+\\]?";
-
-            if(s.matches(regx))
-            {
-                if(s.contains("\\["))
-                {
-                    if (s.contains("\\]"))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (s.contains("\\]"))
-                    {
-                        if (s.contains("\\["))
-                        {
-                            return true;
-                        } else
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+        return b;
     }
 
     @Override

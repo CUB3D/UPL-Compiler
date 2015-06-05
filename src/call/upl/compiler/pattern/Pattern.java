@@ -20,6 +20,7 @@ public abstract class Pattern
     public static final PatternExact PATTERN_EXACT = new PatternExact();
     public static final PatternSkipToExact PATTERN_SKIP_TO_EXACT = new PatternSkipToExact();
     public static final PatternAnyVariable PATTERN_ANY_VARIABLE = new PatternAnyVariable();
+    public static final PatternSkipToEnd PATTERN_SKIP_TO_END = new PatternSkipToEnd();
 
     public Pattern()
     {
