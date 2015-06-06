@@ -10,10 +10,4 @@ pop temp
 psh temp
 int 0x1
 end
-jmp foo
-pop @TEMP0@ 
-psh @TEMP0@
-jmp foo
-pop @TEMP0@ 
-psh @TEMP0@
 jmp test

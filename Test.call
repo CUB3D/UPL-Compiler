@@ -13,4 +13,4 @@ func test(x, y)->
     __UPLBC("int 0x1")
 }
 
-test(foo(), foo())
+test(10 + 10, 10 + 10)

@@ -1,6 +1,5 @@
 package call.upl.compiler.core;
 
-import javax.naming.InitialContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,10 +110,11 @@ public class FunctionParser
             }
             else
             {
-                //must be function (TODO: improve)
-
-                convertFunctionToCode(compiler, "@TEMP0@ = " + argument);
-                compiler.writeCode("psh @TEMP0@");
+                if(CompilerUtils.isFunction(argument))
+                {
+                    convertFunctionToCode(compiler, "@TEMP0@ = " + argument);
+                    compiler.writeCode("psh @TEMP0@");
+                }
             }
         }
     }

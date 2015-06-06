@@ -5,10 +5,12 @@ package call.upl.compiler.core;
  */
 public class CompilerUtils
 {
-    public static final String REGEX_MATCH_VARIABLE = "[a-zA-Z0-9/_@]+";
+    public static final String REGEX_MATCH_VARIABLE = "[a-zA-Z0-9_@]+";
     public static final String REGEX_MATCH_ARRAY_ACCESS = REGEX_MATCH_VARIABLE + "\\s?\\[\\s?" + REGEX_MATCH_VARIABLE + "\\s?\\]";
 
     public static final String REGEX_MATCH_STRING = "\"[\\w\\d\\s]+\"";
+
+    public static final String REGEX_MATCH_FUNCTION = REGEX_MATCH_VARIABLE + "\\s?\\(\\s?[a-zA-Z0-9_@\\[\\]+\\-\\*\\/\\s,\\(\\)]+\\s?\\)";
 
     public static boolean isVariable(String s)
     {
@@ -23,5 +25,10 @@ public class CompilerUtils
     public static boolean isString(String s)
     {
         return s.matches(REGEX_MATCH_STRING);
+    }
+
+    public static boolean isFunction(String s)
+    {
+        return s.matches(REGEX_MATCH_FUNCTION);
     }
 }
