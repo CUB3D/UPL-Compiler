@@ -115,6 +115,11 @@ public class FunctionParser
                     convertFunctionToCode(compiler, "@TEMP0@ = " + argument);
                     compiler.writeCode("psh @TEMP0@");
                 }
+                else
+                {
+                    ExpressionParser.convertExpressionToCode("@TEMP2@ = " + argument, compiler);
+                    compiler.writeCode("psh @TEMP2@");
+                }
             }
         }
     }
