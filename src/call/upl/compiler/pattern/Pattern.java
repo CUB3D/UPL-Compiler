@@ -1,5 +1,7 @@
 package call.upl.compiler.pattern;
 
+import call.upl.compiler.core.CompilerUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +10,6 @@ import java.util.List;
  */
 public abstract class Pattern
 {
-    public static final String NUMBER_FORMAT = "[\\x00-\\x20]*[+-]?(NaN|Infinity|((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?)|(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))[pP][+-]?(\\p{Digit}+)))[fFdD]?))[\\x00-\\x20]*";
-
     private static List<Pattern> patternList = new ArrayList<Pattern>();
 
     public static final PatternAnyWord PATTERN_ANY_WORD = new PatternAnyWord();
@@ -32,7 +32,7 @@ public abstract class Pattern
 
     public static boolean isNumber(char c)
     {
-        return Character.toString(c).matches(NUMBER_FORMAT);
+        return Character.toString(c).matches(CompilerUtils.NUMBER_FORMAT);
     }
 
     public static boolean isLetter(char c)

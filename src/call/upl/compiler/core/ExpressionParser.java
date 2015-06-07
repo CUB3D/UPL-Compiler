@@ -5,6 +5,9 @@ import com.sun.org.apache.xpath.internal.SourceTree;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.util.LineInputStream;
 
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +105,73 @@ public class ExpressionParser
     {
         List<String> subExpressions = breakdownExpression(exp);
 
+        for(String s : subExpressions) System.out.println(s);
+
         convertExpressionToCodeImpl(subExpressions, compiler);
+    }
+
+    public static List<String> tokenise(String s)
+    {
+        StreamTokenizer tokenizer = new StreamTokenizer(new StringReader(s));
+
+        List<String> tokens = new ArrayList<String>();
+
+        try
+        {
+            while(tokenizer.nextToken() != StreamTokenizer.TT_EOF)
+            {
+                switch(tokenizer.ttype)
+                {
+                    case StreamTokenizer.TT_NUMBER:
+                        tokens.add("" + tokenizer.nval);
+                        break;
+                    case StreamTokenizer.TT_WORD:
+                        tokens.add(tokenizer.sval);
+                        break;
+                    default:
+                        tokens.add("" + (char) tokenizer.ttype);
+                        break;
+                }
+            }
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return tokens;
+    }
+
+    public static void sortTokens(List<String> tokens)
+    {
+        //NOOP
+    }
+
+    public static int valueCount = 0;
+    public static EnumOperand curOperand;
+
+    public static void parseToken(UPLCompiler compiler, String token)
+    {
+        //if is number
+        if(token.matches(CompilerUtils.NUMBER_FORMAT))
+        {
+            compiler.writeCode("psh " + token);
+
+            valueCount++;
+        }
+        else
+        {
+            curOperand = getOperand(token);
+        }
+
+        if(valueCount == 2)
+        {
+            valueCount = 1;
+
+            compiler.writeCode("pop @TEMP0@");
+            compiler.writeCode("pop @TEMP1@");
+
+            compiler.writeCode(curOperand.getOpcode() + " @TEMP0@ @TEMP1@");
+        }
     }
 
     public static void convertExpressionToCodeImpl(List<String> subExpressions, UPLCompiler uplCompiler)
@@ -113,11 +182,24 @@ public class ExpressionParser
         {
             String s = subExpressions.get(i);
 
-            if(UPL.DEBUG)
+            List<String> tokens = tokenise(s);
+
+            sortTokens(tokens);
+
+            if(UPLCompiler.DEBUG)
             {
-                System.out.println(s);
+                for(String ss : tokens)
+                {
+                    System.out.println(ss);
+                }
             }
 
+            for(String token : tokens)
+            {
+                parseToken(uplCompiler, token);
+            }
+
+            if(true) continue; // skip old code
 
             if(s.length() >= 3)
             {

@@ -1,19 +1,9 @@
-.foo
-mov @TEMP0@ 20
-psh @TEMP0@
-end
-.test
-pop y
-pop x
-add x y
-pop temp
-psh temp
-int 0x1
-end
-add 10 10
-pop @TEMP2@
-psh @TEMP2@
-add 10 10
-pop @TEMP2@
-psh @TEMP2@
-jmp test
+psh 10.0
+psh 10.0
+pop @TEMP0@
+pop @TEMP1@
+add @TEMP0@ @TEMP1@
+psh 10.0
+pop @TEMP0@
+pop @TEMP1@
+add @TEMP0@ @TEMP1@

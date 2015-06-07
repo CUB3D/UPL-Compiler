@@ -1,16 +1,3 @@
 #include "B:\Git\UPL-Compiler\Array.upl"
 
-func foo()->
-{
-    return 20
-}
-
-func test(x, y)->
-{
-    temp = x + y
-
-    __UPLBC("psh temp")
-    __UPLBC("int 0x1")
-}
-
-test(10 + 10, 10 + 10)
+x = 10 + 10 + 10
