@@ -1,8 +1,10 @@
 package call.upl.compiler.core;
 
+import call.upl.compiler.node.CompileNode;
 import call.upl.core.UPL;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.util.LineInputStream;
+import jdk.nashorn.internal.codegen.CompileUnit;
 
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
@@ -10,12 +12,105 @@ import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by Callum on 26/05/2015.
  */
 public class ExpressionParser
 {
+    public static List<String> tokenise(String s)
+    {
+        StreamTokenizer tokenizer = new StreamTokenizer(new StringReader(s));
+
+        List<String> tokens = new ArrayList<String>();
+
+        try
+        {
+            while(tokenizer.nextToken() != StreamTokenizer.TT_EOF)
+            {
+                switch(tokenizer.ttype)
+                {
+                    case StreamTokenizer.TT_NUMBER:
+                        tokens.add("" + tokenizer.nval);
+                        break;
+                    case StreamTokenizer.TT_WORD:
+                        tokens.add(tokenizer.sval);
+                        break;
+                    default:
+                        tokens.add("" + (char) tokenizer.ttype);
+                        break;
+                }
+            }
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return tokens;
+    }
+
+    public static String convertEquationToRPN(String equation)
+    {
+        List<String> tokens = tokenise(equation);
+
+        String reversePolishNotation = "";
+
+        Stack<EnumOperand> operatorStack = new Stack<>();
+
+        for(String token : tokens)
+        {
+            if(CompilerUtils.isNumber(token) || CompilerUtils.isVariable(token))
+            {
+                reversePolishNotation += token;
+            }
+
+            if(CompilerUtils.isOperator(token))
+            {
+                EnumOperand o1 = getOperand(token);
+
+                while(operatorStack.size() > 0)
+                {
+                    EnumOperand o2 = operatorStack.peek();
+
+                    if((o1.isLeftAssociative() && o1.getPrecedence() <= o2.getPrecedence()) || (!o1.isLeftAssociative() && o1.getPrecedence() < o2.getPrecedence()))
+                    {
+                        operatorStack.pop();
+                        reversePolishNotation += o2.getIdentifier();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                operatorStack.push(o1);
+
+            }
+        }
+
+        while(operatorStack.size() > 0)
+        {
+            reversePolishNotation += operatorStack.pop().getIdentifier();
+        }
+
+        return reversePolishNotation;
+    }
+
+    public static EnumOperand getOperand(String s)
+    {
+        for(EnumOperand operand : EnumOperand.values())
+        {
+            if(operand.getIdentifier().equals(s))
+            {
+                return operand;
+            }
+        }
+
+        return null;
+    }
+
+
     public static List<String> breakdownExpression(String s)
     {
         //get variable for result
@@ -108,37 +203,6 @@ public class ExpressionParser
         for(String s : subExpressions) System.out.println(s);
 
         convertExpressionToCodeImpl(subExpressions, compiler);
-    }
-
-    public static List<String> tokenise(String s)
-    {
-        StreamTokenizer tokenizer = new StreamTokenizer(new StringReader(s));
-
-        List<String> tokens = new ArrayList<String>();
-
-        try
-        {
-            while(tokenizer.nextToken() != StreamTokenizer.TT_EOF)
-            {
-                switch(tokenizer.ttype)
-                {
-                    case StreamTokenizer.TT_NUMBER:
-                        tokens.add("" + tokenizer.nval);
-                        break;
-                    case StreamTokenizer.TT_WORD:
-                        tokens.add(tokenizer.sval);
-                        break;
-                    default:
-                        tokens.add("" + (char) tokenizer.ttype);
-                        break;
-                }
-            }
-        } catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        return tokens;
     }
 
     public static void sortTokens(List<String> tokens)
@@ -261,20 +325,5 @@ public class ExpressionParser
 
             uplCompiler.writeCode("pop " + result);
         }
-    }
-
-    public static EnumOperand getOperand(String s)
-    {
-        EnumOperand operand = null;
-
-        for(EnumOperand operand1 : EnumOperand.values())
-        {
-            if(s.contains(operand1.getIdentifier()))
-            {
-                operand = operand1;
-            }
-        }
-
-        return operand;
     }
 }

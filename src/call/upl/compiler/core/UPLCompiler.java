@@ -150,6 +150,8 @@ public class UPLCompiler
     {
         FileAPI api = new FileAPI(args[0]);
 
-        new UPLCompiler(api);
+       new UPLCompiler(api);
     }
+
+
 }

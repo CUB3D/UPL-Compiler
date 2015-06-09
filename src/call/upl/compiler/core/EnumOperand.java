@@ -5,26 +5,26 @@ package call.upl.compiler.core;
  */
 public enum EnumOperand
 {
-    ADD("add", "+", true),
-    SUBTRACT("sub", "-"),
-    DIVIDE("div", "/"),
-    MULTIPLY("mul", "*", true),
-    MODULUS("mod", "%");
+    ADD("add", "+", true, 2, true),
+    SUBTRACT("sub", "-", false, 2, true),
+    DIVIDE("div", "/", false, 3, true),
+    MULTIPLY("mul", "*", true, 3, true),
+    MODULUS("mod", "%", false, 3, true);
 
     private String opcode;
     private String identifier;
     private boolean escape;
 
-    EnumOperand(String opcode, String identifier)
-    {
-        this(opcode, identifier, false);
-    }
+    private int precedence;
+    private boolean isLeftAssociative;
 
-    EnumOperand(String opcode, String identifier, boolean escape)
+    EnumOperand(String opcode, String identifier, boolean escape, int precedence, boolean isLeftAssociative)
     {
         this.opcode = opcode;
         this.identifier = identifier;
         this.escape = escape;
+        this.precedence = precedence;
+        this.isLeftAssociative = isLeftAssociative;
     }
 
     public String getIdentifier()
@@ -45,5 +45,15 @@ public enum EnumOperand
     public String getOpcode()
     {
         return opcode;
+    }
+
+    public int getPrecedence()
+    {
+        return precedence;
+    }
+
+    public boolean isLeftAssociative()
+    {
+        return isLeftAssociative;
     }
 }
