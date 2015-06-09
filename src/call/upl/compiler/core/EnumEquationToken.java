@@ -3,13 +3,16 @@ package call.upl.compiler.core;
 /**
  * Created by Callum on 30/05/2015.
  */
-public enum EnumOperand
+public enum EnumEquationToken
 {
-    ADD("add", "+", true, 2, true),
-    SUBTRACT("sub", "-", false, 2, true),
-    DIVIDE("div", "/", false, 3, true),
-    MULTIPLY("mul", "*", true, 3, true),
-    MODULUS("mod", "%", false, 3, true);
+    ADD("add", "+", true, true, 2, true),
+    SUBTRACT("sub", "-", false, true, 2, true),
+    DIVIDE("div", "/", false, true, 3, true),
+    MULTIPLY("mul", "*", true, true, 3, true),
+    MODULUS("mod", "%", false, true, 3, true),
+    OPENPAREN("", "(", false, false, 100, true),
+    CLOSEPAREN("", ")", false, false, 100, true);
+
 
     private String opcode;
     private String identifier;
@@ -18,13 +21,16 @@ public enum EnumOperand
     private int precedence;
     private boolean isLeftAssociative;
 
-    EnumOperand(String opcode, String identifier, boolean escape, int precedence, boolean isLeftAssociative)
+    private boolean isOperator;
+
+    EnumEquationToken(String opcode, String identifier, boolean escape, boolean isOperator, int precedence, boolean isLeftAssociative)
     {
         this.opcode = opcode;
         this.identifier = identifier;
         this.escape = escape;
         this.precedence = precedence;
         this.isLeftAssociative = isLeftAssociative;
+        this.isOperator = isOperator;
     }
 
     public String getIdentifier()
@@ -55,5 +61,10 @@ public enum EnumOperand
     public boolean isLeftAssociative()
     {
         return isLeftAssociative;
+    }
+
+    public boolean isOperator()
+    {
+        return isOperator;
     }
 }

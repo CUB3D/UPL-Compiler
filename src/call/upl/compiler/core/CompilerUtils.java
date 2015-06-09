@@ -41,11 +41,14 @@ public class CompilerUtils
 
     public static boolean isOperator(String s)
     {
-        for(EnumOperand operand : EnumOperand.values())
+        for(EnumEquationToken operator : EnumEquationToken.values())
         {
-            if(operand.getIdentifier().equals(s))
+            if(operator.isOperator())
             {
-                return true;
+                if(operator.getIdentifier().equals(s))
+                {
+                    return true;
+                }
             }
         }
 

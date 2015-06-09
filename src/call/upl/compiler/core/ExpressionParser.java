@@ -1,12 +1,5 @@
 package call.upl.compiler.core;
 
-import call.upl.compiler.node.CompileNode;
-import call.upl.core.UPL;
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.LineInputStream;
-import jdk.nashorn.internal.codegen.CompileUnit;
-
-import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
@@ -24,6 +17,8 @@ public class ExpressionParser
         StreamTokenizer tokenizer = new StreamTokenizer(new StringReader(s));
 
         List<String> tokens = new ArrayList<String>();
+
+        tokenizer.ordinaryChar('/');
 
         try
         {
@@ -50,13 +45,13 @@ public class ExpressionParser
         return tokens;
     }
 
-    public static String convertEquationToRPN(String equation)
+    public static String convertEquationToRPN(String equation) throws Exception
     {
         List<String> tokens = tokenise(equation);
 
         String reversePolishNotation = "";
 
-        Stack<EnumOperand> operatorStack = new Stack<>();
+        Stack<EnumEquationToken> operatorStack = new Stack<>();
 
         for(String token : tokens)
         {
@@ -67,43 +62,76 @@ public class ExpressionParser
 
             if(CompilerUtils.isOperator(token))
             {
-                EnumOperand o1 = getOperand(token);
+                EnumEquationToken o1 = getOperator(token);
 
-                while(operatorStack.size() > 0)
+                if(operatorStack.size() > 0 && operatorStack.peek().isOperator())
                 {
-                    EnumOperand o2 = operatorStack.peek();
+                    while(operatorStack.size() > 0)
+                    {
+                        EnumEquationToken o2 = operatorStack.peek();
 
-                    if((o1.isLeftAssociative() && o1.getPrecedence() <= o2.getPrecedence()) || (!o1.isLeftAssociative() && o1.getPrecedence() < o2.getPrecedence()))
-                    {
-                        operatorStack.pop();
-                        reversePolishNotation += o2.getIdentifier();
-                    }
-                    else
-                    {
-                        break;
+                        if((o1.isLeftAssociative() && o1.getPrecedence() <= o2.getPrecedence()) || (!o1.isLeftAssociative() && o1.getPrecedence() < o2.getPrecedence()))
+                        {
+                            operatorStack.pop();
+                            reversePolishNotation += o2.getIdentifier();
+                        } else
+                        {
+                            break;
+                        }
                     }
                 }
 
                 operatorStack.push(o1);
+            }
 
+            if(token.equals("("))
+            {
+                operatorStack.push(EnumEquationToken.OPENPAREN);
+            }
+
+            if(token.equals(")"))
+            {
+                EnumEquationToken popedToken = operatorStack.pop();
+
+                while(popedToken != EnumEquationToken.OPENPAREN)
+                {
+                    reversePolishNotation += popedToken.getIdentifier();
+
+                    if(operatorStack.size() == 0)
+                    {
+                        ExceptionSystem.throwException("Error in RPN conversion, Mismatched parenthesis");
+                    }
+
+                    popedToken = operatorStack.pop();
+                }
             }
         }
 
         while(operatorStack.size() > 0)
         {
-            reversePolishNotation += operatorStack.pop().getIdentifier();
+            EnumEquationToken popedToken = operatorStack.pop();
+
+            if(popedToken == EnumEquationToken.OPENPAREN || popedToken == EnumEquationToken.CLOSEPAREN)
+            {
+                ExceptionSystem.throwException("Error in RPN conversion, Mismatched parenthesis");
+            }
+
+            reversePolishNotation += popedToken.getIdentifier();
         }
 
         return reversePolishNotation;
     }
 
-    public static EnumOperand getOperand(String s)
+    public static EnumEquationToken getOperator(String s)
     {
-        for(EnumOperand operand : EnumOperand.values())
+        for(EnumEquationToken operand : EnumEquationToken.values())
         {
-            if(operand.getIdentifier().equals(s))
+            if(operand.isOperator())
             {
-                return operand;
+                if(operand.getIdentifier().equals(s))
+                {
+                    return operand;
+                }
             }
         }
 
@@ -211,7 +239,7 @@ public class ExpressionParser
     }
 
     public static int valueCount = 0;
-    public static EnumOperand curOperand;
+    public static EnumEquationToken curOperand;
 
     public static void parseToken(UPLCompiler compiler, String token)
     {
@@ -224,7 +252,7 @@ public class ExpressionParser
         }
         else
         {
-            curOperand = getOperand(token);
+            curOperand = getOperator(token);
         }
 
         if(valueCount == 2)
@@ -267,7 +295,7 @@ public class ExpressionParser
 
             if(s.length() >= 3)
             {
-                EnumOperand operand = getOperand(s);
+                EnumEquationToken operand = getOperator(s);
 
                 String[] args = s.split(operand.getIdentifierEscaped());
 
@@ -279,7 +307,7 @@ public class ExpressionParser
 
                 if(s.length() == 1)
                 {
-                    EnumOperand operand = getOperand(s);
+                    EnumEquationToken operand = getOperator(s);
 
                     uplCompiler.writeCode("pop @TEMP0@");
                     uplCompiler.writeCode("pop @TEMP1@");
@@ -298,7 +326,7 @@ public class ExpressionParser
                         isLeftEmpty = true;
                     }
 
-                    EnumOperand operand = getOperand(s);
+                    EnumEquationToken operand = getOperator(s);
 
                     String left;
                     String right;
