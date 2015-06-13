@@ -1,3 +1,5 @@
-#include "B:\Git\UPL-Compiler\Array.upl"
+include "B:\Git\UPL-Compiler\IO.call"
 
 x = 10 + 10 + 10
+
+print(x)

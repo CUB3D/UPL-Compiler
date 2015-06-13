@@ -1,9 +1,12 @@
-psh 10.0
-psh 10.0
-pop @TEMP0@
-pop @TEMP1@
-add @TEMP0@ @TEMP1@
-psh 10.0
-pop @TEMP0@
-pop @TEMP1@
-add @TEMP0@ @TEMP1@
+.test
+nsp test
+mov x 10
+psh x
+int 0x1
+endnsp
+end
+
+mov x 100
+jmp test
+psh x
+int 0x1

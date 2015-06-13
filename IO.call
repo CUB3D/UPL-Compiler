@@ -8,13 +8,13 @@ func newline() ->
 
 func print(x) ->
 {
-    __UPLBC("psh x ")
+    __UPLBC("psh x")
     __UPLBC("int 0x1")
 }
 
 func println(x) ->
 {
-    __UPLBC("psh x ")
+    __UPLBC("psh x")
     __UPLBC("int 0x1")
     newline()
 }
@@ -29,7 +29,7 @@ func readChar() ->
 
 func itoa(num) ->
 {
-    __UPLBC("psh num ")
+    __UPLBC("psh num")
     __UPLBC("int 0x4")
     __UPLBC("pop @TEMP@")
 
@@ -38,7 +38,7 @@ func itoa(num) ->
 
 func atoi(a) ->
 {
-    __UPLBC("psh a ")
+    __UPLBC("psh a")
     __UPLBC("int 0x5")
     __UPLBC("pop @TEMP@")
 

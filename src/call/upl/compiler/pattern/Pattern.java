@@ -30,17 +30,6 @@ public abstract class Pattern
     public abstract boolean matches(PatternStateData csd, String[] args);
     public abstract String getPatternID();
 
-    public static boolean isNumber(char c)
-    {
-        return Character.toString(c).matches(CompilerUtils.NUMBER_FORMAT);
-    }
-
-    public static boolean isLetter(char c)
-    {
-        return Character.toString(c).matches("[a-zA-Z/_@]");
-    }
-
-
     public static Pattern getPattenFor(String exp)
     {
         for(Pattern p : patternList)

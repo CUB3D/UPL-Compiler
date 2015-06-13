@@ -29,7 +29,7 @@ public class CompileNodeEquation extends CompileNode
                 return false;
             }
 
-            ExpressionParser.convertExpressionToCode(curLine, uplCompiler);
+            ExpressionParser.convertEquationToCode(curLine, uplCompiler);
 
             return true;
         }

@@ -117,7 +117,7 @@ public class FunctionParser
                 }
                 else
                 {
-                    ExpressionParser.convertExpressionToCode("@TEMP2@ = " + argument, compiler);
+                    ExpressionParser.convertEquationToCode("@TEMP2@ = " + argument, compiler);
                     compiler.writeCode("psh @TEMP2@");
                 }
             }

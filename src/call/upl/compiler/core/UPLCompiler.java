@@ -92,48 +92,7 @@ public class UPLCompiler
             return compileStateData.curLineNumber;
         }
 
-        // TODO: make this a node or add a special case in CompileNodeFunctionCall for special functions
-
-        PatternBuilder printStr = new PatternBuilder();
-        printStr.addMatchAnyWord();
-        printStr.addMatchSpace(0);
-        printStr.addMatchExact("(");
-        printStr.addMatchSpace(0);
-
-        printStr.addMatchExact("\"");
-        printStr.addMatchSkipToExact("\"");
-
-        printStr.addMatchSpace(0);
-        printStr.addMatchExact(")");
-
-        if(PatternMacher.match(s, printStr.toString()))
-        {
-            // print ( "X Y" )
-            s = s.replaceAll("\\(", " ");
-            // print   "X Y" )
-            s = s.replaceAll("\\)", "");
-            // print   "X Y" .
-            s = s.trim();
-            // print   "X Y".
-            String[] strings = s.split(" ");
-            String methodName = strings[0];
-
-            if (methodName.equals("__UPLBC"))
-            {
-                s = s.replaceAll(methodName + " ", "");
-                // .  "X Y".
-                s = s.trim();
-                // "X Y"
-                s = s.replaceAll("\"", "");
-                // X Y
-
-                writeCode(s);
-
-                return compileStateData.curLineNumber;
-            }
-        }
-
-        return i;
+        return compileStateData.curLineNumber;
     }
 
     public void writeCode(String s)

@@ -30,6 +30,21 @@ public class CompileNodeFunctionCall extends CompileNode
 
                 return true;
             }
+            else
+            {
+                if (name.equals("__UPLBC"))
+                {
+                    curLine = curLine.replaceAll(name, "");
+                    // .  ("X Y").
+                    curLine = curLine.trim();
+                    // ("X Y")
+                    curLine = curLine.replaceAll("\"", "");
+                    curLine = curLine.substring(1, curLine.length() - 1);
+                    // X Y
+
+                    uplCompiler.writeCode(curLine);
+                }
+            }
         }
 
         return false;

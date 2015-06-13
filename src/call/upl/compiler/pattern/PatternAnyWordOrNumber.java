@@ -1,5 +1,7 @@
 package call.upl.compiler.pattern;
 
+import call.upl.compiler.core.CompilerUtils;
+
 /**
  * Created by Callum on 24/04/2015.
  */
@@ -8,63 +10,40 @@ public class PatternAnyWordOrNumber extends Pattern
     @Override
     public boolean matches(PatternStateData csd, String[] args)
     {
-        if(isLetter(csd.text[csd.curChar]))
+        boolean b = false;
+
+        String word = "";
+
+        while(true)
         {
-            boolean b = false;
-
-            while(true)
+            if(csd.curChar >= csd.text.length)
             {
-                if(csd.curChar >= csd.text.length)
-                {
-                    break;
-                }
-
-                char x = csd.text[csd.curChar];
-
-                if(isLetter(x))
-                {
-                    csd.curChar++;
-                    b = true;
-                }
-                else
-                {
-                    break;
-                }
+                break;
             }
 
-            if(!b)
-                return false;
-        }
-        else
-        {
-            if(isNumber(csd.text[csd.curChar]))
+            char x = csd.text[csd.curChar];
+
+            if(CompilerUtils.isNumber("" + x) || CompilerUtils.isWord("" + x))
             {
-                boolean b = false;
-
-                while(true)
-                {
-                    if(csd.curChar >= csd.text.length)
-                    {
-                        break;
-                    }
-
-                    char x = csd.text[csd.curChar];
-
-                    if(isNumber(x))
-                    {
-                        csd.curChar++;
-                        b = true;
-                    } else
-                    {
-                        break;
-                    }
-                }
-
-                if(!b)
-                    return false;
+                word += x;
+                csd.curChar++;
+                b = true;
+            }
+            else
+            {
+                break;
             }
         }
 
+        if(!b)
+        {
+            return false;
+        }
+
+        if(CompilerUtils.isReservedWord(word))
+        {
+            return false;
+        }
 
         return true;
     }

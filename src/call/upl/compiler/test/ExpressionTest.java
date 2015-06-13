@@ -64,9 +64,45 @@ public class ExpressionTest
     {
         String testSimple = "4 + 6 * 3";
 
-        String expectedAnswer = "4.06.03.0*+";
+        List<String> expectedAnswer = new ArrayList<>();
 
-        String answer = null;
+        expectedAnswer.add("4.0");
+        expectedAnswer.add("6.0");
+        expectedAnswer.add("3.0");
+        expectedAnswer.add("*");
+        expectedAnswer.add("+");
+
+        List<String> answer = null;
+
+        try
+        {
+            answer = ExpressionParser.convertEquationToRPN(testSimple);
+        } catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        assertEquals(expectedAnswer, answer);
+    }
+
+    @Test
+    public void testComplexRPNConversion()
+    {
+        String testSimple = "((4 + 6) * (3 / 4)) - 2";
+
+        List<String> expectedAnswer = new ArrayList<>();
+
+        expectedAnswer.add("4.0");
+        expectedAnswer.add("6.0");
+        expectedAnswer.add("+");
+        expectedAnswer.add("3.0");
+        expectedAnswer.add("4.0");
+        expectedAnswer.add("/");
+        expectedAnswer.add("*");
+        expectedAnswer.add("2.0");
+        expectedAnswer.add("-");
+
+        List<String> answer = null;
 
         try
         {
@@ -79,21 +115,33 @@ public class ExpressionTest
     }
 
     @Test
-    public void testComplexRPNConversion()
+    public void testRPNToUPLBC()
     {
-        String testSimple = "((4 + 6) * (3 / 4)) - 2";
+        String input = "(6 + 4) / 2";
 
-        String expectedAnswer = "4.06.0+3.04.0/*2.0-";
-
-        String answer = null;
-
+        List<String> rpn = null;
         try
         {
-            answer = ExpressionParser.convertEquationToRPN(testSimple);
-        } catch(Exception e) {
+            rpn = ExpressionParser.convertEquationToRPN(input);
+        } catch(Exception e)
+        {
             e.printStackTrace();
         }
 
-        assertEquals(expectedAnswer, answer);
+        List<String> uplbc = ExpressionParser.convertRPNToUPLBC(rpn);
+
+        List<String> expected = new ArrayList<>();
+
+        expected.add("psh 6.0");
+        expected.add("psh 4.0");
+        expected.add("pop @TEMP0@");
+        expected.add("pop @TEMP1@");
+        expected.add("add @TEMP0@ @TEMP1@");
+        expected.add("psh 2.0");
+        expected.add("pop @TEMP0@");
+        expected.add("pop @TEMP1@");
+        expected.add("div @TEMP0@ @TEMP1@");
+
+        assertEquals(expected, uplbc);
     }
 }

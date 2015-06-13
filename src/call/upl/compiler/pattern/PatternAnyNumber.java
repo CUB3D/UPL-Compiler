@@ -1,5 +1,7 @@
 package call.upl.compiler.pattern;
 
+import call.upl.compiler.core.CompilerUtils;
+
 /**
  * Created by Callum on 24/04/2015.
  */
@@ -19,7 +21,7 @@ public class PatternAnyNumber extends Pattern
 
             char x = csd.text[csd.curChar];
 
-            if(isNumber(x))
+            if(CompilerUtils.isNumber("" + x))
             {
                 csd.curChar++;
                 b = true;

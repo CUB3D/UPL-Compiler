@@ -1,5 +1,7 @@
 package call.upl.compiler.pattern;
 
+import call.upl.compiler.core.CompilerUtils;
+
 /**
  * Created by Callum on 24/04/2015.
  */
@@ -10,6 +12,8 @@ public class PatternAnyWord extends Pattern
     {
         boolean b = false;
 
+        String word = "";
+
         while(true)
         {
             if(csd.curChar >= csd.text.length)
@@ -19,8 +23,9 @@ public class PatternAnyWord extends Pattern
 
             char x = csd.text[csd.curChar];
 
-            if(isLetter(x))
+            if(CompilerUtils.isWord("" + x))
             {
+                word += x;
                 csd.curChar++;
                 b = true;
             } else
@@ -30,7 +35,14 @@ public class PatternAnyWord extends Pattern
         }
 
         if(!b)
+        {
             return false;
+        }
+
+        if(CompilerUtils.isReservedWord(word))
+        {
+           return false;
+        }
 
         return true;
     }

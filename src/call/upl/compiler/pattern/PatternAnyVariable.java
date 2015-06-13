@@ -1,5 +1,7 @@
 package call.upl.compiler.pattern;
 
+import call.upl.compiler.core.CompilerUtils;
+
 /**
  * Created by Callum on 24/04/2015.
  */
@@ -10,7 +12,7 @@ public class PatternAnyVariable extends Pattern
     {
         boolean b = false;
 
-        String s = "";
+        String word = "";
 
         while(true)
         {
@@ -24,12 +26,17 @@ public class PatternAnyVariable extends Pattern
             if(Character.toString(x).matches("[a-zA-Z_@0-9\\[\\]]"))
             {
                 csd.curChar++;
-                s += x;
+                word += x;
                 b = true;
             } else
             {
                 break;
             }
+        }
+
+        if(CompilerUtils.isReservedWord(word))
+        {
+            return false;
         }
 
         return b;
