@@ -1,5 +1,12 @@
 include "B:\Git\UPL-Compiler\IO.call"
 
-x = 10 + 10 + 10
+func test(x) ->
+{
+    x = x + 10
 
-print(x)
+    println(x)
+}
+
+x = 10
+test(x)
+println(x)

@@ -48,7 +48,8 @@ public class CompileNodeFunctionDefinitions extends CompileNode
 
             uplCompiler.writeCode(name);
 
-            name = name.replaceFirst("\\.", "");
+            //enter namespace
+            uplCompiler.writeCode("nsp " + name.substring(1, name.length()));
 
             int i = compileStateData.curLineNumber + 1;
 
@@ -86,6 +87,9 @@ public class CompileNodeFunctionDefinitions extends CompileNode
             }
 
             compileStateData.curLineNumber = i;
+
+            //leave namespace
+            uplCompiler.writeCode("endnsp");
 
             uplCompiler.writeCode("end");
 
