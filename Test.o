@@ -1,21 +1,12 @@
-<<<<<<< HEAD
 .test
 nsp test
 pop x
 psh x
-=======
-psh 10.0
-psh 10.0
-pop @TEMP0@
-pop @TEMP1@
-add @TEMP0@ @TEMP1@
->>>>>>> 8a4c1012e0f7efb2c92d96603b6760317a53f805
 psh 10.0
 pop @TEMP0@
 pop @TEMP1@
 add @TEMP0@ @TEMP1@
 pop x
-<<<<<<< HEAD
 psh x
 jmp println
 endnsp
@@ -27,16 +18,10 @@ psh x
 jmp println
 .newline
 nsp newline
-=======
-psh x
-jmp print
-.newline
->>>>>>> 8a4c1012e0f7efb2c92d96603b6760317a53f805
 dwd @TEMP0@ /n
 psh @TEMP0@
 int 0x1
 dwd @TEMP0@ NULL
-<<<<<<< HEAD
 endnsp
 end
 .print
@@ -56,64 +41,34 @@ endnsp
 end
 .readChar
 nsp readChar
-=======
-end
-.print
-pop x
-psh x
-int 0x1
-end
-.println
-pop x
-psh x
-int 0x1
-jmp newline
-end
-.readChar
->>>>>>> 8a4c1012e0f7efb2c92d96603b6760317a53f805
 int 0x3
 pop @TEMP@
 mov @TEMP0@ @TEMP@
 psh @TEMP0@
-<<<<<<< HEAD
 endnsp
 end
 .itoa
 nsp itoa
-=======
-end
-.itoa
->>>>>>> 8a4c1012e0f7efb2c92d96603b6760317a53f805
 pop num
 psh num
 int 0x4
 pop @TEMP@
 mov @TEMP0@ @TEMP@
 psh @TEMP0@
-<<<<<<< HEAD
 endnsp
 end
 .atoi
 nsp atoi
-=======
-end
-.atoi
->>>>>>> 8a4c1012e0f7efb2c92d96603b6760317a53f805
 pop a
 psh a
 int 0x5
 pop @TEMP@
 mov @TEMP0@ @TEMP@
 psh @TEMP0@
-<<<<<<< HEAD
 endnsp
 end
 .readString
 nsp readString
-=======
-end
-.readString
->>>>>>> 8a4c1012e0f7efb2c92d96603b6760317a53f805
 dwd tempString  
 jmp readChar
 pop temp 
@@ -132,8 +87,5 @@ pop temp
 endwhl
 mov @TEMP0@ tempString
 psh @TEMP0@
-<<<<<<< HEAD
 endnsp
-=======
->>>>>>> 8a4c1012e0f7efb2c92d96603b6760317a53f805
 end
