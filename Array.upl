@@ -10,7 +10,7 @@ func range(s, e) ->
     {
        returnValue[temp] = size + temp
 
-       temp = temp + 1
+       temp++
     }
 
     return returnValue

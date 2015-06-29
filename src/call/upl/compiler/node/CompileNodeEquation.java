@@ -34,6 +34,15 @@ public class CompileNodeEquation extends CompileNode
             return true;
         }
 
+        if(curLine.matches("[a-zA-Z_@0-9\\[\\]]+\\s*\\+\\+"))
+        {
+            String varName = curLine.replace("++", "");
+            uplCompiler.writeCode("add " + varName + " 1");
+            uplCompiler.writeCode("pop " + varName);
+
+            return true;
+        }
+
         return false;
     }
 }

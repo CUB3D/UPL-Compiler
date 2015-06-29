@@ -1,12 +1,7 @@
 include "B:\Git\UPL-Compiler\IO.call"
+include "B:\Git\UPL-Compiler\Array.upl"
 
-func test(x) ->
-{
-    x = x + 10
+x = 0
+x++
 
-    println(x)
-}
-
-x = 10
-test(x)
-println(x)
+print(x)

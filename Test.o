@@ -1,21 +1,8 @@
-.test
-nsp test
+mov x 0
+add x 1
 pop x
 psh x
-psh 10.0
-pop @TEMP0@
-pop @TEMP1@
-add @TEMP0@ @TEMP1@
-pop x
-psh x
-jmp println
-endnsp
-end
-mov x 10
-psh x
-jmp test
-psh x
-jmp println
+jmp print
 .newline
 nsp newline
 dwd @TEMP0@ /n
@@ -86,6 +73,32 @@ jmp readChar
 pop temp 
 endwhl
 mov @TEMP0@ tempString
+psh @TEMP0@
+endnsp
+end
+.range
+nsp range
+pop e
+pop s
+psh e
+psh s
+pop @TEMP0@
+pop @TEMP1@
+sub @TEMP0@ @TEMP1@
+pop size
+psh @TEMP0@
+mov temp 0
+whl temp < size
+psh size
+psh temp
+pop @TEMP0@
+pop @TEMP1@
+add @TEMP0@ @TEMP1@
+pop returnValue[temp]
+add temp 1
+pop temp
+endwhl
+mov @TEMP0@ returnValue
 psh @TEMP0@
 endnsp
 end
