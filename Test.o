@@ -1,5 +1,5 @@
 psh 0
-psh 10
+psh 6
 jmp range
 pop test 
 mov @TEMP@ 0
@@ -8,12 +8,12 @@ mov x 0
 psh test
 int 0x6
 pop @TEMP1@
-whl @TEMP@ > @TEMP1@
-add @TEMP@ 1
-pop @TEMP@
-mov test[@TEMP@] x
+whl @TEMP@ < @TEMP1@
+mov x test[@TEMP@] 
 psh x
 jmp println
+add @TEMP@ 1
+pop @TEMP@
 endwhl
 .newline
 nsp newline
@@ -101,12 +101,7 @@ pop size
 ary returnValue size
 mov temp 0
 whl temp < size
-psh size
-psh temp
-pop @TEMP1@
-pop @TEMP0@
-add @TEMP0@ @TEMP1@
-pop returnValue[temp]
+mov returnValue[temp] temp
 add temp 1
 pop temp
 endwhl

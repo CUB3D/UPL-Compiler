@@ -1,33 +1,12 @@
 include "B:\Git\UPL-Compiler\IO.call"
 include "B:\Git\UPL-Compiler\Array.upl"
 
-test = range(0, 10)
+test = range(0, 6)
 
 for ( x : test ) ->
 {
     println(x)
 }
-
-//set temp 0
-//set temp1 0
-//set x 0
-
-//psh test
-//int 0x6
-//pop temp1
-
-//whl temp > temp1
-
-
-//temp++
-//mov test[temp1] x
-
-//psh x
-//jmp println
-
-
-//endwhl
-
 
 //for ( x = 0; x < 10; x++ )
 //{

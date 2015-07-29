@@ -50,12 +50,9 @@ public class CompileNodeFor extends CompileNode
             uplCompiler.writeCode("int 0x6");
             uplCompiler.writeCode("pop @TEMP1@");
 
-            uplCompiler.writeCode("whl @TEMP@ > @TEMP1@");
+            uplCompiler.writeCode("whl @TEMP@ < @TEMP1@");
 
-            uplCompiler.writeCode("add @TEMP@ 1");
-            uplCompiler.writeCode("pop @TEMP@");
-
-            uplCompiler.writeCode("mov " + variables[1] + "[@TEMP@] " + variables[0]);
+            uplCompiler.writeCode("mov " + variables[0] + " " + variables[1] + "[@TEMP@] ");
 
             int i = compileStateData.curLineNumber + 1;
 
@@ -85,6 +82,9 @@ public class CompileNodeFor extends CompileNode
             }
 
             compileStateData.curLineNumber = i;
+
+            uplCompiler.writeCode("add @TEMP@ 1");
+            uplCompiler.writeCode("pop @TEMP@");
 
             uplCompiler.writeCode("endwhl");
 

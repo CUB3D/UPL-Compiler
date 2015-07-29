@@ -8,7 +8,7 @@ func range(s, e) ->
 
     while(temp < size ) ->
     {
-       returnValue[temp] = size + temp
+       returnValue[temp] = temp
 
        temp++
     }
