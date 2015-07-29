@@ -3,30 +3,47 @@ include "B:\Git\UPL-Compiler\Array.upl"
 
 test = range(0, 10)
 
-for ( x : test)
+for ( x : test ) ->
 {
-    print(x)
+    println(x)
 }
 
-set temp 0
-whl temp <
+//set temp 0
+//set temp1 0
+//set x 0
+
+//psh test
+//int 0x6
+//pop temp1
+
+//whl temp > temp1
 
 
-for ( x = 0; x < 10; x++ )
-{
-    test--
+//temp++
+//mov test[temp1] x
 
-    print(x)
-    print(test) // would not work if namespace is used
-    //new syntax
-    print(this::test)
-    // this:: moves up the namespace stack by one
-    this::this::test // recursive
-}
+//psh x
+//jmp println
 
-set x 0
-whl x < 10
-x++ // raw copy
-psh x
-jmp print
-endwhl
+
+//endwhl
+
+
+//for ( x = 0; x < 10; x++ )
+//{
+//    test--
+//
+//    print(x)
+ //   print(test) // would not work if namespace is used
+ //   //new syntax
+ //   print(this::test)
+ //   // this:: moves up the namespace stack by one
+ //   this::this::test // recursive
+//}
+
+//set x 0
+//whl x < 10
+//x++ // raw copy
+//psh x
+//jmp print
+//endwhl

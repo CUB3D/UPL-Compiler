@@ -18,13 +18,13 @@ public class CompileNodeFunctionCall extends CompileNode
         callFunc.addMatchAnyWord();
         callFunc.addMatchSpace(0);
         callFunc.addMatchExact("(");
-        callFunc.addSkipToEnd();
+        callFunc.addMatchSkipToExact(")");
 
         if(PatternMacher.match(curLine, callFunc.toString()))
         {
             String name = curLine.substring(0, curLine.indexOf("(")).trim();
 
-            if(!name.startsWith("_")) //TODO: __uplbc goes here
+            if(!name.startsWith("_"))
             {
                 FunctionParser.convertFunctionToCode(uplCompiler, curLine);
 

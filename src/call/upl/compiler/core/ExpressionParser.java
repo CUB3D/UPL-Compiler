@@ -159,7 +159,7 @@ public class ExpressionParser
 
                 for(int i = 0; i < argCount; i++)
                 {
-                    result.add("pop @TEMP" + i + "@");
+                    result.add("pop @TEMP" + (argCount - i - 1) + "@");
 
                     s += " @TEMP" + i + "@";
                 }

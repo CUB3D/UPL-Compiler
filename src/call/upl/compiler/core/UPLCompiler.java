@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class UPLCompiler
 {
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     public List<String> code = new ArrayList<String>();
 

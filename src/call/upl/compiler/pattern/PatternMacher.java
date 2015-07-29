@@ -1,6 +1,7 @@
 package call.upl.compiler.pattern;
 
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.core.UPL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,16 +47,25 @@ public class PatternMacher
             }
         }
 
-        System.out.println("CC: " + csd.curChar + "  TLEN: " + csd.text.length + ", TXT: " + text);
+        if(UPLCompiler.DEBUG)
+        {
+            System.out.println("CC: " + csd.curChar + "  TLEN: " + csd.text.length + ", TXT: " + text);
+        }
 
         if(csd.curChar < csd.text.length) // some of the text was unmached
         {
-            System.out.println("Pattern match failed: unmatched text");
+            if(UPLCompiler.DEBUG)
+            {
+                System.out.println("Pattern match failed: unmatched text");
+            }
 
             return false;
         }
 
-        System.out.println("Pattern matched succesfuly");
+        if(UPLCompiler.DEBUG)
+        {
+            System.out.println("Pattern matched succesfuly");
+        }
 
         return true;
     }

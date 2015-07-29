@@ -16,7 +16,7 @@ public class CompileNodeArray extends CompileNode
     {
         PatternBuilder array = new PatternBuilder();
 
-        array.addMatchAnyWord();
+        array.addMatchVariable();
         array.addMatchSpace(0);
         array.addMatchExact("=");
         array.addMatchSpace(0);
