@@ -1,5 +1,7 @@
 package call.upl.compiler.core;
 
+import call.upl.core.UPL;
+
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.io.StringReader;

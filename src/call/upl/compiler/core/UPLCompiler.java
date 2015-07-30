@@ -20,14 +20,20 @@ import java.util.Map;
  */
 public class UPLCompiler
 {
+    public static UPLCompiler instance = null;
+
     public static final boolean DEBUG = false;
 
     public List<String> code = new ArrayList<String>();
 
     public BasicWriter writer;
 
+    public CompileStateData currentLineData = null;
+
     public UPLCompiler(FileAPI a) throws IOException
     {
+        instance = this;
+
         FileAPI f = new FileAPI(a.getPath().toString().replaceAll(".call", ".o"));
 
         f.createFile();
@@ -57,6 +63,8 @@ public class UPLCompiler
 
             String s;
 
+            //TODO: check for comment
+
             while((s = br.readLine()) != null)
             {
                 if(!s.trim().isEmpty())
@@ -83,16 +91,18 @@ public class UPLCompiler
 
     public int execLine(String s, int i)
     {
-        CompileStateData compileStateData = new CompileStateData();
-        compileStateData.curLine = s;
-        compileStateData.curLineNumber = i;
+        currentLineData = new CompileStateData();
+        currentLineData.curLine = s;
+        currentLineData.curLineNumber = i;
 
-        if(CompileNode.attemptCompile(this, compileStateData))
+        CompileNode.attemptCompile(this, currentLineData);
+
+        if(currentLineData.curLineNumber < i)
         {
-            return compileStateData.curLineNumber;
+            ExceptionSystem.throwException(s);
         }
 
-        return compileStateData.curLineNumber;
+        return i;
     }
 
     public void writeCode(String s)
@@ -109,7 +119,7 @@ public class UPLCompiler
     {
         FileAPI api = new FileAPI(args[0]);
 
-       new UPLCompiler(api);
+        new UPLCompiler(api);
     }
 
 

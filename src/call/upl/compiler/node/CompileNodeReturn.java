@@ -24,7 +24,7 @@ public class CompileNodeReturn extends CompileNode
 
             curLine = "@TEMP0@ = " + curLine;
 
-            uplCompiler.execLine(curLine, 0);
+            uplCompiler.execLine(curLine, compileStateData.curLineNumber);
 
             uplCompiler.writeCode("psh @TEMP0@");
 

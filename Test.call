@@ -1,11 +1,9 @@
-include "B:\Git\UPL-Compiler\IO.call"
-include "B:\Git\UPL-Compiler\Array.upl"
+#include "B:\Git\UPL-Compiler\IO.call"
+#include "B:\Git\UPL-Compiler\Array.upl"
 
-test = range(0, 6)
-
-for ( x : test ) ->
+if ( x == 0 ) ->
 {
-    println(x)
+    test()
 }
 
 //for ( x = 0; x < 10; x++ )

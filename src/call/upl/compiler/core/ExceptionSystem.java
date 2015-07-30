@@ -5,8 +5,20 @@ package call.upl.compiler.core;
  */
 public class ExceptionSystem
 {
-    public static void throwException(String s) throws Exception
+
+    public static void throwCodeException(String s)
     {
-        throw new Exception(s);
+        UPLCompiler instance = UPLCompiler.instance;
+
+        System.out.println("Error: " + s + ", on line " + instance.currentLineData.curLineNumber);
+
+        System.exit(0);
+    }
+
+    public static void throwException(String s)
+    {
+        System.out.println("Error " + s);
+
+        System.exit(0);
     }
 }
