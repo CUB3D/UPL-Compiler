@@ -36,7 +36,7 @@ public class CompileNodeArray extends CompileNode
             String size = contents.split(":")[1];
             contents = contents.substring(0, contents.length() - size.length() - 1);
 
-            uplCompiler.writeCode("ary " + name + " " + size);
+            writeCode("ary " + name + " " + size);
 
             contents = contents.substring(1, contents.length() - 1); // remove []
 
@@ -46,7 +46,7 @@ public class CompileNodeArray extends CompileNode
             {
                 for (int i = 0; i < contentsArray.length; i++)
                 {
-                    uplCompiler.writeCode("mov " + name + "[" + i + "] " + contentsArray[i]);
+                    writeCode("mov " + name + "[" + i + "] " + contentsArray[i]);
                 }
             }
 

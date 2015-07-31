@@ -1,5 +1,6 @@
 package call.upl.compiler.node;
 
+import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
@@ -39,59 +40,63 @@ public class CompileNodeFunctionDefinitions extends CompileNode
             String[] split = curLine.split(" ");
             String name = split[0];
             boolean hasArgs = split.length == 2;
-            String[] args = null;
+            String[] arguments = null;
 
             if(hasArgs)
             {
-                args = split[1].split(",");
+                arguments = split[1].split(",");
             }
 
-            uplCompiler.writeCode(name);
+            writeCode(name);
 
             //enter namespace
-            uplCompiler.writeCode("nsp " + name.substring(1, name.length()));
+            writeCode("nsp " + name.substring(1, name.length()));
 
-            int i = compileStateData.curLineNumber + 1;
+            compileStateData.curLineNumber++;
 
-            if(uplCompiler.code.get(i).equals("{"))
+            if(getLine(compileStateData.curLineNumber++).equals("{"))
             {
-                i++;
-
                 if(hasArgs)
                 {
-                    for (int i1 = args.length - 1; i1 >= 0; i1--)
+                    for (int argumentIndex = arguments.length - 1; argumentIndex >= 0; argumentIndex--)
                     {
-                        uplCompiler.writeCode("pop " + args[i1]);
+                        writeCode("pop " + arguments[argumentIndex]);
                     }
                 }
 
                 while(true)
                 {
-                    String line = uplCompiler.code.get(i);
+                    String line = getLine(compileStateData.curLineNumber);
 
                     if(line.equals("}"))
                     {
                         break;
-                    } else
+                    }
+                    else
                     {
-                        String codeLine = line.trim();
-
-                        i = uplCompiler.execLine(codeLine, i);
+                        if(getCurrentLineNumber() + 1 == uplCompiler.code.size())
+                        {
+                            // could not find end
+                            ExceptionSystem.throwCodeException("Function statement read past EOF, no end token found, in function \"" + name + "\"");
+                        }
+                        else
+                        {
+                            compileStateData.curLineNumber = uplCompiler.execLine(line, compileStateData.curLineNumber);
+                        }
                     }
 
-                    i++;
+                    compileStateData.curLineNumber++;
                 }
-            } else
+            }
+            else
             {
-                System.out.println("Error uncomplete statement");
+                ExceptionSystem.throwCodeException("Function code block missing, no start token found, in function \"" + name + "\"");
             }
 
-            compileStateData.curLineNumber = i;
-
             //leave namespace
-            uplCompiler.writeCode("endnsp");
+            writeCode("endnsp");
 
-            uplCompiler.writeCode("end");
+            writeCode("end");
 
             compileStateData.isInFunction = false;
 

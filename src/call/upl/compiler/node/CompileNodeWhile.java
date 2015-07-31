@@ -1,5 +1,6 @@
 package call.upl.compiler.node;
 
+import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMacher;
@@ -49,38 +50,44 @@ public class CompileNodeWhile extends CompileNode
 
             curLine = curLine.replaceAll("while", "whl");
 
-            uplCompiler.writeCode(curLine);
+            writeCode(curLine);
 
-            int i = compileStateData.curLineNumber + 1;
+            compileStateData.curLineNumber++;
 
-            if(uplCompiler.code.get(i).trim().equals("{"))
+            if(getLine(compileStateData.curLineNumber++).equals("{"))
             {
-                i++;
-
                 while(true)
                 {
-                    String line = uplCompiler.code.get(i).trim();
+                    String line = getLine(compileStateData.curLineNumber);
 
                     if(line.equals("}"))
                     {
                         break;
-                    } else
+                    }
+                    else
                     {
-                        String codeLine = line;
+                        if(getCurrentLineNumber() + 1 == uplCompiler.code.size())
+                        {
+                            // could not find end
+                            ExceptionSystem.throwCodeException("While statement read past EOF, no end token found");
+                        }
+                        else
+                        {
+                            String codeLine = line;
 
-                        i = uplCompiler.execLine(codeLine, i);
+                            compileStateData.curLineNumber = uplCompiler.execLine(codeLine, compileStateData.curLineNumber);
+                        }
                     }
 
-                    i++;
+                    compileStateData.curLineNumber++;
                 }
-            } else
+            }
+            else
             {
-                System.out.println("Error uncomplete statement");
+                ExceptionSystem.throwCodeException("While statement code block missing, no start token found");
             }
 
-            compileStateData.curLineNumber = i;
-
-            uplCompiler.writeCode("endwhl");
+            writeCode("endwhl");
 
             return true;
         }

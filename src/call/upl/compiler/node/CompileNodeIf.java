@@ -58,7 +58,7 @@ public class CompileNodeIf extends CompileNode
             {
                 while(true)
                 {
-                    String line = getCurrentLine();
+                    String line = getLine(compileStateData.curLineNumber);
 
                     if(line.equals("}"))
                     {

@@ -1,26 +1,35 @@
 #include "B:\Git\UPL-Compiler\IO.call"
 #include "B:\Git\UPL-Compiler\Array.upl"
 
-if ( x == 0 ) ->
+func test()->
 {
-    test()
 }
 
-//for ( x = 0; x < 10; x++ )
-//{
-//    test--
-//
-//    print(x)
- //   print(test) // would not work if namespace is used
- //   //new syntax
- //   print(this::test)
- //   // this:: moves up the namespace stack by one
- //   this::this::test // recursive
-//}
+test = range(0, 10)
 
-//set x 0
-//whl x < 10
-//x++ // raw copy
-//psh x
-//jmp print
-//endwhl
+for(x : test)->
+{
+    println(x)
+}
+
+
+
+
+    //for ( x = 0; x < 10; x++ )
+       //{
+       //    test--
+       //
+       //    print(x)
+        //   print(test) // would not work if namespace is used
+        //   //new syntax
+        //   print(this::test)
+        //   // this:: moves up the namespace stack by one
+        //   this::this::test // recursive
+       //
+
+    //set x 0
+    //whl x < 10
+    //x++ // raw copy
+    //psh x
+    //jmp print
+    //endwhl

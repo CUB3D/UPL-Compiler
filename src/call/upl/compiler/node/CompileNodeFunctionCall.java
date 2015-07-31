@@ -42,7 +42,7 @@ public class CompileNodeFunctionCall extends CompileNode
                     curLine = curLine.substring(1, curLine.length() - 1);
                     // X Y
 
-                    uplCompiler.writeCode(curLine);
+                    writeCode(curLine);
                 }
             }
         }

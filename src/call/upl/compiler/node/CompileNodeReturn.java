@@ -26,7 +26,7 @@ public class CompileNodeReturn extends CompileNode
 
             uplCompiler.execLine(curLine, compileStateData.curLineNumber);
 
-            uplCompiler.writeCode("psh @TEMP0@");
+            writeCode("psh @TEMP0@");
 
             return true;
         }

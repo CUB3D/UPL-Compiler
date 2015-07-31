@@ -54,11 +54,6 @@ public abstract class CompileNode
         return UPLCompiler.instance.code.get(line).trim();
     }
 
-    public String getCurrentLine()
-    {
-        return getLine(UPLCompiler.instance.currentLineData.curLineNumber);
-    }
-
     public int getCurrentLineNumber()
     {
         return UPLCompiler.instance.currentLineData.curLineNumber;

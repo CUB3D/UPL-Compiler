@@ -102,7 +102,7 @@ public class UPLCompiler
             ExceptionSystem.throwException(s);
         }
 
-        return i;
+        return currentLineData.curLineNumber;
     }
 
     public void writeCode(String s)

@@ -42,51 +42,49 @@ public class CompileNodeFor extends CompileNode
 
             //x, y
 
-            uplCompiler.writeCode("mov @TEMP@ 0");
-            uplCompiler.writeCode("mov @TEMP1@ 0");
-            uplCompiler.writeCode("mov " + variables[0] + " 0");
+            writeCode("mov @TEMP@ 0");
+            writeCode("mov @TEMP1@ 0");
+            writeCode("mov " + variables[0] + " 0");
 
-            uplCompiler.writeCode("psh " + variables[1]);
-            uplCompiler.writeCode("int 0x6");
-            uplCompiler.writeCode("pop @TEMP1@");
+            writeCode("psh " + variables[1]);
+            writeCode("int 0x6");
+            writeCode("pop @TEMP1@");
 
-            uplCompiler.writeCode("whl @TEMP@ < @TEMP1@");
+            writeCode("whl @TEMP@ < @TEMP1@");
 
-            uplCompiler.writeCode("mov " + variables[0] + " " + variables[1] + "[@TEMP@] ");
+            writeCode("mov " + variables[0] + " " + variables[1] + "[@TEMP@]");
 
-            int i = compileStateData.curLineNumber + 1;
+            compileStateData.curLineNumber++;
 
-            if(uplCompiler.code.get(i).trim().equals("{"))
+            if(getLine(compileStateData.curLineNumber++).equals("{"))
             {
-                i++;
-
                 while(true)
                 {
-                    String line = uplCompiler.code.get(i).trim();
+                    String line = getLine(compileStateData.curLineNumber);
 
                     if(line.equals("}"))
                     {
                         break;
-                    } else
+                    }
+                    else
                     {
                         String codeLine = line;
 
-                        i = uplCompiler.execLine(codeLine, i);
+                        compileStateData.curLineNumber = uplCompiler.execLine(codeLine, compileStateData.curLineNumber);
                     }
 
-                    i++;
+                    compileStateData.curLineNumber++;
                 }
-            } else
+            }
+            else
             {
                 System.out.println("Error uncompleted statement");
             }
 
-            compileStateData.curLineNumber = i;
+            writeCode("add @TEMP@ 1");
+            writeCode("pop @TEMP@");
 
-            uplCompiler.writeCode("add @TEMP@ 1");
-            uplCompiler.writeCode("pop @TEMP@");
-
-            uplCompiler.writeCode("endwhl");
+            writeCode("endwhl");
 
             return true;
         }

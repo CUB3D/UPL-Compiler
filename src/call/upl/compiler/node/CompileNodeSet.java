@@ -26,7 +26,7 @@ public class CompileNodeSet extends CompileNode
             String name = args[0].trim();
             String value = args[1].trim();
 
-            uplCompiler.writeCode("mov " + name + " " + value);
+            writeCode("mov " + name + " " + value);
 
             return true;
         }
@@ -52,7 +52,7 @@ public class CompileNodeSet extends CompileNode
 
             ss[1] = ss[1].substring(1, ss[1].length());
 
-            uplCompiler.writeCode("dwd " + ss[0] + " " + ss[1]);
+            writeCode("dwd " + ss[0] + " " + ss[1]);
 
             return true;
         }
