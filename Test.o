@@ -1,25 +1,11 @@
-.test
-nsp test
-endnsp
-end
+dwd a java.io.File
+dwd b .
+dwd c getAbsolutePath
 
-psh 0
-psh 10
-jmp range
-pop test
+cnc a b
 
-mov @TEMP@ 0
-mov @TEMP1@ 0
-mov x 0
-psh test
-int 0x6
-pop @TEMP1@
-whl @TEMP@ < @TEMP1@
-mov x test[@TEMP@]
+pop File
 
-psh x
-jmp println
+cnm File c
 
-add @TEMP@ 1
-pop @TEMP@
-endwhl
+int 0x1

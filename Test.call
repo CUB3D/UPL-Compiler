@@ -1,10 +1,5 @@
-#include "B:\Git\UPL-Compiler\IO.call"
-#include "B:\Git\UPL-Compiler\Array.upl"
-
-func test()->
-{
-}
-
+include "IO.call"
+include "Array.upl"
 test = range(0, 10)
 
 for(x : test)->
