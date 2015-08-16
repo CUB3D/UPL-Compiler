@@ -1,11 +1,29 @@
-dwd a java.io.File
-dwd b .
-dwd c getAbsolutePath
-
-cnc a b
-
-pop File
-
-cnm File c
-
-int 0x1
+mov @TEMP0@ @TEMP0@
+psh @TEMP0@
+mov @TEMP0@ @TEMP1@
+psh @TEMP0@
+.readStringFromFile
+nsp readStringFromFile
+pop reader
+dwd tempString 
+psh reader
+jmp read
+pop temp 
+whl temp > 10
+psh temp
+jmp itoa
+pop temp 
+psh tempString
+psh temp
+pop @TEMP1@
+pop @TEMP0@
+add @TEMP0@ @TEMP1@
+pop tempString
+psh reader
+jmp read
+pop temp 
+endwhl
+endnsp
+end
+mov @TEMP0@ tempString
+psh @TEMP0@

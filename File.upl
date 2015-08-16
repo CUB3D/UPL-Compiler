@@ -1,0 +1,40 @@
+#func loadFileForReading(name) ->
+{
+    __UPLBC("psh name")
+    __UPLBC("psh 1")
+    __UPLBC("int 0x7")
+
+    __UPLBC("pop @TEMP0@")
+
+    return @TEMP0@
+}
+
+#func read(reader) ->
+{
+        __UPLBC("dwd @TEMP0@ read")
+        __UPLBC("cnm reader @TEMP0@")
+        __UPLBC("pop @TEMP1@")
+
+        return @TEMP1@
+}
+
+func readStringFromFile(reader) ->
+{
+    // cheaty way of creating an empty string
+    __UPLBC("dwd tempString ")
+    temp = read(reader)
+
+    while(temp > 10) ->
+    {
+        temp = itoa(temp)
+
+        tempString = tempString + temp
+
+        temp = read(reader)
+    }
+
+    return tempString
+}
+
+
+

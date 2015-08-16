@@ -1,12 +1,14 @@
-include "IO.call"
-include "Array.upl"
-test = range(0, 10)
+#include "IO.call"
+#include "Array.upl"
+include "File.upl"
 
-for(x : test)->
-{
-    println(x)
-}
+#test = "C:\Users\Callum\Documents\GitHub\UPLBC-Compiler\Array.upl"
 
+#arrayReader = loadFileForReading(test)
+
+#firstLine = readStringFromFile(arrayReader)
+
+#println(firstLine)
 
 
 

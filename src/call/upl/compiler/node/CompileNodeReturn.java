@@ -12,11 +12,13 @@ public class CompileNodeReturn extends CompileNode
     @Override
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
     {
+        curLine = curLine.trim();
+
         //return x
         PatternBuilder ret = new PatternBuilder();
         ret.addMatchExact("return");
         ret.addMatchSpace(0);
-        ret.addMatchValue();
+        ret.addMatchVariable();
 
         if(PatternMacher.match(curLine, ret.toString()))
         {
