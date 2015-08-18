@@ -68,7 +68,7 @@ public class CompileNodeFunctionDefinitions extends CompileNode
                 {
                     String line = getLine(compileStateData.curLineNumber);
 
-                    compileStateData.curLine = line;
+                   // compileStateData.curLine = line;
 
                     if(line.equals("}"))
                     {
@@ -84,13 +84,10 @@ public class CompileNodeFunctionDefinitions extends CompileNode
                         else
                         {
                             compileStateData.curLineNumber = uplCompiler.execLine(line, compileStateData.curLineNumber);
-
-                            System.out.println(getLine(compileStateData.curLineNumber));
-
                         }
                     }
 
-                    compileStateData.curLineNumber++;
+                   compileStateData.curLineNumber++;
                 }
             }
             else

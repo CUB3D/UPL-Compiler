@@ -58,7 +58,7 @@ public class CompileNodeWhile extends CompileNode
             {
                 while(true)
                 {
-                    String line = getLine(compileStateData.curLineNumber);
+                    String line = getLine(compileStateData.curLineNumber++);
 
                     if(line.equals("}"))
                     {
@@ -76,8 +76,6 @@ public class CompileNodeWhile extends CompileNode
                             compileStateData.curLineNumber = uplCompiler.execLine(line, compileStateData.curLineNumber);
                         }
                     }
-
-                    compileStateData.curLineNumber++;
                 }
             }
             else

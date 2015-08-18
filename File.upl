@@ -1,4 +1,4 @@
-#func loadFileForReading(name) ->
+func loadFileForReading(name) ->
 {
     __UPLBC("psh name")
     __UPLBC("psh 1")
@@ -9,13 +9,13 @@
     return @TEMP0@
 }
 
-#func read(reader) ->
+func read(reader) ->
 {
-        __UPLBC("dwd @TEMP0@ read")
-        __UPLBC("cnm reader @TEMP0@")
-        __UPLBC("pop @TEMP1@")
+    __UPLBC("dwd @TEMP0@ read")
+    __UPLBC("cnm reader @TEMP0@")
+    __UPLBC("pop @TEMP1@")
 
-        return @TEMP1@
+    return @TEMP1@
 }
 
 func readStringFromFile(reader) ->
@@ -32,9 +32,9 @@ func readStringFromFile(reader) ->
 
         temp = read(reader)
     }
-
     return tempString
 }
+bla
 
 
 
