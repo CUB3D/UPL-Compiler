@@ -134,12 +134,12 @@ public class ExpressionTest
 
         expected.add("psh 6.0");
         expected.add("psh 4.0");
-        expected.add("pop @TEMP0@");
         expected.add("pop @TEMP1@");
+        expected.add("pop @TEMP0@");
         expected.add("add @TEMP0@ @TEMP1@");
         expected.add("psh 2.0");
-        expected.add("pop @TEMP0@");
         expected.add("pop @TEMP1@");
+        expected.add("pop @TEMP0@");
         expected.add("div @TEMP0@ @TEMP1@");
 
         assertEquals(expected, uplbc);
