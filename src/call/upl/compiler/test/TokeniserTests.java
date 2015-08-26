@@ -29,12 +29,11 @@ public class TokeniserTests
      * Return:
      * Implemented:
      * return variable
-     *
-     * Not Implemented:
      * return string
-     * return array
      * return array Element
      * return number
+     *
+     * Not Implemented:
      *
      **/
 
@@ -138,7 +137,7 @@ public class TokeniserTests
     }
 
     @Test
-    public void testReturn0()
+    public void testReturnVariable()
     {
         String expression = "return @temp1@";
 
@@ -152,13 +151,41 @@ public class TokeniserTests
     }
 
     @Test
-    public void testReturn1()
+    public void testReturnString()
     {
-        String expression = "return 1@temp1@";
+        String expression = "return \"This is a test\"";
 
         String output = TestUtils.join(Tokeniser.tokenise(expression));
 
-        String expected = "return,1,@temp1@";
+        String expected = "return,\",This,is,a,test,\"";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testReturnArrayElement()
+    {
+        String expression = "return a[10]";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "return,a,[,10,]";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testReturnNumber()
+    {
+        String expression = "return 10";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "return,10";
 
         assertEquals(expected, output);
 
