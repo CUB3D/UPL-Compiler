@@ -32,12 +32,19 @@ public class Tokeniser
                 type = getTokenType(currentCharacter);
             }
 
-            if(getTokenType(currentCharacter) != type)
+            if(getTokenType(currentCharacter) == TokenType.NUMBER && type == TokenType.WORD)
             {
-                // split
-                tokens.add(tempToken);
-                tempToken = "";
-                type = getTokenType(currentCharacter);
+
+            }
+            else
+            {
+                if(getTokenType(currentCharacter) != type)
+                {
+                    // split
+                    tokens.add(tempToken);
+                    tempToken = "";
+                    type = getTokenType(currentCharacter);
+                }
             }
 
             if(currentCharacter == ' ')
@@ -73,7 +80,7 @@ public class Tokeniser
 
     public static TokenType getTokenType(char c)
     {
-        return Character.isLetter(c) ? TokenType.WORD :
+        return (Character.isLetter(c) || c == '@') ? TokenType.WORD :
                 Character.isDigit(c) ? TokenType.NUMBER :
                         isSpecial(c) ? TokenType.SPECIAL : TokenType.UNKNOWN;
     }
