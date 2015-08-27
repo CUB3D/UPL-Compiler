@@ -23,9 +23,39 @@ public class Tokeniser
 
         TokenType type = TokenType.UNKNOWN;
 
+        boolean inString = false;
+
         for(int i = 0; i < characters.length; i++)
         {
             char currentCharacter = characters[i];
+
+            if(inString)
+            {
+                if(currentCharacter == ' ')
+                {
+                    tokens.add(tempToken);
+                    tempToken = "";
+                    type = TokenType.UNKNOWN;
+                    continue;
+                }
+
+                if(isSpecial(currentCharacter))
+                {
+                    if(currentCharacter == '"')
+                    {
+                        inString = !inString;
+                        tokens.add(tempToken);
+                        tokens.add("\"");
+                        tempToken = "";
+                        type = TokenType.UNKNOWN;
+                        continue;
+                    }
+                }
+
+                tempToken += currentCharacter;
+
+                continue;
+            }
 
             if(type == TokenType.UNKNOWN)
             {
@@ -57,6 +87,11 @@ public class Tokeniser
 
             if(isSpecial(currentCharacter))
             {
+                if(currentCharacter == '"')
+                {
+                    inString = !inString;
+                }
+
                 if(!tempToken.isEmpty())
                 {
                     tokens.add(tempToken);

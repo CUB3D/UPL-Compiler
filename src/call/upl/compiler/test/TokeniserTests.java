@@ -23,8 +23,9 @@ public class TokeniserTests
      * var -> string
      * array -> array
      * array -> string
-     * Not Implemented:
      * var -> var
+     * Not Implemented:
+     * None
      *
      * Return:
      * Implemented:
@@ -32,8 +33,12 @@ public class TokeniserTests
      * return string
      * return array Element
      * return number
-     *
      * Not Implemented:
+     * None
+     *
+     * Include:
+     * Implemented:
+     * include string
      *
      **/
 
@@ -102,6 +107,20 @@ public class TokeniserTests
         String output = TestUtils.join(Tokeniser.tokenise(expression));
 
         String expected = "test,=,\",This,is,a,test,\"";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testSetVariableVariable()
+    {
+        String expression = "test = @temp1@";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "test,=,@temp1@";
 
         assertEquals(expected, output);
 
@@ -186,6 +205,20 @@ public class TokeniserTests
         String output = TestUtils.join(Tokeniser.tokenise(expression));
 
         String expected = "return,10";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testIncludeString()
+    {
+        String expression = "include \"C:\\abc\\def\\ghi\"";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "include,\",C:\\abc\\def\\ghi,\"";
 
         assertEquals(expected, output);
 
