@@ -40,6 +40,50 @@ public class TokeniserTests
      * Implemented:
      * include string
      *
+     * While:
+     * Implemented:
+     * while var == var
+     * while var == number
+     * while var == string
+     * while var == array element
+     * while var > number
+     * while var > array element
+     * while var < number
+     * while var < array element
+     * while var >= number
+     * while var >= array element
+     * while var <= number
+     * while var <= array element
+     *
+     * Not Implemented:
+     *
+     * while var != number
+     * while var != string
+     * while var != array element
+     *
+     * while number == var
+     * while string == var
+     * while array element == var
+     *
+     * while number > var
+     * while string > var
+     * while array element > var
+     *
+     * while number < var
+     * while string < var
+     * while array element < var
+     *
+     * while number >= var
+     * while string >= var
+     * while array element >= var
+     *
+     * while number <= var
+     * while string <= var
+     * while array element <= var
+     *
+     * while number != var
+     * while string != var
+     * while array element != var
      **/
 
 
@@ -219,6 +263,174 @@ public class TokeniserTests
         String output = TestUtils.join(Tokeniser.tokenise(expression));
 
         String expected = "include,\",C:\\abc\\def\\ghi,\"";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableEqualsVariable()
+    {
+        String expression = "while ( test == @temp1@) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,=,=,@temp1@,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableEqualsNumber()
+    {
+        String expression = "while ( test == 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,=,=,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableEqualsString()
+    {
+        String expression = "while ( test == \"This is a test\") ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,=,=,\",This,is,a,test,\",),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableEqualsArrayElement()
+    {
+        String expression = "while ( test == a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,=,=,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableMoreThanNumber()
+    {
+        String expression = "while ( test > 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,>,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableMoreThanArrayElement()
+    {
+        String expression = "while ( test > a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,>,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableLessThanNumber()
+    {
+        String expression = "while ( test < 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,<,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableLessThanArrayElement()
+    {
+        String expression = "while ( test < a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,<,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableMoreThanEqualNumber()
+    {
+        String expression = "while ( test >= 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,>,=,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableMoreThanEqualsArrayElement()
+    {
+        String expression = "while ( test >= a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,>,=,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableLessThanEqualNumber()
+    {
+        String expression = "while ( test <= 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,<,=,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testWhileVariableLessThanEqualsArrayElement()
+    {
+        String expression = "while ( test <= a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "while,(,test,<,=,a,[,@temp@,],),-,>";
 
         assertEquals(expected, output);
 
