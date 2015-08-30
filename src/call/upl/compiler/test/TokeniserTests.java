@@ -68,7 +68,7 @@ public class TokeniserTests
      * while string != var
      * while array element != var
      *
-     * if:
+     * If:
      * Implemented:
      * if var == var
      * if var == number
@@ -99,6 +99,38 @@ public class TokeniserTests
      * if number != var
      * if string != var
      * if array element != var
+     *
+     * For:
+     * Implemented:
+     * for var == var
+     * for var == number
+     * for var == string
+     * for var == array element
+     * for var > number
+     * for var > array element
+     * for var < number
+     * for var < array element
+     * for var >= number
+     * for var >= array element
+     * for var <= number
+     * for var <= array element
+     * for var != number
+     * for var != string
+     * for var != array element
+     * for number == var
+     * for string == var
+     * for array element == var
+     * for number > var
+     * for array element > var
+     * for number < var
+     * for array element < var
+     * for number >= var
+     * for array element >= var
+     * for number <= var
+     * for array element <= var
+     * for number != var
+     * for string != var
+     * for array element != var
      *
      **/
 
@@ -1091,6 +1123,412 @@ public class TokeniserTests
         String output = TestUtils.join(Tokeniser.tokenise(expression));
 
         String expected = "if,(,a,[,@temp@,],!,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableEqualsVariable()
+    {
+        String expression = "for ( test == @temp1@) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,=,=,@temp1@,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableEqualsNumber()
+    {
+        String expression = "for ( test == 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,=,=,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableEqualsString()
+    {
+        String expression = "for ( test == \"This is a test\") ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,=,=,\",This,is,a,test,\",),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableEqualsArrayElement()
+    {
+        String expression = "for ( test == a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,=,=,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableMoreThanNumber()
+    {
+        String expression = "for ( test > 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,>,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableMoreThanArrayElement()
+    {
+        String expression = "for ( test > a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,>,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableLessThanNumber()
+    {
+        String expression = "for ( test < 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,<,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableLessThanArrayElement()
+    {
+        String expression = "for ( test < a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,<,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableMoreThanEqualNumber()
+    {
+        String expression = "for ( test >= 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,>,=,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableMoreThanEqualsArrayElement()
+    {
+        String expression = "for ( test >= a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,>,=,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableLessThanEqualNumber()
+    {
+        String expression = "for ( test <= 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,<,=,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableLessThanEqualArrayElement()
+    {
+        String expression = "for ( test <= a[@test1@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,<,=,a,[,@test1@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableNotEqualsNumber()
+    {
+        String expression = "for ( test != 10) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,!,=,10,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableNotEqualsString()
+    {
+        String expression = "for ( test != \"This is a test\") ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,!,=,\",This,is,a,test,\",),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForVariableNotEqualsArrayElement()
+    {
+        String expression = "for ( test != a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,!,=,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForNumberEqualsVariable()
+    {
+        String expression = "for ( 10 == test) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,10,=,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForStringEqualsVariable()
+    {
+        String expression = "for ( \"This is a test\" == test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,\",This,is,a,test,\",=,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForArrayElementEqualsVariable()
+    {
+        String expression = "for ( a[@temp@] == test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,a,[,@temp@,],=,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForNumberMoreThanVariable()
+    {
+        String expression = "for ( 10 > test) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,10,>,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForArrayElementMoreThanVariable()
+    {
+        String expression = "for ( a[@temp@] > test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,a,[,@temp@,],>,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForNumberLessThanVariable()
+    {
+        String expression = "for ( 10 < test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,10,<,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForArrayElementLessThanVariable()
+    {
+        String expression = "for ( a[@temp@] < test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,a,[,@temp@,],<,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForNumberMoreThanEqualVariable()
+    {
+        String expression = "for ( 10 >= test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,10,>,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForArrayElementMoreThanEqualVariable()
+    {
+        String expression = "for ( test >= a[@temp@]) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,test,>,=,a,[,@temp@,],),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForNumberLessThanEqualsVariable()
+    {
+        String expression = "for ( 10 <= test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,10,<,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForArrayElementLessThanEqualsVariable()
+    {
+        String expression = "for ( a[@test@] <= test ) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,a,[,@test@,],<,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForNumberNotEqualsVariable()
+    {
+        String expression = "for ( 10 != test) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,10,!,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForStringNotEqualsVariable()
+    {
+        String expression = "for ( \"This is a test\" != test) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,\",This,is,a,test,\",!,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testForArrayElementNotEqualsVariable()
+    {
+        String expression = "for ( a[@temp@] != test) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "for,(,a,[,@temp@,],!,=,test,),-,>";
 
         assertEquals(expected, output);
 
