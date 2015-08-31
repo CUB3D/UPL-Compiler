@@ -141,6 +141,14 @@ public class TokeniserTests
      * with array element
      * with two arguments
      * Not Implemented:
+     * None
+     *
+     * Function definition:
+     * Implemented:
+     * no args
+     * one arg
+     * two args
+     *
      *
      **/
 
@@ -1623,6 +1631,48 @@ public class TokeniserTests
         String output = TestUtils.join(Tokeniser.tokenise(expression));
 
         String expected = "function,(,\",This,is,a,test,\",,,10,)";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionDefinitionNoArguments()
+    {
+        String expression = "func function() ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "func,function,(,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionDefinitionOneArgument()
+    {
+        String expression = "func function(argument1) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "func,function,(,argument1,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionDefinitionTwoArguments()
+    {
+        String expression = "func function(argument1, @temp1@) ->";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "func,function,(,argument1,,,@temp1@,),-,>";
 
         assertEquals(expected, output);
 
