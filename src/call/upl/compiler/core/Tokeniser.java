@@ -120,7 +120,7 @@ public class Tokeniser
                         isSpecial(c) ? TokenType.SPECIAL : TokenType.UNKNOWN;
     }
 
-    public static char[] special = {'=', '-', '>', '<', '[', ']', '"', ':', '(', ')'};
+    public static char[] special = {'=', '-', '>', '<', '[', ']', '"', ':', '(', ')', ','};
 
     public static boolean isSpecial(char c)
     {

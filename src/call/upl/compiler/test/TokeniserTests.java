@@ -132,6 +132,16 @@ public class TokeniserTests
      * for string != var
      * for array element != var
      *
+     * Function calls:
+     * Implemented:
+     * with number
+     * with string
+     * None
+     * with variable
+     * with array element
+     * with two arguments
+     * Not Implemented:
+     *
      **/
 
 
@@ -1529,6 +1539,90 @@ public class TokeniserTests
         String output = TestUtils.join(Tokeniser.tokenise(expression));
 
         String expected = "for,(,a,[,@temp@,],!,=,test,),-,>";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionCallNoArg()
+    {
+        String expression = "function()";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "function,(,)";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionCallNumberArg()
+    {
+        String expression = "function(10)";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "function,(,10,)";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionCallStringArg()
+    {
+        String expression = "function(\"This is a test\")";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "function,(,\",This,is,a,test,\",)";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionCallVariableArg()
+    {
+        String expression = "function(test)";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "function,(,test,)";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionCallArrayElementArg()
+    {
+        String expression = "function(test[@test@])";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "function,(,test,[,@test@,],)";
+
+        assertEquals(expected, output);
+
+        System.out.println("[" + output + "] [" + expected + "]");
+    }
+
+    @Test
+    public void testFunctionCallStringArgAndNumberArg()
+    {
+        String expression = "function(\"This is a test\", 10)";
+
+        String output = TestUtils.join(Tokeniser.tokenise(expression));
+
+        String expected = "function,(,\",This,is,a,test,\",,,10,)";
 
         assertEquals(expected, output);
 
