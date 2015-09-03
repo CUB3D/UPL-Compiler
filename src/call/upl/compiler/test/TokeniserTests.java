@@ -1,12 +1,9 @@
 package call.upl.compiler.test;
 
-import call.upl.compiler.core.ExceptionSystem;
-import call.upl.compiler.core.Tokeniser;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
-import java.util.List;
 
 /**
  * Created by Callum on 30/07/2015.

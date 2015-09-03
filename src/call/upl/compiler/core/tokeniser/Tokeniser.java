@@ -1,10 +1,12 @@
-package call.upl.compiler.core;
+package call.upl.compiler.core.tokeniser;
 
+import call.upl.compiler.core.Pair;
 import org.omg.CORBA.TRANSACTION_UNAVAILABLE;
 
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,90 @@ import java.util.List;
  */
 public class Tokeniser
 {
+    public static List<ObjectToken> convertStringTokenToObjectToken(List<String> tokens)
+    {
+        List<ObjectToken> objectTokens = new ArrayList<ObjectToken>();
+
+        for(int i = 0; i < tokens.size(); i++)
+        {
+            String token = tokens.get(i);
+
+            if(token.equals("\""))
+            {
+                Pair<String, Integer> reconstructedString = reconstructString(tokens, i);
+
+                String value = reconstructedString.first;
+                i = reconstructedString.second;
+
+                objectTokens.add(new StringToken(value));
+                continue;
+            }
+
+            TokenType type = getTokenType(token.charAt(0));
+
+            if(type == TokenType.WORD)
+            {
+                if(tokens.get(i + 1).equals("[") && tokens.get(i + 3).equals("]"))
+                {
+                    Pair<ArrayAccessToken, Integer> reconstructedArrayAccess = reconstructArrayAccess(tokens, i);
+
+                    objectTokens.add(reconstructedArrayAccess.first);
+                    i = reconstructedArrayAccess.second;
+                    continue;
+                }
+            }
+
+            switch(type)
+            {
+                case WORD:
+                    objectTokens.add(new WordToken(token));
+                    break;
+                case NUMBER:
+                    objectTokens.add(new NumberToken(new BigDecimal(token)));
+                    break;
+                case SPECIAL:
+                    objectTokens.add(new OperatorToken(token));
+            }
+        }
+
+        return objectTokens;
+    }
+
+    private static Pair<ArrayAccessToken, Integer> reconstructArrayAccess(List<String> tokens, int pos)
+    {
+        // token layout: variable,[,index,]
+
+        String variable = tokens.get(pos);
+        pos += 2; // skip over [
+        String index = tokens.get(pos);
+        pos++; // skip to ]
+
+        return new Pair<>(new ArrayAccessToken(variable, index), pos);
+    }
+
+    private static Pair<String, Integer> reconstructString(List<String> tokens, int pos)
+    {
+        pos++;
+
+        String result = "";
+
+        for(;pos < tokens.size(); pos++)
+        {
+            String token = tokens.get(pos);
+
+            if(token.equals("\""))
+            {
+                result = result.substring(0, result.length()-1); // remove trailing space
+                break;
+            }
+
+            result += token;
+            result += " ";
+        }
+
+        return new Pair<>(result, pos);
+    }
+
     public static List<String> tokenise(String s)
     {
         List<String> tokens = new ArrayList<String>();
@@ -138,6 +224,6 @@ public class Tokeniser
 
     enum TokenType
     {
-        WORD, NUMBER, SPECIAL, UNKNOWN
+        WORD, NUMBER, SPECIAL, STRING, ARRAY_ACCESS, UNKNOWN
     }
 }
