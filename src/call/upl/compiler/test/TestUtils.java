@@ -7,13 +7,13 @@ import java.util.List;
  */
 public class TestUtils
 {
-    public static String join(List<String> stringList)
+    public static String join(List<?> stringList)
     {
         String returnValue = "";
 
-        for(String s : stringList)
+        for(Object s : stringList)
         {
-            returnValue += s + ",";
+            returnValue += s.toString() + ",";
         }
 
         return returnValue.substring(0, returnValue.length() - 1);

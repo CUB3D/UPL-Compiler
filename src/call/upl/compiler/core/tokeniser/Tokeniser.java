@@ -1,11 +1,7 @@
 package call.upl.compiler.core.tokeniser;
 
 import call.upl.compiler.core.Pair;
-import org.omg.CORBA.TRANSACTION_UNAVAILABLE;
 
-import java.io.IOException;
-import java.io.StreamTokenizer;
-import java.io.StringReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +34,46 @@ public class Tokeniser
 
             if(type == TokenType.WORD)
             {
-                if(tokens.get(i + 1).equals("[") && tokens.get(i + 3).equals("]"))
+                if((tokens.size() - i) >= 3)
                 {
-                    Pair<ArrayAccessToken, Integer> reconstructedArrayAccess = reconstructArrayAccess(tokens, i);
+                    if(tokens.get(i + 1).equals("[") && tokens.get(i + 3).equals("]"))
+                    {
+                        Pair<ArrayAccessToken, Integer> reconstructedArrayAccess = reconstructArrayAccess(tokens, i);
 
-                    objectTokens.add(reconstructedArrayAccess.first);
-                    i = reconstructedArrayAccess.second;
+                        objectTokens.add(reconstructedArrayAccess.first);
+                        i = reconstructedArrayAccess.second;
+                        continue;
+                    }
+                }
+            }
+
+            if(type == TokenType.SPECIAL)
+            {
+                if(token.equals("[") && tokens.get(i + 1).equals("]"))
+                {
+                    Pair<ArrayCreationToken, Integer> reconstructedArrayCreation = reconstructArrayCreation(tokens, i);
+
+                    objectTokens.add(reconstructedArrayCreation.first);
+                    i = reconstructedArrayCreation.second;
+                    continue;
+                }
+            }
+
+            // special grouping
+
+            if(type == TokenType.SPECIAL)
+            {
+                if(token.equals("=") && tokens.get(i + 1).equals("=")) // == (equality)
+                {
+                    objectTokens.add(new SpecialToken("=="));
+                    i++;
+                    continue;
+                }
+
+                if(token.equals("-") && tokens.get(i + 1).equals(">")) // -> (block declaration)
+                {
+                    objectTokens.add(new SpecialToken("=>"));
+                    i++;
                     continue;
                 }
             }
@@ -57,11 +87,35 @@ public class Tokeniser
                     objectTokens.add(new NumberToken(new BigDecimal(token)));
                     break;
                 case SPECIAL:
-                    objectTokens.add(new OperatorToken(token));
+                    objectTokens.add(new SpecialToken(token));
             }
         }
 
         return objectTokens;
+    }
+
+    private static Pair<ArrayCreationToken, Integer> reconstructArrayCreation(List<String> tokens, int pos)
+    {
+        // token layout: [,content | blank,],:,size
+
+        pos++;
+
+        List<String> contentTokens = new ArrayList<String>();
+        String size = "";
+
+        while(!tokens.get(pos).equals("]"))
+        {
+            contentTokens.add(tokens.get(pos++));
+        }
+
+        pos += 2; // skip ]
+
+        if(tokens.get(pos++).equals(":")) // checking for this for a future feature
+        {
+            size = tokens.get(pos);
+        }
+
+        return new Pair<>(new ArrayCreationToken(contentTokens, size), pos);
     }
 
     private static Pair<ArrayAccessToken, Integer> reconstructArrayAccess(List<String> tokens, int pos)
@@ -224,6 +278,6 @@ public class Tokeniser
 
     enum TokenType
     {
-        WORD, NUMBER, SPECIAL, STRING, ARRAY_ACCESS, UNKNOWN
+        WORD, NUMBER, SPECIAL, STRING, ARRAY_ACCESS, ARRAY_CREATION, UNKNOWN
     }
 }
