@@ -72,7 +72,28 @@ public class Tokeniser
 
                 if(token.equals("-") && tokens.get(i + 1).equals(">")) // -> (block declaration)
                 {
-                    objectTokens.add(new SpecialToken("=>"));
+                    objectTokens.add(new SpecialToken("->"));
+                    i++;
+                    continue;
+                }
+
+                if(token.equals(">") && tokens.get(i + 1).equals("=")) // >= (more than or equal to)
+                {
+                    objectTokens.add(new SpecialToken(">="));
+                    i++;
+                    continue;
+                }
+
+                if(token.equals("<") && tokens.get(i + 1).equals("=")) // <= (less than or equal to)
+                {
+                    objectTokens.add(new SpecialToken("<="));
+                    i++;
+                    continue;
+                }
+
+                if(token.equals("!") && tokens.get(i + 1).equals("=")) // != (not equals)
+                {
+                    objectTokens.add(new SpecialToken("!="));
                     i++;
                     continue;
                 }
