@@ -858,7 +858,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -872,7 +872,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -886,7 +886,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -900,7 +900,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -914,7 +914,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -928,7 +928,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -942,7 +942,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -956,7 +956,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -970,7 +970,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -984,7 +984,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -998,7 +998,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1012,7 +1012,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1026,7 +1026,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1040,7 +1040,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1054,7 +1054,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1068,7 +1068,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1082,7 +1082,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1096,7 +1096,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1110,7 +1110,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1124,7 +1124,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1138,7 +1138,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1152,7 +1152,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1166,7 +1166,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1180,7 +1180,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1194,7 +1194,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1208,7 +1208,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1222,7 +1222,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1236,7 +1236,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1250,7 +1250,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1264,7 +1264,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1278,7 +1278,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1292,7 +1292,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1306,7 +1306,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1320,7 +1320,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1334,7 +1334,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1348,7 +1348,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1362,7 +1362,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1376,7 +1376,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1390,7 +1390,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1404,7 +1404,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1418,7 +1418,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1432,7 +1432,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1446,7 +1446,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1460,7 +1460,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1474,7 +1474,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1488,7 +1488,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1502,7 +1502,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1516,7 +1516,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1530,7 +1530,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1544,7 +1544,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1558,7 +1558,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1572,7 +1572,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,NUMBER,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1586,7 +1586,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,STRING,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1600,7 +1600,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,WORD,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1614,7 +1614,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1628,7 +1628,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,SPECIAL,STRING,SPECIAL,NUMBER,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1642,7 +1642,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,WORD,SPECIAL,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1656,7 +1656,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1670,7 +1670,7 @@ public class ObjectTokeniserTests
 
         String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
 
-        String expected = "";
+        String expected = "WORD,WORD,SPECIAL,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 
         assertEquals(expected, output);
 
@@ -1692,8 +1692,4 @@ public class ObjectTokeniserTests
 
         return s;
     }
-
-
-    //TODO: HRMM
-
 }
