@@ -2,8 +2,11 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
+import call.upl.compiler.pattern.PatternMatcher;
+
+import java.util.List;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -11,7 +14,7 @@ import call.upl.compiler.pattern.PatternMacher;
 public class CompileNodeIf extends CompileNode
 {
     @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         //if ( s == d ) -> { }
         PatternBuilder if_ = new PatternBuilder();
@@ -34,7 +37,7 @@ public class CompileNodeIf extends CompileNode
         if_.addMatchSpace(0);
         if_.addMatchExact("-\\>");
 
-        if(PatternMacher.match(curLine, if_.toString()))
+        if(PatternMatcher.match(curLine, if_.toString()))
         {
             //if(x == y) ->
             // if x == y

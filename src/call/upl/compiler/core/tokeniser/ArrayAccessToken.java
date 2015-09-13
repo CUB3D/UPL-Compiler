@@ -15,4 +15,27 @@ public class ArrayAccessToken extends ObjectToken<Pair<String, String>>
 
         this.tokenType = Tokeniser.TokenType.ARRAY_ACCESS;
     }
+
+    @Override
+    public boolean tagMatches(String[] s)
+    {
+        if(!super.tagMatches(s))
+            return false;
+
+        String mode = s[1];
+
+        if(mode.equals("ANY"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toCodeValue()
+    {
+        //value,[,index,]
+        return value.first + "[" + value.second + "]";
+    }
 }

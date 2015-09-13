@@ -1,20 +1,15 @@
 package call.upl.compiler.core;
 
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.node.CompileNode;
 import call.upl.compiler.node.CompileStateData;
-import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
-import call.upl.core.value.Value;
 import cub3d.file.main.FileAPI;
 import cub3d.file.reader.BasicReader;
 import cub3d.file.writer.BasicWriter;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Callum on 23/04/2015.
@@ -68,7 +63,7 @@ public class UPLCompiler
 
             while((s = br.readLine()) != null)
             {
-                if(!s.trim().isEmpty())
+                if(!s.trim().isEmpty() && !s.trim().startsWith("#") && !s.trim().startsWith("//"))
                     code.add(s);
             }
 
@@ -95,6 +90,7 @@ public class UPLCompiler
         currentLineData = new CompileStateData();
         currentLineData.curLine = s;
         currentLineData.curLineNumber = i;
+        currentLineData.tokens = Tokeniser.tokenise(s);
 
         CompileNode.attemptCompile(this, currentLineData);
 

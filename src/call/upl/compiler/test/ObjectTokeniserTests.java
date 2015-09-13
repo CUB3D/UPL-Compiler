@@ -156,7 +156,7 @@ public class ObjectTokeniserTests
     {
         String expression = "test = 10";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER";
 
@@ -170,7 +170,7 @@ public class ObjectTokeniserTests
     {
         String expression = "test[0] = 10";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "ARRAY_ACCESS,SPECIAL,NUMBER";
 
@@ -184,7 +184,7 @@ public class ObjectTokeniserTests
     {
         String expression = "test = x[0]";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS";
 
@@ -198,7 +198,7 @@ public class ObjectTokeniserTests
     {
         String expression = "x = [] : 10";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_CREATION";
 
@@ -212,7 +212,7 @@ public class ObjectTokeniserTests
     {
         String expression = "test = \"This is a test\"";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING";
 
@@ -226,7 +226,7 @@ public class ObjectTokeniserTests
     {
         String expression = "test = @temp1@";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD";
 
@@ -240,7 +240,7 @@ public class ObjectTokeniserTests
     {
         String expression = "@test1@[@temp1@] = @temp1@[@test1@]";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "ARRAY_ACCESS,SPECIAL,ARRAY_ACCESS";
 
@@ -254,7 +254,7 @@ public class ObjectTokeniserTests
     {
         String expression = "@test1@[@temp1@] = \"This is a test\"";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "ARRAY_ACCESS,SPECIAL,STRING";
 
@@ -268,7 +268,7 @@ public class ObjectTokeniserTests
     {
         String expression = "return @temp1@";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,WORD";
 
@@ -282,7 +282,7 @@ public class ObjectTokeniserTests
     {
         String expression = "return \"This is a test\"";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,STRING";
 
@@ -296,7 +296,7 @@ public class ObjectTokeniserTests
     {
         String expression = "return a[10]";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,ARRAY_ACCESS";
 
@@ -310,7 +310,7 @@ public class ObjectTokeniserTests
     {
         String expression = "return 10";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,NUMBER";
 
@@ -324,7 +324,7 @@ public class ObjectTokeniserTests
     {
         String expression = "include \"C:\\abc\\def\\ghi\"";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,STRING";
 
@@ -338,7 +338,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test == @temp1@) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -352,7 +352,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test == 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -366,7 +366,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test == \"This is a test\") ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
@@ -380,7 +380,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test == a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -394,7 +394,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test > 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -408,7 +408,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test > a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -422,7 +422,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test < 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -436,7 +436,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test < a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -450,7 +450,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test >= 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -464,7 +464,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test >= a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -478,7 +478,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test <= 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -492,7 +492,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test <= a[@test1@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -506,7 +506,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test != 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -520,7 +520,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test != \"This is a test\") ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
@@ -534,7 +534,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test != a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -548,7 +548,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( 10 == test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -562,7 +562,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( \"This is a test\" == test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -576,7 +576,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( a[@temp@] == test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -590,7 +590,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( 10 > test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -604,7 +604,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( a[@temp@] > test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -618,7 +618,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( 10 < test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -632,7 +632,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( a[@temp@] < test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -646,7 +646,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( 10 >= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -660,7 +660,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( test >= a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -674,7 +674,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( 10 <= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -688,7 +688,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( a[@test@] <= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -702,7 +702,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( 10 != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -716,7 +716,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( \"This is a test\" != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -730,7 +730,7 @@ public class ObjectTokeniserTests
     {
         String expression = "while ( a[@temp@] != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -744,7 +744,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test == @temp1@) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -758,7 +758,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test == 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -772,7 +772,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test == \"This is a test\") ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
@@ -786,7 +786,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test == a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -800,7 +800,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test > 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -814,7 +814,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test > a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -828,7 +828,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test < 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -842,7 +842,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test < a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -856,7 +856,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test >= 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -870,7 +870,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test >= a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -884,7 +884,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test <= 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -898,7 +898,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test <= a[@test1@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -912,7 +912,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test != 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -926,7 +926,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test != \"This is a test\") ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
@@ -940,7 +940,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test != a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -954,7 +954,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( 10 == test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -968,7 +968,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( \"This is a test\" == test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -982,7 +982,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( a[@temp@] == test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -996,7 +996,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( 10 > test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1010,7 +1010,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( a[@temp@] > test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1024,7 +1024,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( 10 < test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1038,7 +1038,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( a[@temp@] < test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1052,7 +1052,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( 10 >= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1066,7 +1066,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( test >= a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1080,7 +1080,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( 10 <= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1094,7 +1094,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( a[@test@] <= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1108,7 +1108,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( 10 != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1122,7 +1122,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( \"This is a test\" != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1136,7 +1136,7 @@ public class ObjectTokeniserTests
     {
         String expression = "if ( a[@temp@] != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1150,7 +1150,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test == @temp1@) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1164,7 +1164,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test == 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -1178,7 +1178,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test == \"This is a test\") ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
@@ -1192,7 +1192,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test == a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1206,7 +1206,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test > 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -1220,7 +1220,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test > a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1234,7 +1234,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test < 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -1248,7 +1248,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test < a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1262,7 +1262,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test >= 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -1276,7 +1276,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test >= a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1290,7 +1290,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test <= 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -1304,7 +1304,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test <= a[@test1@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1318,7 +1318,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test != 10) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,NUMBER,SPECIAL,SPECIAL";
 
@@ -1332,7 +1332,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test != \"This is a test\") ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,STRING,SPECIAL,SPECIAL";
 
@@ -1346,7 +1346,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test != a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1360,7 +1360,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( 10 == test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1374,7 +1374,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( \"This is a test\" == test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1388,7 +1388,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( a[@temp@] == test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1402,7 +1402,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( 10 > test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1416,7 +1416,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( a[@temp@] > test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1430,7 +1430,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( 10 < test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1444,7 +1444,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( a[@temp@] < test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1458,7 +1458,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( 10 >= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1472,7 +1472,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( test >= a[@temp@]) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,SPECIAL";
 
@@ -1486,7 +1486,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( 10 <= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1500,7 +1500,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( a[@test@] <= test ) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1514,7 +1514,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( 10 != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1528,7 +1528,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( \"This is a test\" != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1542,7 +1542,7 @@ public class ObjectTokeniserTests
     {
         String expression = "for ( a[@temp@] != test) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1556,7 +1556,7 @@ public class ObjectTokeniserTests
     {
         String expression = "function()";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,SPECIAL";
 
@@ -1570,7 +1570,7 @@ public class ObjectTokeniserTests
     {
         String expression = "function(10)";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,NUMBER,SPECIAL";
 
@@ -1584,7 +1584,7 @@ public class ObjectTokeniserTests
     {
         String expression = "function(\"This is a test\")";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL";
 
@@ -1598,7 +1598,7 @@ public class ObjectTokeniserTests
     {
         String expression = "function(test)";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,WORD,SPECIAL";
 
@@ -1612,7 +1612,7 @@ public class ObjectTokeniserTests
     {
         String expression = "function(test[@test@])";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,ARRAY_ACCESS,SPECIAL";
 
@@ -1626,7 +1626,7 @@ public class ObjectTokeniserTests
     {
         String expression = "function(\"This is a test\", 10)";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,SPECIAL,STRING,SPECIAL,NUMBER,SPECIAL";
 
@@ -1640,7 +1640,7 @@ public class ObjectTokeniserTests
     {
         String expression = "func function() ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,WORD,SPECIAL,SPECIAL,SPECIAL";
 
@@ -1654,7 +1654,7 @@ public class ObjectTokeniserTests
     {
         String expression = "func function(argument1) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 
@@ -1668,7 +1668,7 @@ public class ObjectTokeniserTests
     {
         String expression = "func function(argument1, @temp1@) ->";
 
-        String output = join(Tokeniser.convertStringTokenToObjectToken(Tokeniser.tokenise(expression)));
+        String output = join(Tokeniser.convertStringTokenToObjectTokens(Tokeniser.tokeniseString(expression)));
 
         String expected = "WORD,WORD,SPECIAL,WORD,SPECIAL,WORD,SPECIAL,SPECIAL";
 

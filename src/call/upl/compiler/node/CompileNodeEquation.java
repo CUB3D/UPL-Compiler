@@ -2,8 +2,11 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.ExpressionParser;
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
+import call.upl.compiler.pattern.PatternMatcher;
+
+import java.util.List;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -11,7 +14,7 @@ import call.upl.compiler.pattern.PatternMacher;
 public class CompileNodeEquation extends CompileNode
 {
     @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         // a = (b + c) / d
         PatternBuilder basicExpression = new PatternBuilder();
@@ -22,7 +25,7 @@ public class CompileNodeEquation extends CompileNode
         basicExpression.addMatchSpace(0);
         basicExpression.addSkipToEnd();
 
-        if(PatternMacher.match(curLine, basicExpression.toString()))
+        if(PatternMatcher.match(curLine, basicExpression.toString()))
         {
             if(curLine.contains("\"") || curLine.contains(":")) // not equation
             {

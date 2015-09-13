@@ -1,14 +1,14 @@
-include "IO.call"
-#include "Array.upl"
-include "File.upl"
+//include "IO.call"
+//include "Array.upl"
+//include "File.upl"
 
-test = "B:\Git\UPL-Compiler\Array.upl"
+//test = "B:\Git\UPL-Compiler\Array.upl"
 
-arrayReader = loadFileForReading(test)
+//arrayReader = loadFileForReading(test)
 
-firstLine = readStringFromFile(arrayReader)
+//firstLine = readStringFromFile(arrayReader)
 
-println(firstLine)
+//println(firstLine)
 
 
 
@@ -30,3 +30,9 @@ println(firstLine)
     //psh x
     //jmp print
     //endwhl
+
+
+x = 10
+y = @TEMP1@
+z = "Hello World"
+abc = def[ghi]

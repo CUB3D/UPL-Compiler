@@ -1,10 +1,11 @@
 package call.upl.compiler.node;
 
-import call.upl.compiler.core.ExpressionParser;
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
-import call.upl.core.UPLUtils;
+import call.upl.compiler.pattern.PatternMatcher;
+
+import java.util.List;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -12,7 +13,7 @@ import call.upl.core.UPLUtils;
 public class CompileNodeArray extends CompileNode
 {
     @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         PatternBuilder array = new PatternBuilder();
 
@@ -27,7 +28,7 @@ public class CompileNodeArray extends CompileNode
         array.addMatchSpace(0);
         array.addMatchValue();
 
-        if(PatternMacher.match(curLine, array.toString()))
+        if(PatternMatcher.match(curLine, array.toString()))
         {
             curLine = curLine.replaceAll(" ", "");
 

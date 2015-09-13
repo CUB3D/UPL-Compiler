@@ -2,8 +2,11 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
+import call.upl.compiler.pattern.PatternMatcher;
+
+import java.util.List;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -11,7 +14,7 @@ import call.upl.compiler.pattern.PatternMacher;
 public class CompileNodeFunctionDefinitions extends CompileNode
 {
     @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         //func x ( void ) ->
         PatternBuilder func = new PatternBuilder();
@@ -24,7 +27,7 @@ public class CompileNodeFunctionDefinitions extends CompileNode
         func.addMatchSpace(0);
         func.addMatchExact("-\\>");
 
-        if(PatternMacher.match(curLine, func.toString()))
+        if(PatternMatcher.match(curLine, func.toString()))
         {
             compileStateData.isInFunction = true;
 

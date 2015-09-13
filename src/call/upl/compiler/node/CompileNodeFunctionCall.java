@@ -2,8 +2,11 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.FunctionParser;
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
+import call.upl.compiler.pattern.PatternMatcher;
+
+import java.util.List;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -11,7 +14,7 @@ import call.upl.compiler.pattern.PatternMacher;
 public class CompileNodeFunctionCall extends CompileNode
 {
     @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         PatternBuilder callFunc = new PatternBuilder();
         //helloWorld ( x, y )
@@ -20,7 +23,7 @@ public class CompileNodeFunctionCall extends CompileNode
         callFunc.addMatchExact("(");
         callFunc.addMatchSkipToExact(")");
 
-        if(PatternMacher.match(curLine, callFunc.toString()))
+        if(PatternMatcher.match(curLine, callFunc.toString()))
         {
             String name = curLine.substring(0, curLine.indexOf("(")).trim();
 

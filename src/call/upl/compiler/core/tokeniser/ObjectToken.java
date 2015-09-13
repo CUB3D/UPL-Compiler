@@ -12,4 +12,14 @@ public class ObjectToken<T>
     {
         return value;
     }
+
+    public boolean tagMatches(String[] s)
+    {
+        return ("" + tokenType).equals(s[0]);
+    }
+
+    public String toCodeValue()
+    {
+        return value.toString();
+    }
 }

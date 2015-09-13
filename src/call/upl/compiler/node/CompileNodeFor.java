@@ -1,8 +1,11 @@
 package call.upl.compiler.node;
 
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
+import call.upl.compiler.pattern.PatternMatcher;
+
+import java.util.List;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -10,7 +13,7 @@ import call.upl.compiler.pattern.PatternMacher;
 public class CompileNodeFor extends CompileNode
 {
     @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         //for ( value : array ) -> { }
         PatternBuilder for_ = new PatternBuilder();
@@ -29,7 +32,7 @@ public class CompileNodeFor extends CompileNode
         for_.addMatchSpace(0);
         for_.addMatchExact("-\\>");
 
-        if(PatternMacher.match(curLine, for_.toString()))
+        if(PatternMatcher.match(curLine, for_.toString()))
         {
             curLine = curLine.replaceAll(" ", "");
             //for(x:y)->

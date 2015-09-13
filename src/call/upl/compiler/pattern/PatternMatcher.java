@@ -1,6 +1,10 @@
 package call.upl.compiler.pattern;
 
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.NumberToken;
+import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
+import call.upl.compiler.node.CompileStateData;
 import call.upl.core.UPL;
 
 import java.util.ArrayList;
@@ -9,8 +13,60 @@ import java.util.List;
 /**
  * Created by Callum on 23/04/2015.
  */
-public class PatternMacher
+public class PatternMatcher
 {
+    public static boolean match(CompileStateData csd, PatternBuilder builder)
+    {
+        return match(csd, builder.toString());
+    }
+
+    public static boolean match(CompileStateData csd, String pattern)
+    {
+        List<String> tags = getTags(pattern);
+
+        for(int i = 0; i < csd.tokens.size(); i++)
+        {
+            String tag = tags.get(i);
+            ObjectToken token = csd.tokens.get(i);
+
+            if(tag.contains("||"))
+            {
+                String[] orTags = tag.split("\\|\\|");
+
+                boolean or = false;
+
+                for(String s : orTags)
+                {
+                    if (token.tagMatches(s.split(" ")))
+                    {
+                        or = true;
+                        break;
+                    }
+                }
+
+                if(or)
+                {
+                    //found a match
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (!token.tagMatches(tags.get(i).split(" ")))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
     public static boolean match(String text, String pattern)
     {
         List<String> tags = getTags(pattern);
@@ -166,5 +222,10 @@ public class PatternMacher
         }
 
         return tags;
+    }
+
+    public enum MatchType
+    {
+        ANY, EXACT;
     }
 }

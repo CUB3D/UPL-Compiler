@@ -1,5 +1,7 @@
 package call.upl.compiler.pattern;
 
+import call.upl.compiler.core.tokeniser.Tokeniser;
+
 /**
  * Created by Callum on 24/04/2015.
  */
@@ -7,8 +9,48 @@ public class PatternBuilder
 {
     public static final String PATTERN_TAG_START = "<";
     public static final String PATTERN_TAG_END = ">";
+    public static final String PATTERN_TAG_OR = "||";
 
     private String pattern = "";
+    private boolean isInOr;
+
+    public String create(Tokeniser.TokenType type, PatternMatcher.MatchType matchType, String... extra)
+    {
+        return ("" + type) + " " + ("" + matchType) + ((extra.length == 0) ? "" : " " + extra[0]);
+    }
+
+    public void add(Tokeniser.TokenType type, PatternMatcher.MatchType matchType, String... extra)
+    {
+        if(!isInOr)
+        {
+            pattern += PATTERN_TAG_START + create(type, matchType, extra) + PATTERN_TAG_END;
+        }
+        else
+        {
+            pattern += create(type, matchType, extra) + PATTERN_TAG_OR;
+        }
+    }
+
+    public void startOr()
+    {
+        pattern += PATTERN_TAG_START;
+        isInOr = true;
+    }
+
+    public void endOr()
+    {
+        pattern = pattern.substring(0, pattern.length() - 2);
+        pattern += PATTERN_TAG_END;
+        isInOr = false;
+    }
+
+    @Override
+    public String toString()
+    {
+        return pattern;
+    }
+
+    // old below
 
     public void addMatchAnyWord()
     {
@@ -62,11 +104,5 @@ public class PatternBuilder
     public void addSkipToEnd()
     {
         pattern+= PATTERN_TAG_START + Pattern.PATTERN_SKIP_TO_END.getPatternID() + PATTERN_TAG_END;
-    }
-
-    @Override
-    public String toString()
-    {
-        return pattern;
     }
 }

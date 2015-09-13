@@ -153,7 +153,7 @@ public class TokeniserTests
     {
         String expression = "test = 10";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "test,=,10";
 
@@ -167,7 +167,7 @@ public class TokeniserTests
     {
         String expression = "test[0] = 10";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "test,[,0,],=,10";
 
@@ -181,7 +181,7 @@ public class TokeniserTests
     {
         String expression = "test = x[0]";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "test,=,x,[,0,]";
 
@@ -195,7 +195,7 @@ public class TokeniserTests
     {
         String expression = "x = [] : 10";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "x,=,[,],:,10";
 
@@ -209,7 +209,7 @@ public class TokeniserTests
     {
         String expression = "test = \"This is a test\"";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "test,=,\",This,is,a,test,\"";
 
@@ -223,7 +223,7 @@ public class TokeniserTests
     {
         String expression = "test = @temp1@";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "test,=,@temp1@";
 
@@ -237,7 +237,7 @@ public class TokeniserTests
     {
         String expression = "@test1@[@temp1@] = @temp1@[@test1@]";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "@test1@,[,@temp1@,],=,@temp1@,[,@test1@,]";
 
@@ -251,7 +251,7 @@ public class TokeniserTests
     {
         String expression = "@test1@[@temp1@] = \"This is a test\"";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "@test1@,[,@temp1@,],=,\",This,is,a,test,\"";
 
@@ -265,7 +265,7 @@ public class TokeniserTests
     {
         String expression = "return @temp1@";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "return,@temp1@";
 
@@ -279,7 +279,7 @@ public class TokeniserTests
     {
         String expression = "return \"This is a test\"";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "return,\",This,is,a,test,\"";
 
@@ -293,7 +293,7 @@ public class TokeniserTests
     {
         String expression = "return a[10]";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "return,a,[,10,]";
 
@@ -307,7 +307,7 @@ public class TokeniserTests
     {
         String expression = "return 10";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "return,10";
 
@@ -321,7 +321,7 @@ public class TokeniserTests
     {
         String expression = "include \"C:\\abc\\def\\ghi\"";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "include,\",C:\\abc\\def\\ghi,\"";
 
@@ -335,7 +335,7 @@ public class TokeniserTests
     {
         String expression = "while ( test == @temp1@) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,=,=,@temp1@,),-,>";
 
@@ -349,7 +349,7 @@ public class TokeniserTests
     {
         String expression = "while ( test == 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,=,=,10,),-,>";
 
@@ -363,7 +363,7 @@ public class TokeniserTests
     {
         String expression = "while ( test == \"This is a test\") ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,=,=,\",This,is,a,test,\",),-,>";
 
@@ -377,7 +377,7 @@ public class TokeniserTests
     {
         String expression = "while ( test == a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,=,=,a,[,@temp@,],),-,>";
 
@@ -391,7 +391,7 @@ public class TokeniserTests
     {
         String expression = "while ( test > 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,>,10,),-,>";
 
@@ -405,7 +405,7 @@ public class TokeniserTests
     {
         String expression = "while ( test > a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,>,a,[,@temp@,],),-,>";
 
@@ -419,7 +419,7 @@ public class TokeniserTests
     {
         String expression = "while ( test < 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,<,10,),-,>";
 
@@ -433,7 +433,7 @@ public class TokeniserTests
     {
         String expression = "while ( test < a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,<,a,[,@temp@,],),-,>";
 
@@ -447,7 +447,7 @@ public class TokeniserTests
     {
         String expression = "while ( test >= 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,>,=,10,),-,>";
 
@@ -461,7 +461,7 @@ public class TokeniserTests
     {
         String expression = "while ( test >= a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,>,=,a,[,@temp@,],),-,>";
 
@@ -475,7 +475,7 @@ public class TokeniserTests
     {
         String expression = "while ( test <= 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,<,=,10,),-,>";
 
@@ -489,7 +489,7 @@ public class TokeniserTests
     {
         String expression = "while ( test <= a[@test1@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,<,=,a,[,@test1@,],),-,>";
 
@@ -503,7 +503,7 @@ public class TokeniserTests
     {
         String expression = "while ( test != 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,!,=,10,),-,>";
 
@@ -517,7 +517,7 @@ public class TokeniserTests
     {
         String expression = "while ( test != \"This is a test\") ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,!,=,\",This,is,a,test,\",),-,>";
 
@@ -531,7 +531,7 @@ public class TokeniserTests
     {
         String expression = "while ( test != a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,!,=,a,[,@temp@,],),-,>";
 
@@ -545,7 +545,7 @@ public class TokeniserTests
     {
         String expression = "while ( 10 == test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,10,=,=,test,),-,>";
 
@@ -559,7 +559,7 @@ public class TokeniserTests
     {
         String expression = "while ( \"This is a test\" == test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,\",This,is,a,test,\",=,=,test,),-,>";
 
@@ -573,7 +573,7 @@ public class TokeniserTests
     {
         String expression = "while ( a[@temp@] == test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,a,[,@temp@,],=,=,test,),-,>";
 
@@ -587,7 +587,7 @@ public class TokeniserTests
     {
         String expression = "while ( 10 > test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,10,>,test,),-,>";
 
@@ -601,7 +601,7 @@ public class TokeniserTests
     {
         String expression = "while ( a[@temp@] > test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,a,[,@temp@,],>,test,),-,>";
 
@@ -615,7 +615,7 @@ public class TokeniserTests
     {
         String expression = "while ( 10 < test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,10,<,test,),-,>";
 
@@ -629,7 +629,7 @@ public class TokeniserTests
     {
         String expression = "while ( a[@temp@] < test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,a,[,@temp@,],<,test,),-,>";
 
@@ -643,7 +643,7 @@ public class TokeniserTests
     {
         String expression = "while ( 10 >= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,10,>,=,test,),-,>";
 
@@ -657,7 +657,7 @@ public class TokeniserTests
     {
         String expression = "while ( test >= a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,test,>,=,a,[,@temp@,],),-,>";
 
@@ -671,7 +671,7 @@ public class TokeniserTests
     {
         String expression = "while ( 10 <= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,10,<,=,test,),-,>";
 
@@ -685,7 +685,7 @@ public class TokeniserTests
     {
         String expression = "while ( a[@test@] <= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,a,[,@test@,],<,=,test,),-,>";
 
@@ -699,7 +699,7 @@ public class TokeniserTests
     {
         String expression = "while ( 10 != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,10,!,=,test,),-,>";
 
@@ -713,7 +713,7 @@ public class TokeniserTests
     {
         String expression = "while ( \"This is a test\" != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,\",This,is,a,test,\",!,=,test,),-,>";
 
@@ -727,7 +727,7 @@ public class TokeniserTests
     {
         String expression = "while ( a[@temp@] != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "while,(,a,[,@temp@,],!,=,test,),-,>";
 
@@ -741,7 +741,7 @@ public class TokeniserTests
     {
         String expression = "if ( test == @temp1@) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,=,=,@temp1@,),-,>";
 
@@ -755,7 +755,7 @@ public class TokeniserTests
     {
         String expression = "if ( test == 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,=,=,10,),-,>";
 
@@ -769,7 +769,7 @@ public class TokeniserTests
     {
         String expression = "if ( test == \"This is a test\") ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,=,=,\",This,is,a,test,\",),-,>";
 
@@ -783,7 +783,7 @@ public class TokeniserTests
     {
         String expression = "if ( test == a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,=,=,a,[,@temp@,],),-,>";
 
@@ -797,7 +797,7 @@ public class TokeniserTests
     {
         String expression = "if ( test > 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,>,10,),-,>";
 
@@ -811,7 +811,7 @@ public class TokeniserTests
     {
         String expression = "if ( test > a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,>,a,[,@temp@,],),-,>";
 
@@ -825,7 +825,7 @@ public class TokeniserTests
     {
         String expression = "if ( test < 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,<,10,),-,>";
 
@@ -839,7 +839,7 @@ public class TokeniserTests
     {
         String expression = "if ( test < a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,<,a,[,@temp@,],),-,>";
 
@@ -853,7 +853,7 @@ public class TokeniserTests
     {
         String expression = "if ( test >= 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,>,=,10,),-,>";
 
@@ -867,7 +867,7 @@ public class TokeniserTests
     {
         String expression = "if ( test >= a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,>,=,a,[,@temp@,],),-,>";
 
@@ -881,7 +881,7 @@ public class TokeniserTests
     {
         String expression = "if ( test <= 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,<,=,10,),-,>";
 
@@ -895,7 +895,7 @@ public class TokeniserTests
     {
         String expression = "if ( test <= a[@test1@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,<,=,a,[,@test1@,],),-,>";
 
@@ -909,7 +909,7 @@ public class TokeniserTests
     {
         String expression = "if ( test != 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,!,=,10,),-,>";
 
@@ -923,7 +923,7 @@ public class TokeniserTests
     {
         String expression = "if ( test != \"This is a test\") ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,!,=,\",This,is,a,test,\",),-,>";
 
@@ -937,7 +937,7 @@ public class TokeniserTests
     {
         String expression = "if ( test != a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,!,=,a,[,@temp@,],),-,>";
 
@@ -951,7 +951,7 @@ public class TokeniserTests
     {
         String expression = "if ( 10 == test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,10,=,=,test,),-,>";
 
@@ -965,7 +965,7 @@ public class TokeniserTests
     {
         String expression = "if ( \"This is a test\" == test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,\",This,is,a,test,\",=,=,test,),-,>";
 
@@ -979,7 +979,7 @@ public class TokeniserTests
     {
         String expression = "if ( a[@temp@] == test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,a,[,@temp@,],=,=,test,),-,>";
 
@@ -993,7 +993,7 @@ public class TokeniserTests
     {
         String expression = "if ( 10 > test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,10,>,test,),-,>";
 
@@ -1007,7 +1007,7 @@ public class TokeniserTests
     {
         String expression = "if ( a[@temp@] > test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,a,[,@temp@,],>,test,),-,>";
 
@@ -1021,7 +1021,7 @@ public class TokeniserTests
     {
         String expression = "if ( 10 < test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,10,<,test,),-,>";
 
@@ -1035,7 +1035,7 @@ public class TokeniserTests
     {
         String expression = "if ( a[@temp@] < test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,a,[,@temp@,],<,test,),-,>";
 
@@ -1049,7 +1049,7 @@ public class TokeniserTests
     {
         String expression = "if ( 10 >= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,10,>,=,test,),-,>";
 
@@ -1063,7 +1063,7 @@ public class TokeniserTests
     {
         String expression = "if ( test >= a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,test,>,=,a,[,@temp@,],),-,>";
 
@@ -1077,7 +1077,7 @@ public class TokeniserTests
     {
         String expression = "if ( 10 <= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,10,<,=,test,),-,>";
 
@@ -1091,7 +1091,7 @@ public class TokeniserTests
     {
         String expression = "if ( a[@test@] <= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,a,[,@test@,],<,=,test,),-,>";
 
@@ -1105,7 +1105,7 @@ public class TokeniserTests
     {
         String expression = "if ( 10 != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,10,!,=,test,),-,>";
 
@@ -1119,7 +1119,7 @@ public class TokeniserTests
     {
         String expression = "if ( \"This is a test\" != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,\",This,is,a,test,\",!,=,test,),-,>";
 
@@ -1133,7 +1133,7 @@ public class TokeniserTests
     {
         String expression = "if ( a[@temp@] != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "if,(,a,[,@temp@,],!,=,test,),-,>";
 
@@ -1147,7 +1147,7 @@ public class TokeniserTests
     {
         String expression = "for ( test == @temp1@) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,=,=,@temp1@,),-,>";
 
@@ -1161,7 +1161,7 @@ public class TokeniserTests
     {
         String expression = "for ( test == 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,=,=,10,),-,>";
 
@@ -1175,7 +1175,7 @@ public class TokeniserTests
     {
         String expression = "for ( test == \"This is a test\") ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,=,=,\",This,is,a,test,\",),-,>";
 
@@ -1189,7 +1189,7 @@ public class TokeniserTests
     {
         String expression = "for ( test == a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,=,=,a,[,@temp@,],),-,>";
 
@@ -1203,7 +1203,7 @@ public class TokeniserTests
     {
         String expression = "for ( test > 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,>,10,),-,>";
 
@@ -1217,7 +1217,7 @@ public class TokeniserTests
     {
         String expression = "for ( test > a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,>,a,[,@temp@,],),-,>";
 
@@ -1231,7 +1231,7 @@ public class TokeniserTests
     {
         String expression = "for ( test < 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,<,10,),-,>";
 
@@ -1245,7 +1245,7 @@ public class TokeniserTests
     {
         String expression = "for ( test < a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,<,a,[,@temp@,],),-,>";
 
@@ -1259,7 +1259,7 @@ public class TokeniserTests
     {
         String expression = "for ( test >= 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,>,=,10,),-,>";
 
@@ -1273,7 +1273,7 @@ public class TokeniserTests
     {
         String expression = "for ( test >= a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,>,=,a,[,@temp@,],),-,>";
 
@@ -1287,7 +1287,7 @@ public class TokeniserTests
     {
         String expression = "for ( test <= 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,<,=,10,),-,>";
 
@@ -1301,7 +1301,7 @@ public class TokeniserTests
     {
         String expression = "for ( test <= a[@test1@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,<,=,a,[,@test1@,],),-,>";
 
@@ -1315,7 +1315,7 @@ public class TokeniserTests
     {
         String expression = "for ( test != 10) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,!,=,10,),-,>";
 
@@ -1329,7 +1329,7 @@ public class TokeniserTests
     {
         String expression = "for ( test != \"This is a test\") ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,!,=,\",This,is,a,test,\",),-,>";
 
@@ -1343,7 +1343,7 @@ public class TokeniserTests
     {
         String expression = "for ( test != a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,!,=,a,[,@temp@,],),-,>";
 
@@ -1357,7 +1357,7 @@ public class TokeniserTests
     {
         String expression = "for ( 10 == test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,10,=,=,test,),-,>";
 
@@ -1371,7 +1371,7 @@ public class TokeniserTests
     {
         String expression = "for ( \"This is a test\" == test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,\",This,is,a,test,\",=,=,test,),-,>";
 
@@ -1385,7 +1385,7 @@ public class TokeniserTests
     {
         String expression = "for ( a[@temp@] == test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,a,[,@temp@,],=,=,test,),-,>";
 
@@ -1399,7 +1399,7 @@ public class TokeniserTests
     {
         String expression = "for ( 10 > test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,10,>,test,),-,>";
 
@@ -1413,7 +1413,7 @@ public class TokeniserTests
     {
         String expression = "for ( a[@temp@] > test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,a,[,@temp@,],>,test,),-,>";
 
@@ -1427,7 +1427,7 @@ public class TokeniserTests
     {
         String expression = "for ( 10 < test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,10,<,test,),-,>";
 
@@ -1441,7 +1441,7 @@ public class TokeniserTests
     {
         String expression = "for ( a[@temp@] < test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,a,[,@temp@,],<,test,),-,>";
 
@@ -1455,7 +1455,7 @@ public class TokeniserTests
     {
         String expression = "for ( 10 >= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,10,>,=,test,),-,>";
 
@@ -1469,7 +1469,7 @@ public class TokeniserTests
     {
         String expression = "for ( test >= a[@temp@]) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,test,>,=,a,[,@temp@,],),-,>";
 
@@ -1483,7 +1483,7 @@ public class TokeniserTests
     {
         String expression = "for ( 10 <= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,10,<,=,test,),-,>";
 
@@ -1497,7 +1497,7 @@ public class TokeniserTests
     {
         String expression = "for ( a[@test@] <= test ) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,a,[,@test@,],<,=,test,),-,>";
 
@@ -1511,7 +1511,7 @@ public class TokeniserTests
     {
         String expression = "for ( 10 != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,10,!,=,test,),-,>";
 
@@ -1525,7 +1525,7 @@ public class TokeniserTests
     {
         String expression = "for ( \"This is a test\" != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,\",This,is,a,test,\",!,=,test,),-,>";
 
@@ -1539,7 +1539,7 @@ public class TokeniserTests
     {
         String expression = "for ( a[@temp@] != test) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "for,(,a,[,@temp@,],!,=,test,),-,>";
 
@@ -1553,7 +1553,7 @@ public class TokeniserTests
     {
         String expression = "function()";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "function,(,)";
 
@@ -1567,7 +1567,7 @@ public class TokeniserTests
     {
         String expression = "function(10)";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "function,(,10,)";
 
@@ -1581,7 +1581,7 @@ public class TokeniserTests
     {
         String expression = "function(\"This is a test\")";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "function,(,\",This,is,a,test,\",)";
 
@@ -1595,7 +1595,7 @@ public class TokeniserTests
     {
         String expression = "function(test)";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "function,(,test,)";
 
@@ -1609,7 +1609,7 @@ public class TokeniserTests
     {
         String expression = "function(test[@test@])";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "function,(,test,[,@test@,],)";
 
@@ -1623,7 +1623,7 @@ public class TokeniserTests
     {
         String expression = "function(\"This is a test\", 10)";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "function,(,\",This,is,a,test,\",,,10,)";
 
@@ -1637,7 +1637,7 @@ public class TokeniserTests
     {
         String expression = "func function() ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "func,function,(,),-,>";
 
@@ -1651,7 +1651,7 @@ public class TokeniserTests
     {
         String expression = "func function(argument1) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "func,function,(,argument1,),-,>";
 
@@ -1665,7 +1665,7 @@ public class TokeniserTests
     {
         String expression = "func function(argument1, @temp1@) ->";
 
-        String output = TestUtils.join(Tokeniser.tokenise(expression));
+        String output = TestUtils.join(Tokeniser.tokeniseString(expression));
 
         String expected = "func,function,(,argument1,,,@temp1@,),-,>";
 

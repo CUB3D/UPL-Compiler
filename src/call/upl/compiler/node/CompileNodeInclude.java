@@ -1,8 +1,11 @@
 package call.upl.compiler.node;
 
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.pattern.PatternBuilder;
-import call.upl.compiler.pattern.PatternMacher;
+import call.upl.compiler.pattern.PatternMatcher;
+
+import java.util.List;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -10,7 +13,7 @@ import call.upl.compiler.pattern.PatternMacher;
 public class CompileNodeInclude extends CompileNode
 {
     @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine)
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         //include "Test .call"
         PatternBuilder include = new PatternBuilder();
@@ -20,7 +23,7 @@ public class CompileNodeInclude extends CompileNode
         include.addMatchExact("\"");
         include.addMatchSkipToExact("\"");
 
-        if(PatternMacher.match(curLine, include.toString()))
+        if(PatternMatcher.match(curLine, include.toString()))
         {
             curLine = curLine.replaceFirst("include", "");
             curLine = curLine.trim();

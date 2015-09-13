@@ -1,8 +1,8 @@
 package call.upl.compiler.node;
 
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ObjectToken;
 
-import javax.swing.ComponentInputMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +29,13 @@ public abstract class CompileNode
         compileNodes.add(this);
     }
 
-    abstract boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine);
+    abstract boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens);
 
     public static boolean attemptCompile(UPLCompiler compiler, CompileStateData compileStateData)
     {
         for(CompileNode compileNode : compileNodes)
         {
-            if(compileNode.compile(compiler, compileStateData, compileStateData.curLine))
+            if(compileNode.compile(compiler, compileStateData, compileStateData.curLine, compileStateData.tokens))
             {
                 return true;
             }

@@ -12,4 +12,33 @@ public class NumberToken extends ObjectToken<BigDecimal>
         this.tokenType = Tokeniser.TokenType.NUMBER;
         this.value = decimal;
     }
+
+    @Override
+    public boolean tagMatches(String[] s)
+    {
+        if(!super.tagMatches(s))
+            return false;
+
+        String mode = s[1];
+
+        if(mode.equals("ANY"))
+        {
+            return true;
+        }
+        else
+        {
+            if(mode.equals("EXACT"))
+            {
+                return value.equals(new BigDecimal(s[2]));
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toCodeValue()
+    {
+        return value.toPlainString();
+    }
 }

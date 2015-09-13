@@ -11,7 +11,12 @@ import java.util.List;
  */
 public class Tokeniser
 {
-    public static List<ObjectToken> convertStringTokenToObjectToken(List<String> tokens)
+    public static List<ObjectToken> tokenise(String input)
+    {
+        return convertStringTokenToObjectTokens(tokeniseString(input));
+    }
+
+    public static List<ObjectToken> convertStringTokenToObjectTokens(List<String> tokens)
     {
         List<ObjectToken> objectTokens = new ArrayList<ObjectToken>();
 
@@ -49,13 +54,16 @@ public class Tokeniser
 
             if(type == TokenType.SPECIAL)
             {
-                if(token.equals("[") && tokens.get(i + 1).equals("]"))
+                if((tokens.size() - i) >= 3)
                 {
-                    Pair<ArrayCreationToken, Integer> reconstructedArrayCreation = reconstructArrayCreation(tokens, i);
+                    if (token.equals("[") && tokens.get(i + 1).equals("]"))
+                    {
+                        Pair<ArrayCreationToken, Integer> reconstructedArrayCreation = reconstructArrayCreation(tokens, i);
 
-                    objectTokens.add(reconstructedArrayCreation.first);
-                    i = reconstructedArrayCreation.second;
-                    continue;
+                        objectTokens.add(reconstructedArrayCreation.first);
+                        i = reconstructedArrayCreation.second;
+                        continue;
+                    }
                 }
             }
 
@@ -63,39 +71,42 @@ public class Tokeniser
 
             if(type == TokenType.SPECIAL)
             {
-                if(token.equals("=") && tokens.get(i + 1).equals("=")) // == (equality)
+                if((tokens.size() - i) >= 3)
                 {
-                    objectTokens.add(new SpecialToken("=="));
-                    i++;
-                    continue;
-                }
+                    if (token.equals("=") && tokens.get(i + 1).equals("=")) // == (equality)
+                    {
+                        objectTokens.add(new SpecialToken("=="));
+                        i++;
+                        continue;
+                    }
 
-                if(token.equals("-") && tokens.get(i + 1).equals(">")) // -> (block declaration)
-                {
-                    objectTokens.add(new SpecialToken("->"));
-                    i++;
-                    continue;
-                }
+                    if (token.equals("-") && tokens.get(i + 1).equals(">")) // -> (block declaration)
+                    {
+                        objectTokens.add(new SpecialToken("->"));
+                        i++;
+                        continue;
+                    }
 
-                if(token.equals(">") && tokens.get(i + 1).equals("=")) // >= (more than or equal to)
-                {
-                    objectTokens.add(new SpecialToken(">="));
-                    i++;
-                    continue;
-                }
+                    if (token.equals(">") && tokens.get(i + 1).equals("=")) // >= (more than or equal to)
+                    {
+                        objectTokens.add(new SpecialToken(">="));
+                        i++;
+                        continue;
+                    }
 
-                if(token.equals("<") && tokens.get(i + 1).equals("=")) // <= (less than or equal to)
-                {
-                    objectTokens.add(new SpecialToken("<="));
-                    i++;
-                    continue;
-                }
+                    if (token.equals("<") && tokens.get(i + 1).equals("=")) // <= (less than or equal to)
+                    {
+                        objectTokens.add(new SpecialToken("<="));
+                        i++;
+                        continue;
+                    }
 
-                if(token.equals("!") && tokens.get(i + 1).equals("=")) // != (not equals)
-                {
-                    objectTokens.add(new SpecialToken("!="));
-                    i++;
-                    continue;
+                    if (token.equals("!") && tokens.get(i + 1).equals("=")) // != (not equals)
+                    {
+                        objectTokens.add(new SpecialToken("!="));
+                        i++;
+                        continue;
+                    }
                 }
             }
 
@@ -174,7 +185,7 @@ public class Tokeniser
         return new Pair<>(result, pos);
     }
 
-    public static List<String> tokenise(String s)
+    public static List<String> tokeniseString(String s)
     {
         List<String> tokens = new ArrayList<String>();
 
@@ -297,7 +308,7 @@ public class Tokeniser
     }
 
 
-    enum TokenType
+    public enum TokenType
     {
         WORD, NUMBER, SPECIAL, STRING, ARRAY_ACCESS, ARRAY_CREATION, UNKNOWN
     }
