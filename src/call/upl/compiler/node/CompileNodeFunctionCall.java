@@ -29,7 +29,8 @@ public class CompileNodeFunctionCall extends CompileNode
 
             if(!name.startsWith("_"))
             {
-                FunctionParser.convertFunctionToCode(uplCompiler, curLine);
+                //TODO: fix
+               // FunctionParser.convertFunctionToCode(uplCompiler, curLine);
 
                 return true;
             }

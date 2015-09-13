@@ -13,6 +13,7 @@ public class PatternBuilder
 
     private String pattern = "";
     private boolean isInOr;
+    private boolean inexactMatch = false;
 
     public String create(Tokeniser.TokenType type, PatternMatcher.MatchType matchType, String... extra)
     {
@@ -42,6 +43,16 @@ public class PatternBuilder
         pattern = pattern.substring(0, pattern.length() - 2);
         pattern += PATTERN_TAG_END;
         isInOr = false;
+    }
+
+    public void enableInexactMatching()
+    {
+        this.inexactMatch = true;
+    }
+
+    public boolean isInexactMatching()
+    {
+        return inexactMatch;
     }
 
     @Override

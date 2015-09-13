@@ -32,8 +32,6 @@ public class CompileNodeSet extends CompileNode
         setVariableNumber.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
         setVariableNumber.endOr();
 
-        System.out.println(PatternMatcher.match(compileStateData, setVariableNumber));
-
         if(PatternMatcher.match(compileStateData, setVariableNumber))
         {
             String varName = ((WordToken) tokens.get(0)).getValue();
@@ -41,51 +39,26 @@ public class CompileNodeSet extends CompileNode
             ObjectToken valueToken = tokens.get(2);
 
             writeCode((valueToken.tokenType == Tokeniser.TokenType.STRING ? "dwd " : "mov ") + varName + " " + valueToken.toCodeValue());
-        }
-
-        if(true)
-            return true;
-
-        PatternBuilder setArray = new PatternBuilder();
-        setArray.addMatchVariable();
-        setArray.addMatchSpace(0);
-        setArray.addMatchExact("=");
-        setArray.addMatchSpace(0);
-        setArray.addMatchVariable();
-
-        if(PatternMatcher.match(curLine, setArray.toString()))
-        {
-            String[] args = curLine.split("=");
-            String name = args[0].trim();
-            String value = args[1].trim();
-
-            writeCode("mov " + name + " " + value);
 
             return true;
         }
-
-        PatternBuilder setFunc = new PatternBuilder();
 
         //x = foo ( 10 )
 
-        setFunc.addMatchVariable();
-        setFunc.addMatchSpace(0);
-        setFunc.addMatchExact("=");
-        setFunc.addMatchSpace(0);
-        setFunc.addMatchAnyWord();
-        setFunc.addMatchSpace(0);
-        setFunc.addMatchExact("(");
-        setFunc.addSkipToEnd();
+        PatternBuilder setVariableFunction = new PatternBuilder();
+        setVariableFunction.enableInexactMatching();
+        setVariableFunction.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        setVariableFunction.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "=");
+        setVariableFunction.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        setVariableFunction.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.ANY, "(");
 
-        if(PatternMatcher.match(curLine, setFunc.toString()))
+        System.out.println(compileStateData.curLine + " " + compileStateData.tokens.size());
+
+        if(PatternMatcher.match(compileStateData, setVariableFunction))
         {
-            String name = curLine.substring(curLine.indexOf("="), curLine.indexOf("(")).trim();
+            System.out.println("Test");
 
-
-            if(!name.startsWith("_"))
-            {
-                FunctionParser.convertFunctionToCode(uplCompiler, curLine);
-            }
+            FunctionParser.convertFunctionToCode(uplCompiler, compileStateData.tokens);
 
             return true;
         }

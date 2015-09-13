@@ -1,11 +1,8 @@
 package call.upl.compiler.pattern;
 
 import call.upl.compiler.core.UPLCompiler;
-import call.upl.compiler.core.tokeniser.NumberToken;
 import call.upl.compiler.core.tokeniser.ObjectToken;
-import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.node.CompileStateData;
-import call.upl.core.UPL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +12,24 @@ import java.util.List;
  */
 public class PatternMatcher
 {
-    public static boolean match(CompileStateData csd, PatternBuilder builder)
+    public static boolean match(CompileStateData csd, PatternBuilder pattern)
     {
-        return match(csd, builder.toString());
-    }
+        List<String> tags = getTags(pattern.toString());
 
-    public static boolean match(CompileStateData csd, String pattern)
-    {
-        List<String> tags = getTags(pattern);
+        System.out.println(pattern.isInexactMatching());
 
-        for(int i = 0; i < csd.tokens.size(); i++)
+        if(!pattern.isInexactMatching() && tags.size() != csd.tokens.size())
+        {
+            return false;
+        }
+
+        if(tags.size() > csd.tokens.size())
+        {
+            System.out.println("Error: not enough tokens for the given number of tags");
+            return false;
+        }
+
+        for(int i = 0; i < tags.size(); i++)
         {
             String tag = tags.get(i);
             ObjectToken token = csd.tokens.get(i);

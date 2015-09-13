@@ -1,5 +1,8 @@
 package call.upl.compiler.core;
 
+import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import java.util.List;
  */
 public class FunctionParser
 {
+    @Deprecated
     public static List<String> breakdownFunction(String function)
     {
         //x = foo()
@@ -37,6 +41,7 @@ public class FunctionParser
         return ret;
     }
 
+    @Deprecated
     public static void breakdownFunctionCall(List<String> ret, String functioncall)
     {
         //foo (x [ n ], x, x ( n ))
@@ -66,21 +71,22 @@ public class FunctionParser
         //x ( n )
     }
 
-    public static void convertFunctionToCode(UPLCompiler compiler, String function)
+    public static void convertFunctionToCode(UPLCompiler compiler, List<ObjectToken> function)
     {
-        List<String> breakdown = breakdownFunction(function);
+        //foo = bar("foobar", 20)
 
-        String returnValue = breakdown.get(0);
+        String returnValue = function.get(0).toCodeValue(); // could be a WORD or ARRAY_ACCESS type
 
-        String functionName = breakdown.get(1);
+        String functionName = function.get(2).toCodeValue(); // will always be a WORD type
 
-        int argumentCount = Integer.parseInt(breakdown.get(2));
-
-        for(int i = 0; i < argumentCount; i++)
+        for(int i = 4; i < function.size() - 1; i++) // could change to i += 2 to remove if
         {
-            String line = breakdown.get(3 + i);
+            ObjectToken token = function.get(i);
 
-            convertArgumentToCode(compiler, line);
+            if(token.tokenType != Tokeniser.TokenType.SPECIAL)
+            {
+                convertArgumentToCode(compiler, function, i);
+            }
         }
 
         compiler.writeCode("jmp " + functionName);
@@ -91,36 +97,21 @@ public class FunctionParser
         }
     }
 
-    public static void convertArgumentToCode(UPLCompiler compiler, String argument)
+    public static void convertArgumentToCode(UPLCompiler compiler, List<ObjectToken> arguments, int index)
     {
-        //x, x [ n ], x ( n, n )
-        if(argument.trim().isEmpty())
-            return;
+        ObjectToken argument = arguments.get(index);
 
-        if(CompilerUtils.isVariable(argument) || CompilerUtils.isArrayAccess(argument))
+        if(argument.tokenType == Tokeniser.TokenType.WORD || argument.tokenType == Tokeniser.TokenType.ARRAY_ACCESS || argument.tokenType == Tokeniser.TokenType.NUMBER)
         {
-            compiler.writeCode("psh " + argument);
+            compiler.writeCode("psh " + argument.toCodeValue());
         }
-        else
+
+        if(argument.tokenType == Tokeniser.TokenType.STRING)
         {
-            if(CompilerUtils.isString(argument))
-            {
-                compiler.execLine("@TEMP1@ = " + argument, 0);
-                compiler.writeCode("psh @TEMP1@");
-            }
-            else
-            {
-                if(CompilerUtils.isFunction(argument))
-                {
-                    convertFunctionToCode(compiler, "@TEMP0@ = " + argument);
-                    compiler.writeCode("psh @TEMP0@");
-                }
-                else
-                {
-                    ExpressionParser.convertEquationToCode("@TEMP2@ = " + argument, compiler);
-                    compiler.writeCode("psh @TEMP2@");
-                }
-            }
+            compiler.writeCode("dwd @TEMP1@ " + argument.toCodeValue());
+            compiler.writeCode("psh @TEMP1@");
         }
+
+        //TODO: functionCalls, equations
     }
 }

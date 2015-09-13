@@ -2,3 +2,10 @@ mov x 10
 mov y @TEMP1@
 dwd z Hello World
 mov abc def[ghi]
+
+
+psh 10
+dwd @TEMP1@ This is a test
+psh @TEMP1@
+jmp testFunc
+pop test
