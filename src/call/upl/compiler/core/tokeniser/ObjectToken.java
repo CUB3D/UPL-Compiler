@@ -22,4 +22,10 @@ public class ObjectToken<T>
     {
         return value.toString();
     }
+
+    @Override
+    public String toString()
+    {
+        return toCodeValue();
+    }
 }

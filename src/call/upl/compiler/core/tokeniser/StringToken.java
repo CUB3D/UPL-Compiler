@@ -33,4 +33,10 @@ public class StringToken extends ObjectToken<String>
 
         return false;
     }
+
+    @Override
+    public String toString()
+    {
+        return "\"" + super.toString() + "\"";
+    }
 }

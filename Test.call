@@ -36,4 +36,17 @@ x = 10
 y = @TEMP1@
 z = "Hello World"
 abc = def[ghi]
-test = testFunc(10, "This is a test")
+__UPLBC("---")
+test = testFunc(foo(bar(getTen())), "This is a test")
+__UPLBC("---")
+x = test(10)
+
+//expected
+//jmp getTen
+//pop @TEMP@
+//psh @TEMP@
+//jmp bar
+//pop @TEMP@
+//psh @TEMP@
+//jmp foo
+//pop @TEMP@

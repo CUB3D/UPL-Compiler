@@ -52,8 +52,6 @@ public class CompileNodeSet extends CompileNode
         setVariableFunction.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
         setVariableFunction.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.ANY, "(");
 
-        System.out.println(compileStateData.curLine + " " + compileStateData.tokens.size());
-
         if(PatternMatcher.match(compileStateData, setVariableFunction))
         {
             System.out.println("Test");

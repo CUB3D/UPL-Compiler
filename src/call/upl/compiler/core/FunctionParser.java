@@ -1,6 +1,7 @@
 package call.upl.compiler.core;
 
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.SpecialToken;
 import call.upl.compiler.core.tokeniser.Tokeniser;
 
 import java.util.ArrayList;
@@ -79,14 +80,30 @@ public class FunctionParser
 
         String functionName = function.get(2).toCodeValue(); // will always be a WORD type
 
+        String argumentString = "";
+
         for(int i = 4; i < function.size() - 1; i++) // could change to i += 2 to remove if
         {
             ObjectToken token = function.get(i);
 
-            if(token.tokenType != Tokeniser.TokenType.SPECIAL)
+            if(token.tokenType == Tokeniser.TokenType.SPECIAL)
             {
-                convertArgumentToCode(compiler, function, i);
+                if(token.toCodeValue().equals(","))
+                {
+                    convertArgumentToCode(compiler, argumentString);
+
+                    argumentString = "";
+
+                    continue;
+                }
             }
+
+            argumentString += token.toString();
+        }
+
+        if(!argumentString.isEmpty())
+        {
+            convertArgumentToCode(compiler, argumentString);
         }
 
         compiler.writeCode("jmp " + functionName);
@@ -97,21 +114,66 @@ public class FunctionParser
         }
     }
 
-    public static void convertArgumentToCode(UPLCompiler compiler, List<ObjectToken> arguments, int index)
+    public static String rebuildFunction(List<ObjectToken> tokens)
     {
-        ObjectToken argument = arguments.get(index);
+        String s = "";
 
-        if(argument.tokenType == Tokeniser.TokenType.WORD || argument.tokenType == Tokeniser.TokenType.ARRAY_ACCESS || argument.tokenType == Tokeniser.TokenType.NUMBER)
+        int braceCounter = 0;
+
+        for(int i = 0; i < tokens.size(); i++)
         {
-            compiler.writeCode("psh " + argument.toCodeValue());
+            s += tokens.get(i).toCodeValue();
+
+            if(tokens.get(i).tagMatches(new String[]{"SPECIAL", "EXACT", "("}))
+            {
+                braceCounter++;
+            }
+            if(tokens.get(i).tagMatches(new String[]{"SPECIAL", "EXACT", ")"}))
+            {
+                if(braceCounter > 0)
+                {
+                    braceCounter--;
+
+                    if(braceCounter == 0)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
-        if(argument.tokenType == Tokeniser.TokenType.STRING)
+        System.out.println("Rebuilt function: " + s);
+
+        return s;
+    }
+
+    public static void convertArgumentToCode(UPLCompiler compiler, String argument)
+    {
+        List<ObjectToken> arguments = Tokeniser.tokenise(argument);
+
+        if(arguments.get(0).tokenType == Tokeniser.TokenType.WORD && arguments.get(1).tagMatches(new String[]{"SPECIAL", "EXACT", "("}))
         {
-            compiler.writeCode("dwd @TEMP1@ " + argument.toCodeValue());
+            String s = rebuildFunction(arguments);
+
+            convertFunctionToCode(compiler, Tokeniser.tokenise("@TEMP1@ = " + s));
             compiler.writeCode("psh @TEMP1@");
         }
+        else
+        {
+            if(arguments.get(0).tokenType == Tokeniser.TokenType.WORD || arguments.get(0).tokenType == Tokeniser.TokenType.ARRAY_ACCESS || arguments.get(0).tokenType == Tokeniser.TokenType.NUMBER)
+            {
+                compiler.writeCode("psh " + arguments.get(0).toCodeValue());
+            }
+            else
+            {
+                if(arguments.get(0).tokenType == Tokeniser.TokenType.STRING)
+                {
+                    compiler.writeCode("dwd @TEMP1@ " + arguments.get(0).toCodeValue());
+                    compiler.writeCode("psh @TEMP1@");
+                }
+            }
+        }
 
-        //TODO: functionCalls, equations
+        //TODO: equations
     }
 }

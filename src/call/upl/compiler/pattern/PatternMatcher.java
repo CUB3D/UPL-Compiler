@@ -16,8 +16,6 @@ public class PatternMatcher
     {
         List<String> tags = getTags(pattern.toString());
 
-        System.out.println(pattern.isInexactMatching());
-
         if(!pattern.isInexactMatching() && tags.size() != csd.tokens.size())
         {
             return false;
