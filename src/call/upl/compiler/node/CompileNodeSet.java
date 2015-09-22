@@ -49,8 +49,7 @@ public class CompileNodeSet extends CompileNode
         setVariableFunction.enableInexactMatching();
         setVariableFunction.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
         setVariableFunction.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "=");
-        setVariableFunction.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
-        setVariableFunction.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.ANY, "(");
+        setVariableFunction.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
 
         if(PatternMatcher.match(compileStateData, setVariableFunction))
         {

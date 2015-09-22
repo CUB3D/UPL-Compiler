@@ -3,20 +3,8 @@ mov y @TEMP1@
 dwd z Hello World
 mov abc def[ghi]
 ---
-jmp getTen
-pop @TEMP1@
-psh @TEMP1@
-jmp bar
-pop @TEMP1@
-psh @TEMP1@
-jmp foo
-pop @TEMP1@
-psh @TEMP1@
-dwd @TEMP1@ This is a test
-psh @TEMP1@
-jmp testFunc
+jmp First: testFunc Second: [foo, (, bar, (, getTen, (, ), ), ), ,, "Thisisatest "]
 pop test
 ---
-psh 10
-jmp test
+jmp First: test Second: []
 pop x

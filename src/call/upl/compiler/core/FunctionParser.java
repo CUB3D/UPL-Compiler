@@ -1,10 +1,8 @@
 package call.upl.compiler.core;
 
 import call.upl.compiler.core.tokeniser.ObjectToken;
-import call.upl.compiler.core.tokeniser.SpecialToken;
 import call.upl.compiler.core.tokeniser.Tokeniser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,68 +10,12 @@ import java.util.List;
  */
 public class FunctionParser
 {
-    @Deprecated
-    public static List<String> breakdownFunction(String function)
-    {
-        //x = foo()
-        //foo()
-
-        String[] args = function.split("=");
-
-        String fucntionCall;
-        String returnValue = null;
-
-        if(args.length > 1)
-        {
-            fucntionCall = args[1];
-            returnValue = args[0];
-        }
-        else
-        {
-            fucntionCall = args[0];
-        }
-
-        List<String> ret = new ArrayList<String>();
-
-        ret.add(returnValue);
-
-        breakdownFunctionCall(ret, fucntionCall.trim());
-
-        return ret;
-    }
-
-    @Deprecated
-    public static void breakdownFunctionCall(List<String> ret, String functioncall)
-    {
-        //foo (x [ n ], x, x ( n ))
-        String name = functioncall.substring(0, functioncall.indexOf("("));
-
-        functioncall = functioncall.replaceFirst(name, "");
-
-        ret.add(name.trim());
-
-        //(x [ n ], x, x ( n ))
-
-        functioncall = functioncall.substring(1, functioncall.length() - 1);
-
-        //x [ n ], x, x ( n )
-
-        String[] arguments = functioncall.split(",");
-
-        ret.add("" + arguments.length);
-
-        for(int i = 0; i < arguments.length; i++)
-        {
-            ret.add(arguments[i].trim());
-        }
-
-        //x [ n ]
-        //x
-        //x ( n )
-    }
-
     public static void convertFunctionToCode(UPLCompiler compiler, List<ObjectToken> function)
     {
+        for (ObjectToken t : function)
+        {
+            System.out.println(t.tokenType + " " + t.toString());
+        }
         //foo = bar("foobar", 20)
 
         String returnValue = function.get(0).toCodeValue(); // could be a WORD or ARRAY_ACCESS type

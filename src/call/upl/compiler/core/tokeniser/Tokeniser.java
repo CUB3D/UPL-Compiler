@@ -67,6 +67,21 @@ public class Tokeniser
                 }
             }
 
+            if(type == TokenType.WORD)
+            {
+                if((tokens.size() - i) >= 2)
+                {
+                    if(tokens.get(i + 1).equals("(") && tokens.get(tokens.size() - 1).equals(")"))
+                    {
+                        Pair<FunctionCallToken, Integer> reconstructedFunctionCall = reconstructFunctionCalls(tokens, i);
+
+                        objectTokens.add(reconstructedFunctionCall.first);
+                        i = reconstructedFunctionCall.second;
+                        continue;
+                    }
+                }
+            }
+
             // special grouping
 
             if(type == TokenType.SPECIAL)
@@ -124,6 +139,32 @@ public class Tokeniser
         }
 
         return objectTokens;
+    }
+
+    private static Pair<FunctionCallToken, Integer> reconstructFunctionCalls(List<String> tokens, int pos)
+    {
+        // layout word,(,arg,,,arg,,,)
+
+        String functionName = tokens.get(pos++);
+
+        pos++; // skip (
+
+        String arguments = "";
+
+        if(!tokens.get(pos).equals(")")) // has arguments
+        {
+            for(; pos < tokens.size() - 2; pos++)
+            {
+                //TODO: not parsing strign correctely
+                arguments += tokens.get(pos);
+            }
+        }
+
+        System.out.println("Found function: " + functionName + " with arguments: " + arguments);
+
+        pos++; // skip )
+
+        return new Pair<>(new FunctionCallToken(functionName, arguments), pos);
     }
 
     private static Pair<ArrayCreationToken, Integer> reconstructArrayCreation(List<String> tokens, int pos)
@@ -310,6 +351,6 @@ public class Tokeniser
 
     public enum TokenType
     {
-        WORD, NUMBER, SPECIAL, STRING, ARRAY_ACCESS, ARRAY_CREATION, UNKNOWN
+        WORD, NUMBER, SPECIAL, STRING, ARRAY_ACCESS, ARRAY_CREATION, FUNCTION_CALL, UNKNOWN
     }
 }
