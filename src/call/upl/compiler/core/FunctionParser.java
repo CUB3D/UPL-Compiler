@@ -1,7 +1,9 @@
 package call.upl.compiler.core;
 
+import call.upl.compiler.core.tokeniser.FunctionCallToken;
 import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.core.tokeniser.Tokeniser;
+import jdk.nashorn.internal.ir.FunctionCall;
 
 import java.util.List;
 
@@ -12,21 +14,17 @@ public class FunctionParser
 {
     public static void convertFunctionToCode(UPLCompiler compiler, List<ObjectToken> function)
     {
-        for (ObjectToken t : function)
-        {
-            System.out.println(t.tokenType + " " + t.toString());
-        }
         //foo = bar("foobar", 20)
 
         String returnValue = function.get(0).toCodeValue(); // could be a WORD or ARRAY_ACCESS type
 
-        String functionName = function.get(2).toCodeValue(); // will always be a WORD type
+        FunctionCallToken functionCall = (FunctionCallToken) function.get(2); // will always be a FUNCTION_CALL type
 
         String argumentString = "";
 
-        for(int i = 4; i < function.size() - 1; i++) // could change to i += 2 to remove if
+        for(int i = 0; i < functionCall.getValue().second.size(); i++) // could change to i += 2 to remove if
         {
-            ObjectToken token = function.get(i);
+            ObjectToken token = functionCall.getValue().second.get(i);
 
             if(token.tokenType == Tokeniser.TokenType.SPECIAL)
             {
@@ -48,7 +46,7 @@ public class FunctionParser
             convertArgumentToCode(compiler, argumentString);
         }
 
-        compiler.writeCode("jmp " + functionName);
+        compiler.writeCode("jmp " + functionCall.getValue().first);
 
         if(returnValue != null)
         {
@@ -56,48 +54,13 @@ public class FunctionParser
         }
     }
 
-    public static String rebuildFunction(List<ObjectToken> tokens)
-    {
-        String s = "";
-
-        int braceCounter = 0;
-
-        for(int i = 0; i < tokens.size(); i++)
-        {
-            s += tokens.get(i).toCodeValue();
-
-            if(tokens.get(i).tagMatches(new String[]{"SPECIAL", "EXACT", "("}))
-            {
-                braceCounter++;
-            }
-            if(tokens.get(i).tagMatches(new String[]{"SPECIAL", "EXACT", ")"}))
-            {
-                if(braceCounter > 0)
-                {
-                    braceCounter--;
-
-                    if(braceCounter == 0)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-
-        System.out.println("Rebuilt function: " + s);
-
-        return s;
-    }
-
     public static void convertArgumentToCode(UPLCompiler compiler, String argument)
     {
         List<ObjectToken> arguments = Tokeniser.tokenise(argument);
 
-        if(arguments.get(0).tokenType == Tokeniser.TokenType.WORD && arguments.get(1).tagMatches(new String[]{"SPECIAL", "EXACT", "("}))
+        if(arguments.get(0).tokenType == Tokeniser.TokenType.FUNCTION_CALL)
         {
-            String s = rebuildFunction(arguments);
-
-            convertFunctionToCode(compiler, Tokeniser.tokenise("@TEMP1@ = " + s));
+            convertFunctionToCode(compiler, Tokeniser.tokenise("@TEMP1@ = " + argument));
             compiler.writeCode("psh @TEMP1@");
         }
         else

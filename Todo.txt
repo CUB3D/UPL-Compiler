@@ -1,0 +1,32 @@
+//include "IO.call"
+//include "Array.upl"
+//include "File.upl"
+
+//test = "B:\Git\UPL-Compiler\Array.upl"
+
+//arrayReader = loadFileForReading(test)
+
+//firstLine = readStringFromFile(arrayReader)
+
+//println(firstLine)
+
+
+
+    //for ( x = 0; x < 10; x++ )
+       //{
+       //    test--
+       //
+       //    print(x)
+        //   print(test) // would not work if namespace is used
+        //   //new syntax
+        //   print(this::test)
+        //   // this:: moves up the namespace stack by one
+        //   this::this::test // recursive
+       //
+
+    //set x 0
+    //whl x < 10
+    //x++ // raw copy
+    //psh x
+    //jmp print
+    //endwhl

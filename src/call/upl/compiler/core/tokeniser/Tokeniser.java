@@ -151,12 +151,27 @@ public class Tokeniser
 
         String arguments = "";
 
+        boolean isInString = false;
+
         if(!tokens.get(pos).equals(")")) // has arguments
         {
-            for(; pos < tokens.size() - 2; pos++)
+            for(; pos < tokens.size() - 1; pos++)
             {
-                //TODO: not parsing strign correctely
+                //TODO: not parsing string correctely
                 arguments += tokens.get(pos);
+
+                if(isInString) arguments += " ";
+
+                if(tokens.get(pos).equals("\""))
+                {
+                    isInString = !isInString;
+
+                    if(!isInString)
+                    {
+                        arguments = arguments.substring(0, arguments.length() - 3);
+                        arguments += "\"";
+                    }
+                }
             }
         }
 

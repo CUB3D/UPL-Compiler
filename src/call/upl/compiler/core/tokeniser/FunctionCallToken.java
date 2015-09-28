@@ -14,4 +14,17 @@ public class FunctionCallToken extends ObjectToken<Pair<String, List<ObjectToken
         this.value = new Pair<>(functionName, Tokeniser.tokenise(arguments));
         this.tokenType = Tokeniser.TokenType.FUNCTION_CALL;
     }
+
+    @Override
+    public String toCodeValue()
+    {
+        String s = value.first + "(";
+
+        for(ObjectToken ot : value.second)
+        {
+            s += ot.toCodeValue();
+        }
+
+        return s + ")";
+    }
 }

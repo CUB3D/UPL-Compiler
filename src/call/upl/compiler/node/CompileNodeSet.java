@@ -53,8 +53,6 @@ public class CompileNodeSet extends CompileNode
 
         if(PatternMatcher.match(compileStateData, setVariableFunction))
         {
-            System.out.println("Test");
-
             FunctionParser.convertFunctionToCode(uplCompiler, compileStateData.tokens);
 
             return true;
