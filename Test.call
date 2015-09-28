@@ -5,4 +5,6 @@ abc = def[ghi]
 __UPLBC("---")
 test = testFunc(foo(bar()), "This is a test")
 __UPLBC("---")
-//x = test(10)
+x = test(10)
+__UPLBC("---")
+foo(bar(bar(bar())))

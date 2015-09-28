@@ -14,3 +14,18 @@ psh @TEMP1@
 jmp testFunc
 pop test
 ---
+psh 10
+jmp test
+pop x
+---
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp foo
+pop @TEMP1@

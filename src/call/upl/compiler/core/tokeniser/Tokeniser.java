@@ -343,7 +343,7 @@ public class Tokeniser
 
     public static TokenType getTokenType(char c)
     {
-        return (Character.isLetter(c) || c == '@') ? TokenType.WORD :
+        return (Character.isLetter(c) || c == '@' || c == '_') ? TokenType.WORD :
                 Character.isDigit(c) ? TokenType.NUMBER :
                         isSpecial(c) ? TokenType.SPECIAL : TokenType.UNKNOWN;
     }

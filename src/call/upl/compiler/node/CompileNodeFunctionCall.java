@@ -2,9 +2,12 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.FunctionParser;
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.FunctionCallToken;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
+import com.sun.javafx.fxml.expression.Expression;
 
 import java.util.List;
 
@@ -17,26 +20,26 @@ public class CompileNodeFunctionCall extends CompileNode
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         PatternBuilder callFunc = new PatternBuilder();
-        //helloWorld ( x, y )
-        callFunc.addMatchAnyWord();
-        callFunc.addMatchSpace(0);
-        callFunc.addMatchExact("(");
-        callFunc.addMatchSkipToExact(")");
+        callFunc.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
 
-        if(PatternMatcher.match(curLine, callFunc.toString()))
+        if(PatternMatcher.match(compileStateData, callFunc))
         {
-            String name = curLine.substring(0, curLine.indexOf("(")).trim();
+            FunctionCallToken function = (FunctionCallToken) compileStateData.tokens.get(0);
 
-            if(!name.startsWith("_"))
+            String name = function.getValue().first;
+
+            if(!name.startsWith("_")) // check for compiler function
             {
-                //TODO: fix
-               // FunctionParser.convertFunctionToCode(uplCompiler, curLine);
+                compileStateData.curLine = "@TEMP1@ = " + compileStateData.curLine;
+                compileStateData.tokens = Tokeniser.tokenise(compileStateData.curLine);
+
+               FunctionParser.convertFunctionToCode(uplCompiler, compileStateData.tokens);
 
                 return true;
             }
             else
             {
-                if (name.equals("__UPLBC"))
+                if(name.equals("__UPLBC"))
                 {
                     curLine = curLine.replaceAll(name, "");
                     // .  ("X Y").
@@ -47,6 +50,8 @@ public class CompileNodeFunctionCall extends CompileNode
                     // X Y
 
                     writeCode(curLine);
+
+                    return true;
                 }
             }
         }
