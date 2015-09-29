@@ -38,7 +38,7 @@ public class CompileNodeSet extends CompileNode
 
             ObjectToken valueToken = tokens.get(2);
 
-            writeCode((valueToken.tokenType == Tokeniser.TokenType.STRING ? "dwd " : "mov ") + varName + " " + valueToken.toCodeValue());
+            writeCode((valueToken.tokenType == Tokeniser.TokenType.STRING ? "dwd " + varName + " " + valueToken.toCodeValue() : "mov " + valueToken.toCodeValue() + " " + varName));
 
             return true;
         }

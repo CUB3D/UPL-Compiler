@@ -1,7 +1,7 @@
-mov x 10
-mov y @TEMP1@
+mov 10 x
+mov @TEMP1@ y
 dwd z Hello World
-mov abc def[ghi]
+mov def[ghi] abc
 ---
 jmp bar
 pop @TEMP1@
@@ -29,3 +29,5 @@ pop @TEMP1@
 psh @TEMP1@
 jmp foo
 pop @TEMP1@
+---
+psh @TEMP2@

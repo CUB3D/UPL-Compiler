@@ -2,6 +2,7 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
 
@@ -15,23 +16,32 @@ public class CompileNodeReturn extends CompileNode
     @Override
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
-        curLine = curLine.trim();
-
         //return x
         PatternBuilder ret = new PatternBuilder();
-        ret.addMatchExact("return");
-        ret.addMatchSpace(0);
-        ret.addMatchVariable();
+        ret.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.EXACT, "return");
+        ret.enableInexactMatching();
+        ret.startOr();
+        ret.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        ret.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
+        ret.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
+        ret.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        ret.endOr();
 
-        if(PatternMatcher.match(curLine, ret.toString()))
+        //TODO: return function call
+
+        if(PatternMatcher.match(compileStateData, ret))
         {
-            curLine = curLine.replaceFirst("return", "");
+            ObjectToken token = compileStateData.tokens.get(1);
 
-            curLine = "@TEMP0@ = " + curLine;
-
-            uplCompiler.execLine(curLine, compileStateData.curLineNumber);
-
-            writeCode("psh @TEMP0@");
+            if(token.tokenType == Tokeniser.TokenType.STRING)
+            {
+                writeCode("dwd @TEMP1@ " + token.toCodeValue());
+                writeCode("psh @TEMP1@");
+            }
+            else
+            {
+                writeCode("psh " + token.toCodeValue());
+            }
 
             return true;
         }

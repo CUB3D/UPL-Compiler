@@ -8,3 +8,5 @@ __UPLBC("---")
 x = test(10)
 __UPLBC("---")
 foo(bar(bar(bar())))
+__UPLBC("---")
+return 1
