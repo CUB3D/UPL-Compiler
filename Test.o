@@ -30,4 +30,14 @@ psh @TEMP1@
 jmp foo
 pop @TEMP1@
 ---
-psh @TEMP2@
+psh 1
+---
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp foo
+pop @TEMP1@
+psh @TEMP1@
+jmp test
+pop @TEMP1@
+psh @TEMP1@

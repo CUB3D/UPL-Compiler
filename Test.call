@@ -10,3 +10,5 @@ __UPLBC("---")
 foo(bar(bar(bar())))
 __UPLBC("---")
 return 1
+__UPLBC("---")
+return test(foo(bar()))

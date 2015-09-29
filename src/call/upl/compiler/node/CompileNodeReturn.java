@@ -1,5 +1,6 @@
 package call.upl.compiler.node;
 
+import call.upl.compiler.core.FunctionParser;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.core.tokeniser.Tokeniser;
@@ -25,22 +26,30 @@ public class CompileNodeReturn extends CompileNode
         ret.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
         ret.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
         ret.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        ret.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
         ret.endOr();
-
-        //TODO: return function call
 
         if(PatternMatcher.match(compileStateData, ret))
         {
             ObjectToken token = compileStateData.tokens.get(1);
 
-            if(token.tokenType == Tokeniser.TokenType.STRING)
+            if(token.tokenType == Tokeniser.TokenType.FUNCTION_CALL)
             {
-                writeCode("dwd @TEMP1@ " + token.toCodeValue());
+                compileStateData.curLine = compileStateData.curLine.replace("return", "@TEMP1@ = ");
+                compileStateData.tokenise();
+                FunctionParser.convertFunctionToCode(uplCompiler, compileStateData.tokens);
                 writeCode("psh @TEMP1@");
             }
             else
             {
-                writeCode("psh " + token.toCodeValue());
+                if(token.tokenType == Tokeniser.TokenType.STRING)
+                {
+                    writeCode("dwd @TEMP1@ " + token.toCodeValue());
+                    writeCode("psh @TEMP1@");
+                } else
+                {
+                    writeCode("psh " + token.toCodeValue());
+                }
             }
 
             return true;
