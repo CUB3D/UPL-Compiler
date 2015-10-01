@@ -41,3 +41,73 @@ psh @TEMP1@
 jmp test
 pop @TEMP1@
 psh @TEMP1@
+.newline
+nsp newline
+dwd @TEMP0@ /n
+psh @TEMP0@
+int 0x1
+dwd @TEMP0@ NULL
+endnsp
+end
+.print
+nsp print
+pop x
+psh x
+int 0x1
+endnsp
+end
+.println
+nsp println
+pop x
+psh x
+int 0x1
+jmp newline
+pop @TEMP1@
+endnsp
+end
+.readChar
+nsp readChar
+int 0x3
+pop @TEMP@
+psh @TEMP@
+endnsp
+end
+.itoa
+nsp itoa
+pop num
+psh num
+int 0x4
+pop @TEMP@
+psh @TEMP@
+endnsp
+end
+.atoi
+nsp atoi
+pop a
+psh a
+int 0x5
+pop @TEMP@
+psh @TEMP@
+endnsp
+end
+.readString
+nsp readString
+dwd tempString 
+jmp readChar
+pop temp
+whl temp > 10
+psh temp
+jmp itoa
+pop temp
+psh tempString
+psh temp
+pop @TEMP1@
+pop @TEMP0@
+add @TEMP0@ @TEMP1@
+pop tempString
+jmp readChar
+pop temp
+endwhl
+psh tempString
+endnsp
+end
