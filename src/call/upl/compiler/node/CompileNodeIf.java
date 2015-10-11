@@ -3,6 +3,7 @@ package call.upl.compiler.node;
 import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
 
@@ -19,25 +20,41 @@ public class CompileNodeIf extends CompileNode
         //if ( s == d ) -> { }
         PatternBuilder if_ = new PatternBuilder();
 
-        if_.addMatchExact("if");
-        if_.addMatchSpace(0);
-        if_.addMatchExact("(");
+        if_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.EXACT, "if");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "(");
 
-        if_.addMatchSpace(0);
-        if_.addMatchValue();
-        if_.addMatchSpace(0);
+        if_.startOr();
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
+        if_.endOr();
 
-        if_.addMatchExact("==", "\\>", "\\<");
+        if_.startOr();
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "==");
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "!=");
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\>");
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\>=");
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\<");
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\<=");
+        if_.endOr();
 
-        if_.addMatchSpace(0);
-        if_.addMatchValue();
-        if_.addMatchSpace(0);
-        if_.addMatchExact(")");
+        if_.startOr();
+        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        if_.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
+        if_.endOr();
 
-        if_.addMatchSpace(0);
-        if_.addMatchExact("-\\>");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, ")");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "-\\>");
 
-        if(PatternMatcher.match(curLine, if_.toString()))
+        System.out.println(if_.toString());
+
+
+        if(PatternMatcher.match(compileStateData, if_))
         {
             //if(x == y) ->
             // if x == y

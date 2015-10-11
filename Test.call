@@ -12,3 +12,8 @@ __UPLBC("---")
 return 1
 __UPLBC("---")
 return test(foo(bar()))
+__UPLBC("---")
+if ( x == 10 ) ->
+{
+    __UPLBC("---")
+}
