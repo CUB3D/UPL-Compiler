@@ -42,4 +42,6 @@ jmp test
 pop @TEMP1@
 psh @TEMP1@
 ---
+if x == 10
 ---
+endif

@@ -86,7 +86,7 @@ public class Tokeniser
 
             if(type == TokenType.SPECIAL)
             {
-                if((tokens.size() - i) >= 3)
+                if((tokens.size() - i) >= 2)
                 {
                     if (token.equals("=") && tokens.get(i + 1).equals("=")) // == (equality)
                     {

@@ -32,12 +32,12 @@ public class CompileNodeIf extends CompileNode
         if_.endOr();
 
         if_.startOr();
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "==");
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "!=");
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\>");
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\>=");
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\<");
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.EXACT, "\\<=");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "==");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "!=");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>=");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<");
+        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<=");
         if_.endOr();
 
         if_.startOr();
@@ -51,8 +51,12 @@ public class CompileNodeIf extends CompileNode
         if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, ")");
         if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "-\\>");
 
-        System.out.println(if_.toString());
-
+        System.out.println("Line: " + curLine);
+        for(ObjectToken s : Tokeniser.tokenise(curLine))
+        {
+            System.out.println(s.tokenType+"");
+        }
+        System.out.println(Tokeniser.tokenise(curLine).size() + " " + PatternMatcher.getTags(if_.toString()).size());
 
         if(PatternMatcher.match(compileStateData, if_))
         {

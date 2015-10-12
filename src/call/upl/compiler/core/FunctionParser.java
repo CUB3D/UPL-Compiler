@@ -3,7 +3,6 @@ package call.upl.compiler.core;
 import call.upl.compiler.core.tokeniser.FunctionCallToken;
 import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.core.tokeniser.Tokeniser;
-import jdk.nashorn.internal.ir.FunctionCall;
 
 import java.util.List;
 
