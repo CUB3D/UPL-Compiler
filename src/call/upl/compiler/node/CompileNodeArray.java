@@ -1,10 +1,13 @@
 package call.upl.compiler.node;
 
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.ArrayCreationToken;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 /**
@@ -17,43 +20,33 @@ public class CompileNodeArray extends CompileNode
     {
         PatternBuilder array = new PatternBuilder();
 
-        array.addMatchVariable();
-        array.addMatchSpace(0);
-        array.addMatchExact("=");
-        array.addMatchSpace(0);
-        array.addMatchExact("[");
-        array.addMatchSkipToExact("]");
-        array.addMatchSpace(0);
-        array.addMatchExact(":");
-        array.addMatchSpace(0);
-        array.addMatchValue();
+        array.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        array.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "=");
+        array.add(Tokeniser.TokenType.ARRAY_CREATION, PatternMatcher.MatchType.ANY);
 
-        if(PatternMatcher.match(curLine, array.toString()))
+        if(PatternMatcher.match(compileStateData, array))
         {
-            curLine = curLine.replaceAll(" ", "");
+            String name = tokens.get(0).toCodeValue();
 
-            String name = curLine.split("=")[0];
-            String contents = curLine.split("=")[1];
-            String size = contents.split(":")[1];
-            contents = contents.substring(0, contents.length() - size.length() - 1);
+            ArrayCreationToken arrayCreationToken = (ArrayCreationToken) tokens.get(2);
+
+            String size = arrayCreationToken.getValue().second;
 
             writeCode("ary " + name + " " + size);
 
-            contents = contents.substring(1, contents.length() - 1); // remove []
+            List<String> contentsArray = arrayCreationToken.getValue().first;
 
-            String[] contentsArray = contents.split(",");
-
-            if(contents.contains(","))
+            if(!contentsArray.isEmpty())
             {
-                for (int i = 0; i < contentsArray.length; i++)
+                for (int i = 0; i < contentsArray.size(); i++)
                 {
-                    writeCode("mov " + name + "[" + i + "] " + contentsArray[i]);
+                    writeCode("mov " + name + "[" + i + "] " + contentsArray.get(i));
                 }
             }
 
             if(UPLCompiler.DEBUG)
             {
-                System.out.println("Array created: Name: " + name + ", Content: " + contents + ", Size: " + size);
+                System.out.println("Array created: Name: " + name + ", Content: " + contentsArray + ", Size: " + size);
             }
 
             return true;

@@ -19,52 +19,45 @@ public class CompileNodeIf extends CompileNode
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         //if ( s == d ) -> { }
-        PatternBuilder if_ = new PatternBuilder();
+        PatternBuilder ifMatcher = new PatternBuilder();
 
-        if_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.EXACT, "if");
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "(");
+        ifMatcher.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.EXACT, "if");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "(");
 
-        if_.startOr();
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
-        if_.endOr();
+        ifMatcher.startOr();
+        ifMatcher.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
+        ifMatcher.endOr();
 
-        if_.startOr();
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "==");
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "!=");
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>");
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>=");
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<");
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<=");
-        if_.endOr();
+        ifMatcher.startOr();
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "==");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "!=");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>=");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<=");
+        ifMatcher.endOr();
 
-        if_.startOr();
-        if_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
-        if_.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
-        if_.endOr();
+        ifMatcher.startOr();
+        ifMatcher.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        ifMatcher.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
+        ifMatcher.endOr();
 
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, ")");
-        if_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "-\\>");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, ")");
+        ifMatcher.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "-\\>");
 
-        System.out.println("Line: " + curLine);
-        for(ObjectToken s : Tokeniser.tokenise(curLine))
-        {
-            System.out.println(s.tokenType+"");
-        }
-        System.out.println(Tokeniser.tokenise(curLine).size() + " " + PatternMatcher.getTags(if_.toString()).size());
-
-        if(PatternMatcher.match(compileStateData, if_))
+        if(PatternMatcher.match(compileStateData, ifMatcher))
         {
             ObjectToken argument1 = tokens.get(2);
             ObjectToken argument2 = tokens.get(4);
 
-            String conditionType = ((SpecialToken)tokens.get(3)).toCodeValue();
+            String conditionType = tokens.get(3).toCodeValue();
 
             writeCode("if " + argument1.toCodeValue() + " " + conditionType + " " + argument2.toCodeValue());
 

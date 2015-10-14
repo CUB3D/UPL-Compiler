@@ -1,7 +1,9 @@
 mov 10 x
 mov @TEMP1@ y
 dwd z Hello World
-mov def[ghi] abc
+psh def
+psh ghi
+pop abc
 ---
 jmp bar
 pop @TEMP1@
@@ -47,3 +49,8 @@ psh 0
 jmp test
 pop x
 endif
+---
+ary x 3
+mov x[0] 0
+mov x[1] 0
+mov x[2] 0

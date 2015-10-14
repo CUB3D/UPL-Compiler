@@ -37,26 +37,11 @@ public class Tokeniser
 
             TokenType type = getTokenType(token.charAt(0));
 
-            if(type == TokenType.WORD)
-            {
-                if((tokens.size() - i) >= 3)
-                {
-                    if(tokens.get(i + 1).equals("[") && tokens.get(i + 3).equals("]"))
-                    {
-                        Pair<ArrayAccessToken, Integer> reconstructedArrayAccess = reconstructArrayAccess(tokens, i);
-
-                        objectTokens.add(reconstructedArrayAccess.first);
-                        i = reconstructedArrayAccess.second;
-                        continue;
-                    }
-                }
-            }
-
             if(type == TokenType.SPECIAL)
             {
                 if((tokens.size() - i) >= 3)
                 {
-                    if (token.equals("[") && tokens.get(i + 1).equals("]"))
+                    if (token.equals("[") && tokens.get(tokens.size() - 3).equals("]"))
                     {
                         Pair<ArrayCreationToken, Integer> reconstructedArrayCreation = reconstructArrayCreation(tokens, i);
 
@@ -191,12 +176,38 @@ public class Tokeniser
         List<String> contentTokens = new ArrayList<String>();
         String size = "";
 
+
         while(!tokens.get(pos).equals("]"))
         {
-            contentTokens.add(tokens.get(pos++));
+            String curArg = "";
+
+            while(true)
+            {
+                curArg += tokens.get(pos);
+
+                System.out.println(tokens.get(pos));
+
+                pos++;
+
+                if(tokens.get(pos).equals("]"))
+                {
+                    break;
+                }
+
+                if(tokens.get(pos++).equals(","))
+                {
+                    break;
+                }
+            }
+
+            contentTokens.add(curArg);
         }
 
-        pos += 2; // skip ]
+        for(String s : contentTokens){
+            System.out.println("CONT: " + s);
+        }
+
+        pos ++; // skip ]
 
         if(tokens.get(pos++).equals(":")) // checking for this for a future feature
         {
