@@ -43,5 +43,7 @@ pop @TEMP1@
 psh @TEMP1@
 ---
 if x == 10
----
+psh 0
+jmp test
+pop x
 endif

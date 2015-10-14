@@ -3,6 +3,7 @@ package call.upl.compiler.node;
 import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.SpecialToken;
 import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
@@ -60,21 +61,12 @@ public class CompileNodeIf extends CompileNode
 
         if(PatternMatcher.match(compileStateData, if_))
         {
-            //if(x == y) ->
-            // if x == y
-            curLine = curLine.replaceAll(" ", "");
-            //if(x==y)->
-            curLine = curLine.replaceAll("\\(", " ");
-            //if x==y)->
-            curLine = curLine.replaceAll("\\)", "");
-            //if x==y->
-            curLine = curLine.replaceAll("->", "");
-            //if x==y
-            curLine = curLine.replaceAll("==", " == ");
-            curLine = curLine.replaceAll(">", " > ");
-            curLine = curLine.replaceAll("<", " < ");
+            ObjectToken argument1 = tokens.get(2);
+            ObjectToken argument2 = tokens.get(4);
 
-            writeCode(curLine);
+            String conditionType = ((SpecialToken)tokens.get(3)).toCodeValue();
+
+            writeCode("if " + argument1.toCodeValue() + " " + conditionType + " " + argument2.toCodeValue());
 
             compileStateData.curLineNumber++;
 

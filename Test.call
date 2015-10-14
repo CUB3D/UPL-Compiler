@@ -15,5 +15,5 @@ return test(foo(bar()))
 __UPLBC("---")
 if ( x == 10 ) ->
 {
-    __UPLBC("---")
+   x = test(0)
 }
