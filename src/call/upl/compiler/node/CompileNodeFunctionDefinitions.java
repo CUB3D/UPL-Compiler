@@ -2,11 +2,15 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
+import call.upl.compiler.core.tokeniser.FunctionCallToken;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
+import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.util.List;
+import java.util.SortedMap;
 
 /**
  * Created by Callum on 27/04/2015.
@@ -18,52 +22,35 @@ public class CompileNodeFunctionDefinitions extends CompileNode
     {
         //func x ( void ) ->
         PatternBuilder func = new PatternBuilder();
-        func.addMatchExact("func");
-        func.addMatchSpace(0);
-        func.addMatchAnyWord();
-        func.addMatchSpace(0);
-        func.addMatchExact("(");
-        func.addMatchSkipToExact(")");
-        func.addMatchSpace(0);
-        func.addMatchExact("-\\>");
 
-        if(PatternMatcher.match(curLine, func.toString()))
+        func.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.EXACT, "func");
+        func.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
+        func.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "-\\>");
+
+        if(PatternMatcher.match(compileStateData, func))
         {
             compileStateData.isInFunction = true;
 
-            //def x ( x, y ) ->
-            curLine = curLine.replaceAll("func", ".");
-            //. x ( x, y ) ->
-            curLine = curLine.replaceAll(" ", "");
-            //.x(x,y)->
-            curLine = curLine.replaceFirst("\\(", " ");
-            //.x x,y)->
-            curLine = curLine.replaceAll("\\)->", "");
-            // .x x,y
-            String[] split = curLine.split(" ");
-            String name = split[0];
-            boolean hasArgs = split.length == 2;
-            String[] arguments = null;
+            FunctionCallToken functionCallToken = (FunctionCallToken) tokens.get(1);
 
-            if(hasArgs)
-            {
-                arguments = split[1].split(",");
-            }
+            String name = functionCallToken.getValue().first;
 
-            writeCode(name);
+            List<ObjectToken> arguments = functionCallToken.getValue().second;
+
+            writeCode("." + name);
 
             //enter namespace
-            writeCode("nsp " + name.substring(1, name.length()));
+            writeCode("nsp " + name);
 
             compileStateData.curLineNumber++;
 
             if(getLine(compileStateData.curLineNumber++).equals("{"))
             {
-                if(hasArgs)
+                if(!arguments.isEmpty())
                 {
-                    for (int argumentIndex = arguments.length - 1; argumentIndex >= 0; argumentIndex--)
+                    for (int argumentIndex = arguments.size() - 1; argumentIndex >= 0; argumentIndex--)
                     {
-                        writeCode("pop " + arguments[argumentIndex]);
+                        writeCode("pop " + arguments.get(argumentIndex).toCodeValue());
                     }
                 }
 

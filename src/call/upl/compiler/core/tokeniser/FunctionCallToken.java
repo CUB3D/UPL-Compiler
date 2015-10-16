@@ -2,6 +2,7 @@ package call.upl.compiler.core.tokeniser;
 
 import call.upl.compiler.core.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,10 @@ public class FunctionCallToken extends ObjectToken<Pair<String, List<ObjectToken
 {
     public FunctionCallToken(String functionName, String arguments)
     {
-        this.value = new Pair<>(functionName, Tokeniser.tokenise(arguments));
+        this.value = new Pair<>(functionName, new ArrayList<>());
+
+        Tokeniser.tokenise(arguments).stream().filter(token -> !token.tagMatches(new String[]{"SPECIAL", "EXACT", ","})).forEach(token -> this.value.second.add(token));
+
         this.tokenType = Tokeniser.TokenType.FUNCTION_CALL;
     }
 
