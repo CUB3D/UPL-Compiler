@@ -54,3 +54,9 @@ ary x 3
 mov x[0] 0
 mov x[1] 0
 mov x[2] 0
+---
+whl x > 10
+psh 0
+jmp test
+pop x
+endwhl

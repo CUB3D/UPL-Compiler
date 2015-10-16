@@ -3,6 +3,7 @@ package call.upl.compiler.node;
 import call.upl.compiler.core.ExceptionSystem;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
 
@@ -17,43 +18,47 @@ public class CompileNodeWhile extends CompileNode
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         //while ( s == d ) -> { }
-        PatternBuilder if_ = new PatternBuilder();
+        PatternBuilder while_ = new PatternBuilder();
 
-        if_.addMatchExact("while");
-        if_.addMatchSpace(0);
-        if_.addMatchExact("(");
+        while_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.EXACT, "while");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "(");
 
-        if_.addMatchSpace(0);
-        if_.addMatchValue();
-        if_.addMatchSpace(0);
+        while_.startOr();
+        while_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
+        while_.endOr();
 
-        if_.addMatchExact("==", "\\>", "\\<");
+        while_.startOr();
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "==");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "!=");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\>=");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "\\<=");
+        while_.endOr();
 
-        if_.addMatchSpace(0);
-        if_.addMatchValue();
-        if_.addMatchSpace(0);
-        if_.addMatchExact(")");
+        while_.startOr();
+        while_.add(Tokeniser.TokenType.STRING, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.NUMBER, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.ARRAY_ACCESS, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        while_.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
+        while_.endOr();
 
-        if_.addMatchSpace(0);
-        if_.addMatchExact("-\\>");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, ")");
+        while_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "-\\>");
 
-        if(PatternMatcher.match(curLine, if_.toString()))
+        if(PatternMatcher.match(compileStateData, while_))
         {
-            curLine = curLine.replaceAll(" ", "");
-            //while(x==y)->
-            curLine = curLine.replaceAll("\\(", " ");
-            //while x==y)->
-            curLine = curLine.replaceAll("\\)", "");
-            //while x==y->
-            curLine = curLine.replaceAll("->", "");
-            //while x==y
-            curLine = curLine.replaceAll("==", " == ");
-            curLine = curLine.replaceAll(">", " > ");
-            curLine = curLine.replaceAll("<", " < ");
+            ObjectToken argument1 = tokens.get(2);
+            ObjectToken argument2 = tokens.get(4);
 
-            curLine = curLine.replaceAll("while", "whl");
+            String conditionType = tokens.get(3).toCodeValue();
 
-            writeCode(curLine);
+            writeCode("whl " + argument1.toCodeValue() + " " + conditionType + " " + argument2.toCodeValue());
 
             compileStateData.curLineNumber++;
 
@@ -61,7 +66,7 @@ public class CompileNodeWhile extends CompileNode
             {
                 while(true)
                 {
-                    String line = getLine(compileStateData.curLineNumber++);
+                    String line = getLine(compileStateData.curLineNumber);
 
                     if(line.equals("}"))
                     {
@@ -76,9 +81,11 @@ public class CompileNodeWhile extends CompileNode
                         }
                         else
                         {
-                            compileStateData.curLineNumber = uplCompiler.execLine(line, compileStateData.curLineNumber);
+                            compileStateData.curLineNumber = uplCompiler.execLine(line, getCurrentLineNumber());
                         }
                     }
+
+                    compileStateData.curLineNumber++;
                 }
             }
             else
@@ -87,8 +94,6 @@ public class CompileNodeWhile extends CompileNode
             }
 
             writeCode("endwhl");
-
-            compileStateData.curLineNumber++;
 
             return true;
         }
