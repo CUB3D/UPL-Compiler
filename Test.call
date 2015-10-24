@@ -1,31 +1,4 @@
-x = 10
-y = @TEMP1@
-z = "Hello World"
-abc = def[ghi]
-__UPLBC("---")
-test = testFunc(foo(bar()), "This is a test")
-__UPLBC("---")
-x = test(10)
-__UPLBC("---")
-foo(bar(bar(bar())))
-__UPLBC("---")
-return 1
-__UPLBC("---")
-return test(foo(bar()))
-__UPLBC("---")
-if ( x == 10 ) ->
-{
-   x = test(0)
-}
-__UPLBC("---")
-x = [0, 0, 0] : 3
-__UPLBC("---")
-while ( x == 10 ) ->
-{
-    x = test(0)
-}
-__UPLBC("---")
 func print(x, y, z) ->
 {
-    x = test(0)
+    test = x(0)
 }
