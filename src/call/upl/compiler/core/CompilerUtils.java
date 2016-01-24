@@ -7,11 +7,6 @@ public class CompilerUtils
 {
     public static final String REGEX_MATCH_WORD = "[a-zA-Z@_]";
     public static final String REGEX_MATCH_VARIABLE = "[a-zA-Z0-9_@]+";
-    public static final String REGEX_MATCH_ARRAY_ACCESS = REGEX_MATCH_VARIABLE + "\\s?\\[\\s?" + REGEX_MATCH_VARIABLE + "\\s?\\]";
-
-    public static final String REGEX_MATCH_STRING = "\"[\\w\\d\\s]+\"";
-
-    public static final String REGEX_MATCH_FUNCTION = REGEX_MATCH_VARIABLE + "\\s?\\(\\s?[a-zA-Z0-9_@\\[\\]+\\-\\*/\\s,\\(\\)]+\\s?\\)";
 
     public static final String NUMBER_FORMAT = "[\\x00-\\x20]*[+-]?(NaN|Infinity|((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?)|(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))[pP][+-]?(\\p{Digit}+)))[fFdD]?))[\\x00-\\x20]*";
 
@@ -20,21 +15,6 @@ public class CompilerUtils
     public static boolean isVariable(String s)
     {
         return s.matches(REGEX_MATCH_VARIABLE);
-    }
-
-    public static boolean isArrayAccess(String s)
-    {
-        return s.matches(REGEX_MATCH_ARRAY_ACCESS);
-    }
-
-    public static boolean isString(String s)
-    {
-        return s.matches(REGEX_MATCH_STRING);
-    }
-
-    public static boolean isFunction(String s)
-    {
-        return s.matches(REGEX_MATCH_FUNCTION);
     }
 
     public static boolean isNumber(String s)
