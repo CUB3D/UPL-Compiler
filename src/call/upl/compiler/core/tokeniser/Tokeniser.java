@@ -5,7 +5,6 @@ import call.upl.compiler.core.Pair;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 
 /**
  * Created by Callum on 18/08/2015.
@@ -124,11 +123,6 @@ public class Tokeniser
             }
         }
 
-        for(ObjectToken t : objectTokens)
-            System.out.print(t.toCodeValue());
-
-        System.out.println();
-
         return objectTokens;
     }
 
@@ -191,7 +185,7 @@ public class Tokeniser
 
         if(!tokens.get(pos).equals(")")) // has arguments
         {
-            for(; pos < bracePos; pos++)
+            for(; pos < bracePos -1; pos++)
             {
                 arguments += tokens.get(pos);
 
@@ -211,6 +205,8 @@ public class Tokeniser
         }
 
         System.out.println("Found function: " + functionName + " with arguments: " + arguments);
+
+        pos++; // skip )
 
         return new Pair<>(new FunctionCallToken(functionName, arguments), pos);
     }
