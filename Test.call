@@ -1,16 +1,2 @@
-func readString() ->
-{
-    __UPLBC("dwd tempString ")
-    temp = readChar()
-
-    while(temp > 10) ->
-    {
-        temp = itoa(temp)
-
-        tempString = tempString + temp
-
-        temp = readChar()
-    }
-
-    return tempString
-}
+include "IO.upl"
+print("Hello, World!")

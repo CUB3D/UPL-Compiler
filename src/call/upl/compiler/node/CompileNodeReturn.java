@@ -29,6 +29,7 @@ public class CompileNodeReturn extends CompileNode
         ret.add(Tokeniser.TokenType.FUNCTION_CALL, PatternMatcher.MatchType.ANY);
         ret.endOr();
 
+
         if(PatternMatcher.match(compileStateData, ret))
         {
             ObjectToken token = compileStateData.tokens.get(1);

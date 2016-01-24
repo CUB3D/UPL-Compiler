@@ -74,7 +74,7 @@ public class CompileNodeWhile extends CompileNode
                     }
                     else
                     {
-                        if(getCurrentLineNumber() + 1 == uplCompiler.code.size())
+                        if(compileStateData.curLineNumber + 1 == uplCompiler.code.size())
                         {
                             // could not find end
                             ExceptionSystem.throwCodeException("While statement read past EOF, no end token found");
@@ -94,6 +94,8 @@ public class CompileNodeWhile extends CompileNode
             }
 
             writeCode("endwhl");
+
+            UPLCompiler.instance.currentLineData.curLineNumber++;
 
             return true;
         }
