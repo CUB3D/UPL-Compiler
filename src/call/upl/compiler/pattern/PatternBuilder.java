@@ -87,24 +87,9 @@ public class PatternBuilder
         pattern += PATTERN_TAG_START + Pattern.PATTERN_EXACT.getPatternID() + " " + args + PATTERN_TAG_END;
     }
 
-    public void addMatchValue()
-    {
-        pattern += PATTERN_TAG_START + Pattern.PATTERN_ANY_WORD_OR_NUMBER.getPatternID() + PATTERN_TAG_END;
-    }
-
-    public void addMatchSkipChar()
-    {
-        pattern += PATTERN_TAG_START + Pattern.PATTERN_SKIP_CHAR.getPatternID() + PATTERN_TAG_END;
-    }
-
     public void addMatchSkipToExact(String s)
     {
         pattern += PATTERN_TAG_START + Pattern.PATTERN_SKIP_TO_EXACT.getPatternID() + " " + s + PATTERN_TAG_END;
-    }
-
-    public void addMatchNumber()
-    {
-        pattern += PATTERN_TAG_START + Pattern.PATTERN_ANY_NUMBER.getPatternID() + PATTERN_TAG_END;
     }
 
     public void addMatchVariable()

@@ -13,9 +13,6 @@ public abstract class Pattern
     private static List<Pattern> patternList = new ArrayList<Pattern>();
 
     public static final PatternAnyWord PATTERN_ANY_WORD = new PatternAnyWord();
-    public static final PatternSkipChar PATTERN_SKIP_CHAR = new PatternSkipChar();
-    public static final PatternAnyWordOrNumber PATTERN_ANY_WORD_OR_NUMBER = new PatternAnyWordOrNumber();
-    public static final PatternAnyNumber PATTERN_ANY_NUMBER = new PatternAnyNumber();
     public static final PatternAnySpace PATTERN_ANY_SPACE = new PatternAnySpace();
     public static final PatternExact PATTERN_EXACT = new PatternExact();
     public static final PatternSkipToExact PATTERN_SKIP_TO_EXACT = new PatternSkipToExact();
