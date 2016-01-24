@@ -1,62 +1,21 @@
-mov 10 x
-mov @TEMP1@ y
-dwd z Hello World
-psh def
-psh ghi
-pop abc
----
-jmp bar
+.readString
+nsp readString
+dwd tempString 
+jmp readChar
+pop temp
+whl temp > 10
+psh temp
+jmp itoa
+pop temp
+psh tempString
+psh temp
 pop @TEMP1@
-psh @TEMP1@
-jmp foo
-pop @TEMP1@
-psh @TEMP1@
-dwd @TEMP1@ This is a test
-psh @TEMP1@
-jmp testFunc
-pop test
----
-psh 10
-jmp test
-pop x
----
-jmp bar
-pop @TEMP1@
-psh @TEMP1@
-jmp bar
-pop @TEMP1@
-psh @TEMP1@
-jmp bar
-pop @TEMP1@
-psh @TEMP1@
-jmp foo
-pop @TEMP1@
----
-psh 1
----
-jmp bar
-pop @TEMP1@
-psh @TEMP1@
-jmp foo
-pop @TEMP1@
-psh @TEMP1@
-jmp test
-pop @TEMP1@
-psh @TEMP1@
----
-if x == 10
-psh 0
-jmp test
-pop x
-endif
----
-ary x 3
-mov x[0] 0
-mov x[1] 0
-mov x[2] 0
----
-whl x > 10
-psh 0
-jmp test
-pop x
+pop @TEMP0@
+add @TEMP0@ @TEMP1@
+pop tempString
+jmp readChar
+pop temp
 endwhl
+endnsp
+end
+psh tempString

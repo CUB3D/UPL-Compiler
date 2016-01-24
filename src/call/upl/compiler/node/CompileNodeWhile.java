@@ -81,7 +81,7 @@ public class CompileNodeWhile extends CompileNode
                         }
                         else
                         {
-                            compileStateData.curLineNumber = uplCompiler.execLine(line, getCurrentLineNumber());
+                            compileStateData.curLineNumber = uplCompiler.execLine(line, compileStateData.curLineNumber);
                         }
                     }
 

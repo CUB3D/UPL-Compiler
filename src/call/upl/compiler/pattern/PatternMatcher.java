@@ -3,6 +3,7 @@ package call.upl.compiler.pattern;
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.core.tokeniser.ObjectToken;
 import call.upl.compiler.node.CompileStateData;
+import call.upl.core.UPL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,12 @@ public class PatternMatcher
 
         if(tags.size() > csd.tokens.size())
         {
-            System.out.println("Error: not enough tokens for the given number of tags");
+            if(UPLCompiler.DEBUG)
+            {
+                System.out.println("Error: not enough tokens for the given number of tags");
+            }
             return false;
+
         }
 
         for(int i = 0; i < tags.size(); i++)

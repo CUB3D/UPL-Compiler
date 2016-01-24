@@ -1,6 +1,7 @@
 package call.upl.compiler.core.tokeniser;
 
 import call.upl.compiler.core.Pair;
+import call.upl.compiler.core.UPLCompiler;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -160,7 +161,10 @@ public class Tokeniser
             }
         }
 
-        System.out.println("Found function: " + functionName + " with arguments: " + arguments);
+        if(UPLCompiler.DEBUG)
+        {
+            System.out.println("Found function: " + functionName + " with arguments: " + arguments);
+        }
 
         pos++; // skip )
 

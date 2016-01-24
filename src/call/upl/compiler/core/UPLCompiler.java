@@ -59,8 +59,6 @@ public class UPLCompiler
 
             String s;
 
-            //TODO: check for comment
-
             while((s = br.readLine()) != null)
             {
                 if(!s.trim().isEmpty() && !s.trim().startsWith("#") && !s.trim().startsWith("//"))
@@ -94,6 +92,7 @@ public class UPLCompiler
 
         CompileNode.attemptCompile(this, currentLineData);
 
+        // executing prior pieces of code is not allowed
         if(currentLineData.curLineNumber < i)
         {
             ExceptionSystem.throwException(s);
