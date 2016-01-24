@@ -113,9 +113,12 @@ public class UPLCompiler
 
     public static void main(String[] args) throws IOException
     {
+        long startTime = System.nanoTime();
         FileAPI api = new FileAPI(args[0]);
 
         new UPLCompiler(api);
+        long totalTime = System.nanoTime() - startTime;
+        System.out.println("Compile completed in " + totalTime/1000000 + "ms");
     }
 
 
