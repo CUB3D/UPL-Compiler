@@ -4,31 +4,59 @@ dwd z Hello World
 psh def
 psh ghi
 pop abc
-psh test
-psh 10.0
+---
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp foo
+pop @TEMP1@
+psh @TEMP1@
+dwd @TEMP1@ This is a test
+psh @TEMP1@
+jmp testFunc
+pop test
+---
+psh 10
+jmp test
 pop x
+---
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp foo
+pop @TEMP1@
+---
 psh 1
-psh test
+---
+jmp bar
+pop @TEMP1@
+psh @TEMP1@
+jmp foo
+pop @TEMP1@
+psh @TEMP1@
+jmp test
+pop @TEMP1@
+psh @TEMP1@
+---
 if x == 10
-psh test
-psh 0.0
+psh 0
+jmp test
 pop x
 endif
+---
 ary x 3
 mov x[0] 0
 mov x[1] 0
 mov x[2] 0
-whl x == 10
-psh test
-psh 0.0
+---
+whl x > 10
+psh 0
+jmp test
 pop x
 endwhl
-.print
-nsp print
-pop y
-pop x
-psh test
-psh 0.0
-pop x
-endnsp
-end

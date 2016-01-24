@@ -56,7 +56,7 @@ public class Tokeniser
             {
                 if((tokens.size() - i) >= 2)
                 {
-                    if(isFunctionCall(tokens, i))
+                    if(tokens.get(i + 1).equals("(") && tokens.get(tokens.size() - 1).equals(")"))
                     {
                         Pair<FunctionCallToken, Integer> reconstructedFunctionCall = reconstructFunctionCalls(tokens, i);
 
@@ -126,40 +126,6 @@ public class Tokeniser
         return objectTokens;
     }
 
-    private static boolean isFunctionCall(List<String> tokens, int i)
-    {
-        if(getTokenType(tokens.get(i).charAt(0)) == TokenType.WORD)
-        {
-            if(tokens.get(i + 1).equals("("))
-            {
-                if(!tokens.get(i + 2).equals(")"))
-                {
-                    boolean failed = false;
-                    for(int x = i + 3; x < tokens.size() - 3; x+=2)
-                    {
-                        if(!tokens.get(x).equals(","))
-                        {
-                            failed = true;
-                        }
-                    }
-
-                    if(tokens.get(tokens.size() - 1).equals(")"))
-                    {
-                        failed = true;
-                    }
-
-                    return !failed;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     private static Pair<FunctionCallToken, Integer> reconstructFunctionCalls(List<String> tokens, int pos)
     {
         // layout word,(,arg,,,arg,,,)
@@ -172,21 +138,11 @@ public class Tokeniser
 
         boolean isInString = false;
 
-        int bracePos = 0;
-
-        for(int i = tokens.size() - 1; i > 0; i--)
-        {
-            if(tokens.get(i).equals(")"))
-            {
-                bracePos = i;
-                break;
-            }
-        }
-
         if(!tokens.get(pos).equals(")")) // has arguments
         {
-            for(; pos < bracePos -1; pos++)
+            for(; pos < tokens.size() - 1; pos++)
             {
+                //TODO: not parsing string correctely
                 arguments += tokens.get(pos);
 
                 if(isInString) arguments += " ";

@@ -20,12 +20,7 @@ if ( x == 10 ) ->
 __UPLBC("---")
 x = [0, 0, 0] : 3
 __UPLBC("---")
-while ( x == 10 ) ->
-{
-    x = test(0)
-}
-__UPLBC("---")
-func print(x, y, z) ->
+while ( x > 10 ) ->
 {
     x = test(0)
 }
