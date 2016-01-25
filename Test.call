@@ -1,3 +1,4 @@
+include "IO.upl"
 
-#y = [0, 1, 2] : 3
-x = y[10]
+x = "Test 123"
+printString(x, 8)
