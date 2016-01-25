@@ -1,3 +1,1 @@
-mov 0 z
-psh z
-int 0x1
+mov x y[10]

@@ -66,6 +66,18 @@ public class Tokeniser
                         continue;
                     }
                 }
+
+                if((tokens.size() - i) >= 3)
+                {
+                    if(tokens.get(i + 1).equals("[") && tokens.get(i + 3).equals("]"))
+                    {
+                        Pair<ArrayAccessToken, Integer> reconstructedFunctionCall = reconstructArrayAccess(tokens, i);
+
+                        objectTokens.add(reconstructedFunctionCall.first);
+                        i = reconstructedFunctionCall.second;
+                        continue;
+                    }
+                }
             }
 
             // special grouping
