@@ -1,2 +1,9 @@
-include "IO.upl"
-print("Hello, World!")
+
+#y = [0, 1, 2] : 3
+#x = y[10]
+
+
+
+z = 0
+__UPLBC("psh z")
+__UPLBC("int 0x1")

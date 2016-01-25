@@ -21,6 +21,7 @@ public class CompileNodeSet extends CompileNode
     boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
     {
         //<WORD ANY><SPECIAL EXACT =><NUMBER ANY||WORD ANY||ARRAY_ACCESS ANY||STRING ANY>
+        //x = 0
 
         PatternBuilder setVariableNumber = new PatternBuilder();
         setVariableNumber.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
@@ -38,7 +39,7 @@ public class CompileNodeSet extends CompileNode
 
             ObjectToken valueToken = tokens.get(2);
 
-            writeCode((valueToken.tokenType == Tokeniser.TokenType.STRING ? "dwd " + varName + " " + valueToken.toCodeValue() : "mov " + valueToken.toCodeValue() + " " + varName));
+            writeCode((valueToken.tokenType == Tokeniser.TokenType.STRING ? "dwd " + varName + " " + valueToken.toCodeValue() : "mov " + varName + " " + valueToken.toCodeValue()));
 
             return true;
         }
