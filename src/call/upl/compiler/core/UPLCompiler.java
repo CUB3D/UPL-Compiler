@@ -3,11 +3,15 @@ package call.upl.compiler.core;
 import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.node.CompileNode;
 import call.upl.compiler.node.CompileStateData;
-import cub3d.file.main.FileAPI;
-import cub3d.file.reader.BasicReader;
-import cub3d.file.writer.BasicWriter;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,21 +26,23 @@ public class UPLCompiler
 
     public List<String> code = new ArrayList<String>();
 
-    public BasicWriter writer;
+    public BufferedWriter writer;
 
     public CompileStateData currentLineData = null;
 
-    public UPLCompiler(FileAPI a) throws IOException
+    public UPLCompiler(Path path) throws IOException
     {
         instance = this;
 
-        FileAPI f = new FileAPI(a.getPath().toString().replaceAll(".call", ".o"));
+        Path output = Paths.get(path.toString().replace(".call", ".o"));
+        if (!Files.exists(output))
+        {
+            Files.createFile(output);
+        }
 
-        f.createFile();
+        this.writer = Files.newBufferedWriter(output);
 
-        this.writer = new BasicWriter(f.getWriter());
-
-        readCode(new BasicReader(a.getReader()));
+        readCode(Files.newBufferedReader(path));
         runCode();
     }
 
@@ -44,22 +50,21 @@ public class UPLCompiler
     {
         try
         {
-            readCode(new BasicReader(new FileAPI(filename).getReader()));
+            Path path = Paths.get(filename);
+            readCode(Files.newBufferedReader(path));
         } catch(IOException e)
         {
             e.printStackTrace();
         }
     }
 
-    private void readCode(BasicReader reader)
+    private void readCode(BufferedReader reader)
     {
         try
         {
-            BasicReader br = new BasicReader(reader);
-
             String s;
 
-            while((s = br.readLine()) != null)
+            while((s = reader.readLine()) != null)
             {
                 if(!s.trim().isEmpty() && !s.trim().startsWith("#") && !s.trim().startsWith("//"))
                     code.add(s);
@@ -80,7 +85,8 @@ public class UPLCompiler
             i = execLine(s, i);
         }
 
-        writer.cleanup();
+        writer.flush();
+        writer.close();
     }
 
     public int execLine(String s, int i)
@@ -105,7 +111,7 @@ public class UPLCompiler
     {
         try
         {
-            writer.writeLine(s);
+            writer.write(s + System.lineSeparator());
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,9 +120,10 @@ public class UPLCompiler
     public static void main(String[] args) throws IOException
     {
         long startTime = System.nanoTime();
-        FileAPI api = new FileAPI(args[0]);
 
-        new UPLCompiler(api);
+        Path path = Paths.get(args[0]);
+
+        new UPLCompiler(path);
         long totalTime = System.nanoTime() - startTime;
         System.out.println("Compile completed in " + totalTime/1000000 + "ms");
     }

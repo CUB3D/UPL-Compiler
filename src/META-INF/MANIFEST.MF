@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: call.upl.core.UPL
+Main-Class: call.upl.compiler.core.UPLCompiler
 
