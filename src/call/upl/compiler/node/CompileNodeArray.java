@@ -15,15 +15,18 @@ import java.util.List;
  */
 public class CompileNodeArray extends CompileNode
 {
-    @Override
-    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
-    {
-        PatternBuilder array = new PatternBuilder();
+    public PatternBuilder array = new PatternBuilder();
 
+    public CompileNodeArray()
+    {
         array.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
         array.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "=");
         array.add(Tokeniser.TokenType.ARRAY_CREATION, PatternMatcher.MatchType.ANY);
+    }
 
+    @Override
+    boolean compile(UPLCompiler uplCompiler, CompileStateData compileStateData, String curLine, List<ObjectToken> tokens)
+    {
         if(PatternMatcher.match(compileStateData, array))
         {
             String name = tokens.get(0).toCodeValue();

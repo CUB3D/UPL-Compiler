@@ -1,14 +1,31 @@
 dwd x Test 123
+mov @TEMP@ 0
+mov @TEMP1@ 0
+mov asdf 0
 psh x
-psh 8
-jmp printString
+int 0x6
 pop @TEMP1@
+whl @TEMP@ < @TEMP1@
+mov asdf x[@TEMP@]
+psh asdf
+jmp println
+pop @TEMP1@
+add @TEMP@ 1
+pop @TEMP@
+endwhl
 .newline
 nsp newline
 dwd @TEMP0@ /n
 psh @TEMP0@
 int 0x1
 dwd @TEMP0@ NULL
+endnsp
+end
+.strlen
+nsp strlen
+pop str
+psh str
+int 0x8
 endnsp
 end
 .printString
@@ -41,7 +58,12 @@ end
 nsp println
 pop x
 psh x
-int 0x1
+psh x
+jmp strlen
+pop @TEMP1@
+psh @TEMP1@
+jmp printString
+pop @TEMP1@
 jmp newline
 pop @TEMP1@
 endnsp

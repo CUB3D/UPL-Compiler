@@ -1,4 +1,9 @@
 include "IO.upl"
 
 x = "Test 123"
-printString(x, 8)
+#println(x)
+#println(x[1])
+for(asdf : x) ->
+{
+    println(asdf)
+}

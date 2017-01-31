@@ -2,6 +2,7 @@ package call.upl.compiler.node;
 
 import call.upl.compiler.core.UPLCompiler;
 import call.upl.compiler.core.tokeniser.ObjectToken;
+import call.upl.compiler.core.tokeniser.Tokeniser;
 import call.upl.compiler.pattern.PatternBuilder;
 import call.upl.compiler.pattern.PatternMatcher;
 
@@ -18,21 +19,29 @@ public class CompileNodeFor extends CompileNode
         //for ( value : array ) -> { }
         PatternBuilder for_ = new PatternBuilder();
 
-        for_.addMatchExact("for");
-        for_.addMatchSpace(0);
-        for_.addMatchExact("(");
-        for_.addMatchSpace(0);
-        for_.addMatchVariable();
-        for_.addMatchSpace(0);
-        for_.addMatchExact(":");
-        for_.addMatchSpace(0);
-        for_.addMatchVariable();
-        for_.addMatchSpace(0);
-        for_.addMatchExact(")");
-        for_.addMatchSpace(0);
-        for_.addMatchExact("-\\>");
+        for_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.EXACT, "for");
+        for_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "(");
+        for_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        for_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, ":");
+        for_.add(Tokeniser.TokenType.WORD, PatternMatcher.MatchType.ANY);
+        for_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, ")");
+        for_.add(Tokeniser.TokenType.SPECIAL, PatternMatcher.MatchType.EXACT, "-\\>");
 
-        if(PatternMatcher.match(curLine, for_.toString()))
+//        for_.addMatchExact("for");
+//        for_.addMatchSpace(0);
+//        for_.addMatchExact("(");
+//        for_.addMatchSpace(0);
+//        for_.addMatchVariable();
+//        for_.addMatchSpace(0);
+//        for_.addMatchExact(":");
+//        for_.addMatchSpace(0);
+//        for_.addMatchVariable();
+//        for_.addMatchSpace(0);
+//        for_.addMatchExact(")");
+//        for_.addMatchSpace(0);
+//        for_.addMatchExact("-\\>");
+
+        if(PatternMatcher.match(compileStateData, for_))
         {
             curLine = curLine.replaceAll(" ", "");
             //for(x:y)->
